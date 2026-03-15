@@ -1,8 +1,8 @@
 {
   "mosque": {
-    "name": "Al-Noor Mosque",
-    "nameAr": "مسجد النور",
-    "address": "123 Islamic Center Drive, City, State 12345",
+    "name": "Al Faruk Moschee (Muslime in Potsdam e.V)",
+    "nameAr": "مسجد الفاروق",
+    "address": "Am Kanal 61, 14467 Potsdam",
     "addressAr": "١٢٣ شارع المركز الإسلامي، المدينة، الولاية",
     "hijriAdjustment": 0
   },
@@ -119,5 +119,5 @@
       "sourceAr": "رواه البخاري"
     }
   ],
-  "lastUpdated": "2026-03-15T00:00:00.000Z"
+  "lastUpdated": "2026-03-15T23:43:37.641Z"
 }

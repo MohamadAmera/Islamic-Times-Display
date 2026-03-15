@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Layout } from '@/components/Layout';
 import { usePrayerContext } from '@/context/PrayerContext';
 import { useVerifyAdmin, useUpdatePrayerData, useGetPrayerData } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Save, Loader2, Plus, Trash2 } from 'lucide-react';
+import { Lock, Save, Loader2, Plus, Trash2, Upload, FileJson } from 'lucide-react';
 import type { PrayerData } from '@workspace/api-client-react';
 
 export default function Admin() {
@@ -15,6 +15,36 @@ export default function Admin() {
   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleJsonUpload = (file: File) => {
+    if (!file.name.endsWith('.json')) {
+      toast({ title: isAr ? 'خطأ' : 'Error', description: isAr ? 'يجب أن يكون الملف بصيغة JSON' : 'File must be a .json file', variant: 'destructive' });
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const parsed = JSON.parse(e.target?.result as string);
+        if (!parsed.prayers || !Array.isArray(parsed.prayers)) {
+          throw new Error('Invalid format: missing prayers array');
+        }
+        setFormData(parsed as PrayerData);
+        toast({ title: isAr ? 'تم بنجاح ✓' : 'File Loaded ✓', description: isAr ? 'تم تحميل الملف. راجع البيانات ثم اضغط حفظ.' : 'File loaded. Review data then click Save.' });
+      } catch (err: any) {
+        toast({ title: isAr ? 'خطأ في الملف' : 'Invalid JSON', description: err.message, variant: 'destructive' });
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleJsonUpload(file);
+  };
   
   const { data: initialData, refetch } = useGetPrayerData();
   const verifyMutation = useVerifyAdmin();
@@ -107,6 +137,38 @@ export default function Admin() {
             {updateMutation.isPending ? <Loader2 className="animate-spin mr-2" /> : <Save className="mr-2 h-4 w-4" />}
             {isAr ? 'حفظ التغييرات' : 'Save Changes'}
           </Button>
+        </div>
+
+        {/* JSON Upload Section */}
+        <div
+          className={`mb-8 border-2 border-dashed rounded-2xl p-6 text-center transition-colors cursor-pointer ${isDragging ? 'border-primary bg-primary/10' : 'border-white/20 hover:border-primary/60 bg-white/5'}`}
+          onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+          onDragLeave={() => setIsDragging(false)}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json"
+            className="hidden"
+            onChange={(e) => { const f = e.target.files?.[0]; if (f) handleJsonUpload(f); e.target.value = ''; }}
+          />
+          <div className="flex flex-col items-center gap-3 pointer-events-none">
+            <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center">
+              <FileJson className="text-primary w-7 h-7" />
+            </div>
+            <div>
+              <p className="font-semibold text-lg">{isAr ? 'ارفع ملف JSON' : 'Upload JSON File'}</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {isAr ? 'اسحب وأفلت الملف هنا أو انقر للاختيار' : 'Drag & drop your JSON file here, or click to browse'}
+              </p>
+            </div>
+            <Button variant="outline" size="sm" className="pointer-events-none mt-1" onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }}>
+              <Upload className="w-4 h-4 mr-2" />
+              {isAr ? 'اختر ملفاً' : 'Choose File'}
+            </Button>
+          </div>
         </div>
 
         <div className="space-y-8">
