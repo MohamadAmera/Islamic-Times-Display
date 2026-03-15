@@ -6,6 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface PrayerTime {
+  name: string;
+  nameAr: string;
+  /** Time in HH:MM format (24h) */
+  time: string;
+  enabled: boolean;
 }

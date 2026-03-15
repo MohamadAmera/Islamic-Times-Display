@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Al-Noor Prayer Times"
+version = "1.0.0"
+id = "artifacts/al-noor"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+localPort = 21890
+name = "web"
+paths = ["/"]
+
+[services.development]
+run = "pnpm --filter @workspace/al-noor run dev"
+
+[services.env]
+PORT = "21890"
+BASE_PATH = "/"
+
+[services.production]
+build = ["pnpm", "--filter", "@workspace/al-noor", "run", "build"]
+publicDir = "artifacts/al-noor/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"

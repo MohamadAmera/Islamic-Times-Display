@@ -1,0 +1,38 @@
+{
+  "name": "Al-Noor - Prayer Times",
+  "short_name": "Al-Noor",
+  "description": "Islamic Prayer Times App - النور",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#c9a227",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["lifestyle", "utilities"],
+  "lang": "en",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Prayer Times",
+      "short_name": "Prayers",
+      "description": "View current prayer times",
+      "url": "/",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    },
+    {
+      "name": "Qibla",
+      "short_name": "Qibla",
+      "description": "Find the Qibla direction",
+      "url": "/qibla",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any" }]
+    }
+  ]
+}

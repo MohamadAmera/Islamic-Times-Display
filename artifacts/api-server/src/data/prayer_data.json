@@ -1,0 +1,123 @@
+{
+  "mosque": {
+    "name": "Al-Noor Mosque",
+    "nameAr": "مسجد النور",
+    "address": "123 Islamic Center Drive, City, State 12345",
+    "addressAr": "١٢٣ شارع المركز الإسلامي، المدينة، الولاية",
+    "hijriAdjustment": 0
+  },
+  "prayers": [
+    {
+      "name": "Fajr",
+      "nameAr": "الفجر",
+      "time": "05:15",
+      "enabled": true
+    },
+    {
+      "name": "Sunrise",
+      "nameAr": "الشروق",
+      "time": "06:45",
+      "enabled": true
+    },
+    {
+      "name": "Dhuhr",
+      "nameAr": "الظهر",
+      "time": "12:30",
+      "enabled": true
+    },
+    {
+      "name": "Asr",
+      "nameAr": "العصر",
+      "time": "15:45",
+      "enabled": true
+    },
+    {
+      "name": "Maghrib",
+      "nameAr": "المغرب",
+      "time": "18:20",
+      "enabled": true
+    },
+    {
+      "name": "Isha",
+      "nameAr": "العشاء",
+      "time": "20:00",
+      "enabled": true
+    }
+  ],
+  "news": [
+    {
+      "id": "1",
+      "text": "Jumu'ah Prayer every Friday at 1:00 PM. All are welcome.",
+      "textAr": "صلاة الجمعة كل جمعة الساعة الواحدة ظهراً. الجميع مدعوون."
+    },
+    {
+      "id": "2",
+      "text": "Quran classes for children every Saturday morning from 9 AM to 12 PM.",
+      "textAr": "دروس القرآن الكريم للأطفال كل يوم سبت من الساعة 9 صباحاً حتى 12 ظهراً."
+    },
+    {
+      "id": "3",
+      "text": "Islamic studies circle every Tuesday after Isha prayer.",
+      "textAr": "حلقة الدراسات الإسلامية كل يوم ثلاثاء بعد صلاة العشاء."
+    }
+  ],
+  "azkar": [
+    {
+      "id": "1",
+      "text": "SubhanAllah (Glory be to Allah)",
+      "textAr": "سبحان الله",
+      "source": "Reported by Al-Bukhari and Muslim",
+      "sourceAr": "رواه البخاري ومسلم"
+    },
+    {
+      "id": "2",
+      "text": "Alhamdulillah (Praise be to Allah)",
+      "textAr": "الحمد لله",
+      "source": "Reported by Muslim",
+      "sourceAr": "رواه مسلم"
+    },
+    {
+      "id": "3",
+      "text": "Allahu Akbar (Allah is the Greatest)",
+      "textAr": "الله أكبر",
+      "source": "Reported by Al-Bukhari",
+      "sourceAr": "رواه البخاري"
+    },
+    {
+      "id": "4",
+      "text": "La ilaha illa Allah (There is no god but Allah)",
+      "textAr": "لا إله إلا الله",
+      "source": "Reported by Al-Bukhari and Muslim",
+      "sourceAr": "رواه البخاري ومسلم"
+    },
+    {
+      "id": "5",
+      "text": "Astaghfirullah (I seek forgiveness from Allah)",
+      "textAr": "أستغفر الله",
+      "source": "Reported by Muslim",
+      "sourceAr": "رواه مسلم"
+    },
+    {
+      "id": "6",
+      "text": "SubhanAllahi wa bihamdihi, SubhanAllahil Azim (Glory be to Allah and His is the praise, Glory be to Allah the Almighty)",
+      "textAr": "سبحان الله وبحمده، سبحان الله العظيم",
+      "source": "Reported by Al-Bukhari and Muslim",
+      "sourceAr": "رواه البخاري ومسلم"
+    },
+    {
+      "id": "7",
+      "text": "Hasbunallahu wa ni'mal wakeel (Allah is sufficient for us and He is the best disposer of affairs)",
+      "textAr": "حسبنا الله ونعم الوكيل",
+      "source": "Quran 3:173",
+      "sourceAr": "القرآن الكريم ٣:١٧٣"
+    },
+    {
+      "id": "8",
+      "text": "La hawla wa la quwwata illa billah (There is no power or strength except with Allah)",
+      "textAr": "لا حول ولا قوة إلا بالله",
+      "source": "Reported by Al-Bukhari",
+      "sourceAr": "رواه البخاري"
+    }
+  ],
+  "lastUpdated": "2026-03-15T00:00:00.000Z"
+}

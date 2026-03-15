@@ -6,6 +6,10 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface HealthStatus {
-  status: string;
+export interface MosqueInfo {
+  name: string;
+  nameAr: string;
+  address: string;
+  addressAr: string;
+  hijriAdjustment: number;
 }

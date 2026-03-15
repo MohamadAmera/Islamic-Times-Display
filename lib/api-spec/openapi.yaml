@@ -1,15 +1,18 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Al-Noor Prayer Times API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: prayer
+    description: Prayer times and data
+  - name: admin
+    description: Admin operations
 paths:
   /healthz:
     get:
@@ -24,6 +27,72 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /prayer-data:
+    get:
+      operationId: getPrayerData
+      tags: [prayer]
+      summary: Get prayer data
+      description: Returns prayer times, news, and azkar for the current configuration
+      responses:
+        "200":
+          description: Prayer data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrayerData"
+
+  /admin/prayer-data:
+    put:
+      operationId: updatePrayerData
+      tags: [admin]
+      summary: Update prayer data
+      description: Update prayer times, news, and azkar (requires admin password)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdatePrayerDataRequest"
+      responses:
+        "200":
+          description: Updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/verify:
+    post:
+      operationId: verifyAdmin
+      tags: [admin]
+      summary: Verify admin password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminVerifyRequest"
+      responses:
+        "200":
+          description: Verified
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +103,156 @@ components:
       required:
         - status
 
+    PrayerTime:
+      type: object
+      properties:
+        name:
+          type: string
+        nameAr:
+          type: string
+        time:
+          type: string
+          description: Time in HH:MM format (24h)
+        enabled:
+          type: boolean
+      required:
+        - name
+        - nameAr
+        - time
+        - enabled
+
+    NewsItem:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        textAr:
+          type: string
+      required:
+        - id
+        - text
+        - textAr
+
+    AzkarItem:
+      type: object
+      properties:
+        id:
+          type: string
+        text:
+          type: string
+        textAr:
+          type: string
+        source:
+          type: string
+        sourceAr:
+          type: string
+      required:
+        - id
+        - text
+        - textAr
+        - source
+        - sourceAr
+
+    MosqueInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        nameAr:
+          type: string
+        address:
+          type: string
+        addressAr:
+          type: string
+        hijriAdjustment:
+          type: integer
+      required:
+        - name
+        - nameAr
+        - address
+        - addressAr
+        - hijriAdjustment
+
+    PrayerData:
+      type: object
+      properties:
+        mosque:
+          $ref: "#/components/schemas/MosqueInfo"
+        prayers:
+          type: array
+          items:
+            $ref: "#/components/schemas/PrayerTime"
+        news:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsItem"
+        azkar:
+          type: array
+          items:
+            $ref: "#/components/schemas/AzkarItem"
+        lastUpdated:
+          type: string
+      required:
+        - mosque
+        - prayers
+        - news
+        - azkar
+        - lastUpdated
+
+    UpdatePrayerDataRequest:
+      type: object
+      properties:
+        adminPassword:
+          type: string
+        mosque:
+          $ref: "#/components/schemas/MosqueInfo"
+        prayers:
+          type: array
+          items:
+            $ref: "#/components/schemas/PrayerTime"
+        news:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsItem"
+        azkar:
+          type: array
+          items:
+            $ref: "#/components/schemas/AzkarItem"
+      required:
+        - adminPassword
+        - mosque
+        - prayers
+        - news
+        - azkar
+
+    AdminVerifyRequest:
+      type: object
+      properties:
+        password:
+          type: string
+      required:
+        - password
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+      required:
+        - success
+        - message
