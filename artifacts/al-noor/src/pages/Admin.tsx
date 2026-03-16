@@ -13,8 +13,8 @@ export default function Admin() {
   const isAr = language === 'ar';
   const { toast } = useToast();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem('adminAuth') === 'true');
+  const [password, setPassword] = useState(() => sessionStorage.getItem('adminPwd') || '');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -35,6 +35,8 @@ export default function Admin() {
       const res = await verifyMutation.mutateAsync({ data: { password } });
       if (res.success) {
         setIsAuthenticated(true);
+        sessionStorage.setItem('adminAuth', 'true');
+        sessionStorage.setItem('adminPwd', password);
         toast({ title: isAr ? 'تم الدخول ✓' : 'Logged in ✓' });
       } else {
         toast({ title: isAr ? 'خطأ' : 'Error', description: isAr ? 'كلمة مرور خاطئة' : 'Wrong password', variant: 'destructive' });
@@ -136,8 +138,6 @@ export default function Admin() {
     );
   }
 
-  if (!formData) return <Layout><div className="flex-1 flex items-center justify-center"><Loader2 className="animate-spin" /></div></Layout>;
-
   // ── Admin dashboard ──────────────────────────────────────────────────────────
 
   return (
@@ -147,10 +147,12 @@ export default function Admin() {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold text-primary">{isAr ? 'إدارة البيانات' : 'Manage Data'}</h1>
-          <Button onClick={handleSave} disabled={updateMutation.isPending}>
-            {updateMutation.isPending ? <Loader2 className="animate-spin mr-2" /> : <Save className="mr-2 h-4 w-4" />}
-            {isAr ? 'حفظ التغييرات' : 'Save Changes'}
-          </Button>
+          {formData && (
+            <Button onClick={handleSave} disabled={updateMutation.isPending}>
+              {updateMutation.isPending ? <Loader2 className="animate-spin mr-2" /> : <Save className="mr-2 h-4 w-4" />}
+              {isAr ? 'حفظ التغييرات' : 'Save Changes'}
+            </Button>
+          )}
         </div>
 
         {/* ── Diyanet / JSON Upload Zone ── */}
@@ -211,7 +213,13 @@ export default function Admin() {
         </section>
 
         {/* ── Manual editing sections ── */}
-        <div className="space-y-8">
+        {!formData && (
+          <div className="flex items-center justify-center gap-3 py-10 text-muted-foreground">
+            <Loader2 className="animate-spin w-5 h-5" />
+            <span>{isAr ? 'جاري تحميل البيانات...' : 'Loading data...'}</span>
+          </div>
+        )}
+        {formData && <div className="space-y-8">
 
           {/* Mosque Info */}
           <section className="glass-panel p-6 rounded-2xl">
@@ -316,7 +324,7 @@ export default function Admin() {
             </div>
           </section>
 
-        </div>
+        </div>}
       </div>
     </Layout>
   );
