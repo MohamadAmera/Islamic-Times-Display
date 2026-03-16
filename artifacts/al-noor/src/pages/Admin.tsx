@@ -68,7 +68,7 @@ export default function Admin() {
 
       // ── Detect Hadith format: array of { hadith_ar, hadith_de } ──
       if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object' && parsed[0] !== null && ('hadith_ar' in parsed[0] || 'hadith_de' in parsed[0])) {
-        const res = await fetch('/api/admin/hadith-upload', {
+        const res = await fetch('/api/prayer/hadith', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ adminPassword: password, hadiths: parsed }),
