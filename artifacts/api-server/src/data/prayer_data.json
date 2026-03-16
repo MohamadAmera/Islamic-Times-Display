@@ -10,7 +10,7 @@
     {
       "name": "Fajr",
       "nameAr": "الفجر",
-      "time": "05:15",
+      "time": "01:20",
       "enabled": true
     },
     {
@@ -119,5 +119,5 @@
       "sourceAr": "رواه البخاري"
     }
   ],
-  "lastUpdated": "2026-03-15T23:43:37.641Z"
+  "lastUpdated": "2026-03-16T00:19:07.161Z"
 }

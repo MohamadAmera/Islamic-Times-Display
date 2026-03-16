@@ -14,24 +14,96 @@ const router: IRouter = Router();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_FILE = resolve(__dirname, "../data/prayer_data.json");
+const DIYANET_FILE = resolve(__dirname, "../data/diyanet_data.json");
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 
-function readPrayerData() {
-  if (!existsSync(DATA_FILE)) {
-    throw new Error("Prayer data file not found");
+// ── Diyanet helpers ───────────────────────────────────────────────────────────
+
+interface DiyanetData {
+  city?: string;
+  city_full?: string;
+  lat?: number;
+  lon?: number;
+  kibla?: number;
+  year?: number;
+  prayer_names?: {
+    [key: string]: { EN: string; AR: string };
+  };
+  times?: {
+    [month: string]: {
+      [day: string]: {
+        [prayer: string]: { t: string; idx: number };
+        hijri_date?: string;
+      };
+    };
+  };
+}
+
+function getTodayPrayersFromDiyanet(data: DiyanetData) {
+  const now = new Date();
+  const month = String(now.getMonth() + 1);
+  const day = String(now.getDate());
+
+  const dayData = data.times?.[month]?.[day];
+  if (!dayData) return null;
+
+  const names = data.prayer_names ?? {
+    p1: { EN: "Fajr", AR: "الفجر" },
+    p2: { EN: "Sunrise", AR: "الشروق" },
+    p3: { EN: "Dhuhr", AR: "الظهر" },
+    p4: { EN: "Asr", AR: "العصر" },
+    p5: { EN: "Maghrib", AR: "المغرب" },
+    p6: { EN: "Isha", AR: "العشاء" },
+  };
+
+  const prayers = [];
+  for (const key of ["p1", "p2", "p3", "p4", "p5", "p6"]) {
+    const entry = (dayData as any)[key];
+    const name = names[key];
+    if (entry && name) {
+      prayers.push({
+        name: name.EN,
+        nameAr: name.AR,
+        time: entry.t,
+        enabled: true,
+      });
+    }
   }
-  const raw = readFileSync(DATA_FILE, "utf-8");
-  return JSON.parse(raw);
+  return prayers;
+}
+
+// ── Generic helpers ───────────────────────────────────────────────────────────
+
+function readPrayerData() {
+  if (!existsSync(DATA_FILE)) throw new Error("Prayer data file not found");
+  return JSON.parse(readFileSync(DATA_FILE, "utf-8"));
 }
 
 function writePrayerData(data: unknown) {
   writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
 }
 
+// ── Routes ────────────────────────────────────────────────────────────────────
+
+// GET /api/prayer-data — serves today's times (from Diyanet if available)
 router.get("/prayer-data", (_req, res) => {
   try {
     const data = readPrayerData();
+
+    // If Diyanet data is stored, overlay today's prayer times
+    if (existsSync(DIYANET_FILE)) {
+      const diyanet: DiyanetData = JSON.parse(readFileSync(DIYANET_FILE, "utf-8"));
+      const todayPrayers = getTodayPrayersFromDiyanet(diyanet);
+      if (todayPrayers) {
+        data.prayers = todayPrayers;
+      }
+      // Attach kibla angle if available
+      if (diyanet.kibla !== undefined) {
+        data.kibla = diyanet.kibla;
+      }
+    }
+
     const parsed = GetPrayerDataResponse.parse(data);
     res.json(parsed);
   } catch (err) {
@@ -39,12 +111,13 @@ router.get("/prayer-data", (_req, res) => {
   }
 });
 
+// PUT /api/admin/prayer-data — update mosque info / news / azkar (manual form)
 router.put("/admin/prayer-data", (req, res) => {
   try {
     const body = UpdatePrayerDataBody.parse(req.body);
 
     if (body.adminPassword !== ADMIN_PASSWORD) {
-      res.status(401).json(UpdatePrayerDataResponse.parse({ success: false, message: "Invalid admin password" }));
+      res.status(401).json({ success: false, message: "Invalid admin password" });
       return;
     }
 
@@ -59,28 +132,65 @@ router.put("/admin/prayer-data", (req, res) => {
     };
 
     writePrayerData(updatedData);
-
-    res.json(UpdatePrayerDataResponse.parse({ success: true, message: "Prayer data updated successfully" }));
+    res.json({ success: true, message: "Prayer data updated successfully" });
   } catch (err) {
-    if (err instanceof Error && err.message.includes("password")) {
-      res.status(401).json({ success: false, message: "Unauthorized" });
-    } else {
-      res.status(400).json({ success: false, message: "Invalid request data" });
-    }
+    res.status(400).json({ success: false, message: "Invalid request data" });
   }
 });
 
+// POST /api/admin/diyanet-upload — upload full Diyanet yearly JSON
+router.post("/admin/diyanet-upload", (req, res) => {
+  try {
+    const { adminPassword, data } = req.body as { adminPassword: string; data: DiyanetData };
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      res.status(401).json({ success: false, message: "Invalid admin password" });
+      return;
+    }
+
+    if (!data?.times || !data?.prayer_names) {
+      res.status(400).json({ success: false, message: "Invalid Diyanet file format" });
+      return;
+    }
+
+    // Save full Diyanet data
+    writeFileSync(DIYANET_FILE, JSON.stringify(data, null, 2), "utf-8");
+
+    // Update mosque city info if available
+    if (data.city) {
+      const prayerData = readPrayerData();
+      if (!prayerData.mosque.name || prayerData.mosque.name === "Al-Noor Mosque") {
+        prayerData.mosque.name = data.city_full || data.city;
+        prayerData.mosque.nameAr = data.city_full || data.city;
+        prayerData.mosque.address = `Lat: ${data.lat?.toFixed(5)}, Lon: ${data.lon?.toFixed(5)}`;
+        writePrayerData(prayerData);
+      }
+    }
+
+    // Count total days stored
+    let dayCount = 0;
+    for (const month of Object.values(data.times ?? {})) {
+      dayCount += Object.keys(month).length;
+    }
+
+    res.json({ success: true, message: `Diyanet data saved — ${dayCount} days loaded for ${data.year ?? "year"}` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to save Diyanet data" });
+  }
+});
+
+// POST /api/admin/verify
 router.post("/admin/verify", (req, res) => {
   try {
     const body = VerifyAdminBody.parse(req.body);
 
     if (body.password !== ADMIN_PASSWORD) {
-      res.status(401).json(VerifyAdminResponse.parse({ success: false, message: "Invalid password" }));
+      res.status(401).json({ success: false, message: "Invalid password" });
       return;
     }
 
-    res.json(VerifyAdminResponse.parse({ success: true, message: "Authenticated" }));
-  } catch (err) {
+    res.json({ success: true, message: "Authenticated" });
+  } catch {
     res.status(400).json({ success: false, message: "Invalid request" });
   }
 });
