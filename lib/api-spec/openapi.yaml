@@ -115,6 +115,9 @@ components:
           description: Time in HH:MM format (24h)
         enabled:
           type: boolean
+        iqamaOffset:
+          type: integer
+          description: Minutes after Adhan for Iqama (0 = no iqama displayed)
       required:
         - name
         - nameAr

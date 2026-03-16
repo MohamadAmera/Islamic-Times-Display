@@ -33,6 +33,7 @@ export const GetPrayerDataResponse = zod.object({
       nameAr: zod.string(),
       time: zod.string().describe("Time in HH:MM format (24h)"),
       enabled: zod.boolean(),
+      iqamaOffset: zod.number().optional(),
     }),
   ),
   news: zod.array(
@@ -73,6 +74,7 @@ export const UpdatePrayerDataBody = zod.object({
       nameAr: zod.string(),
       time: zod.string().describe("Time in HH:MM format (24h)"),
       enabled: zod.boolean(),
+      iqamaOffset: zod.number().optional(),
     }),
   ),
   news: zod.array(
