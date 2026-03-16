@@ -1,0 +1,14 @@
+
+  {
+    "hadith_ar": "الحديث الأول\n\nعن أمير المؤمنين أبي حفص عمر بن الخطاب (رضي الله عنه) قال: سمعت رسول الله ﷺ يقول: \"إنما الأعمال بالنيات وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله، فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها، فهجرته إلى ما هاجـر إليه\". (رواه البخاري ومسلم)",
+    "hadith_de": "Der erste Hadith\n\nÜber den Befehlshaber der Gläubigen, Abu Hafs Umar ibn al-Khattab (r), der sagte: Ich hörte den Gesandten Allahs ﷺ sagen: \"Die Taten werden nur nach den Absichten beurteilt, und jedem Menschen steht das zu, was er beabsichtigt hat. Wessen Auswanderung also für Allah und Seinen Gesandten war, dessen Auswanderung ist für Allah und Seinen Gesandten. Und wessen Auswanderung für etwas Weltliches war, das er erlangen wollte, oder für eine Frau, die er heiraten wollte, dessen Auswanderung ist für das, derentwegen er ausgewandert ist.\" (Überliefert von Al-Bukhari und Muslim)"
+  },
+  {
+    "hadith_ar": "الحديث الثاني\n\nعن عمر (رضي الله عنه) أيضاً قال: بينما نحن جلوس عند رسول الله ﷺ ذات يوم إذ طلع علينا رجل شديد بياض الثياب، شديد سواد الشعر... (رواه مسلم)",
+    "hadith_de": "Der zweite Hadith\n\nEbenfalls über Umar (r): Eines Tages saßen wir beim Gesandten Allahs ﷺ, als ein Mann mit sehr weißer Kleidung und sehr schwarzen Haaren erschien... Er sagte am Ende: \"Es war Dschibril (Gabriel), er kam zu euch, um euch eure Religion zu lehren.\" (Überliefert von Muslim)"
+  },
+  {
+    "hadith_ar": "الحديث الثالث\n\nعن أبي عبد الرحمن عبد الله بن عمر بن الخطاب رضي الله عنهما قال: سمعت رسول الله ﷺ يقول: \"بني الإسلام على خمسٍ؛ شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان\". (رواه البخاري ومسلم)",
+    "hadith_de": "Der dritte Hadith\n\nÜber Abdullah ibn Umar (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Der Islam ist auf fünf (Säulen) erbaut: Dem Zeugnis, dass es keinen Gott gibt außer Allah und dass Muhammad der Gesandte Allahs ist, der Verrichtung des Gebets, der Entrichtung der Zakat, der Pilgerfahrt zum Haus und dem Fasten im Ramadan.\" (Überliefert von Al-Bukhari und Muslim)"
+  },
+  {
