@@ -5,8 +5,8 @@ import { useVerifyAdmin, useUpdatePrayerData, useGetPrayerData } from '@workspac
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Lock, Save, Loader2, Plus, Trash2, Upload, FileJson, CheckCircle2 } from 'lucide-react';
-import type { PrayerData } from '@workspace/api-client-react';
+import { Lock, Save, Loader2, Plus, Trash2, Upload, FileJson, CheckCircle2, BookOpen } from 'lucide-react';
+import type { PrayerData, HadithItem } from '@workspace/api-client-react';
 
 export default function Admin() {
   const { language } = usePrayerContext();
@@ -16,9 +16,16 @@ export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => sessionStorage.getItem('adminAuth') === 'true');
   const [password, setPassword] = useState(() => sessionStorage.getItem('adminPwd') || '');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const hadithFileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadDone, setUploadDone] = useState(false);
+
+  // ── Dedicated Hadith file upload state ──────────────────────────────────────
+  const [hadithPreview, setHadithPreview] = useState<HadithItem[] | null>(null);
+  const [hadithFileName, setHadithFileName] = useState<string>('');
+  const [isHadithUploading, setIsHadithUploading] = useState(false);
+  const [hadithUploadDone, setHadithUploadDone] = useState(false);
 
   const { data: initialData, refetch } = useGetPrayerData();
   const verifyMutation = useVerifyAdmin();
@@ -104,6 +111,52 @@ export default function Admin() {
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
     if (file) handleFileUpload(file);
+  };
+
+  // ── Dedicated Hadith file parse (no immediate upload) ───────────────────────
+  const handleHadithFileSelect = async (file: File) => {
+    if (!file.name.endsWith('.json')) {
+      toast({ title: isAr ? 'خطأ' : 'Error', description: isAr ? 'يجب أن يكون الملف بصيغة JSON' : 'File must be .json', variant: 'destructive' });
+      return;
+    }
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed) || parsed.length === 0) throw new Error(isAr ? 'يجب أن يكون الملف مصفوفة JSON غير فارغة' : 'File must be a non-empty JSON array');
+      const first = parsed[0];
+      if (typeof first !== 'object' || first === null || !('hadith_ar' in first) || !('hadith_de' in first)) {
+        throw new Error(isAr ? 'كل عنصر يجب أن يحتوي على hadith_ar وhadith_de' : 'Each item must have "hadith_ar" and "hadith_de" fields');
+      }
+      setHadithPreview(parsed as HadithItem[]);
+      setHadithFileName(file.name);
+      setHadithUploadDone(false);
+    } catch (err: any) {
+      toast({ title: isAr ? 'خطأ في الملف' : 'File Error', description: err.message, variant: 'destructive' });
+      setHadithPreview(null);
+    }
+  };
+
+  const handleHadithUpload = async () => {
+    if (!hadithPreview || hadithPreview.length === 0) return;
+    setIsHadithUploading(true);
+    try {
+      const res = await fetch('/api/admin/hadith-upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminPassword: password, hadiths: hadithPreview }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message || 'Upload failed');
+      setHadithUploadDone(true);
+      setHadithPreview(null);
+      setHadithFileName('');
+      refetch();
+      toast({ title: isAr ? 'تم رفع الأحاديث ✓' : 'Hadiths Uploaded ✓', description: json.message });
+    } catch (err: any) {
+      toast({ title: isAr ? 'خطأ' : 'Error', description: err.message, variant: 'destructive' });
+    } finally {
+      setIsHadithUploading(false);
+    }
   };
 
   // ── Save form data ───────────────────────────────────────────────────────────
@@ -369,17 +422,90 @@ export default function Admin() {
 
           {/* Hadiths */}
           <section className="glass-panel p-6 rounded-2xl">
-            <div className="flex items-center justify-between mb-1">
-              <h2 className="text-xl font-bold">{isAr ? 'الأحاديث النبوية' : 'Prophetic Hadiths'}</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-primary" />
+                {isAr ? 'الأحاديث النبوية' : 'Prophetic Hadiths'}
+              </h2>
               <Button size="sm" variant="outline"
                 onClick={() => setFormData({ ...formData, azkar: [...formData.azkar, { hadith_ar: '', hadith_de: '' }] })}>
-                <Plus className="w-4 h-4 mr-1" /> {isAr ? 'إضافة' : 'Add'}
+                <Plus className="w-4 h-4 mr-1" /> {isAr ? 'إضافة يدوياً' : 'Add Manually'}
               </Button>
             </div>
+
+            {/* ── Dedicated Hadith JSON Upload ── */}
+            <div className="mb-6 p-4 rounded-xl border border-primary/20 bg-primary/5">
+              <p className="text-sm font-semibold text-primary mb-3">
+                {isAr ? 'رفع ملف الأحاديث (JSON)' : 'Upload Hadith File (JSON)'}
+              </p>
+              <input
+                ref={hadithFileInputRef}
+                type="file"
+                accept=".json"
+                className="hidden"
+                onChange={e => { const f = e.target.files?.[0]; if (f) handleHadithFileSelect(f); e.target.value = ''; }}
+              />
+
+              {!hadithPreview && !hadithUploadDone && (
+                <div className="flex items-center gap-3">
+                  <Button variant="outline" size="sm" onClick={() => hadithFileInputRef.current?.click()}>
+                    <FileJson className="w-4 h-4 mr-2" />
+                    {isAr ? 'اختر ملف JSON' : 'Choose JSON File'}
+                  </Button>
+                  <span className="text-xs text-muted-foreground">
+                    {isAr ? 'الصيغة: [{hadith_ar:"...", hadith_de:"..."}]' : 'Format: [{hadith_ar:"...", hadith_de:"..."}]'}
+                  </span>
+                </div>
+              )}
+
+              {hadithPreview && (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <div className="flex items-center gap-2 bg-primary/10 border border-primary/30 rounded-lg px-3 py-2">
+                      <FileJson className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-mono text-primary/80">{hadithFileName}</span>
+                    </div>
+                    <div className="text-sm font-bold text-primary">
+                      {isAr ? `✓ ${hadithPreview.length} حديث جاهز للرفع` : `✓ ${hadithPreview.length} hadith${hadithPreview.length !== 1 ? 's' : ''} ready to upload`}
+                    </div>
+                  </div>
+                  <div className="text-xs text-muted-foreground bg-background/50 rounded-lg p-3 max-h-28 overflow-y-auto space-y-1">
+                    {hadithPreview.slice(0, 3).map((h, i) => (
+                      <div key={i} className="truncate">
+                        <span className="text-primary/60 font-mono">{i + 1}.</span> {h.hadith_ar.slice(0, 60)}…
+                      </div>
+                    ))}
+                    {hadithPreview.length > 3 && (
+                      <div className="text-muted-foreground/60 italic">
+                        {isAr ? `+ ${hadithPreview.length - 3} أحاديث أخرى` : `+ ${hadithPreview.length - 3} more`}
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={handleHadithUpload} disabled={isHadithUploading}>
+                      {isHadithUploading ? <Loader2 className="animate-spin w-4 h-4 mr-2" /> : <Upload className="w-4 h-4 mr-2" />}
+                      {isAr ? 'رفع الأحاديث' : 'Upload Hadiths'}
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => { setHadithPreview(null); setHadithFileName(''); }}>
+                      {isAr ? 'إلغاء' : 'Cancel'}
+                    </Button>
+                  </div>
+                </div>
+              )}
+
+              {hadithUploadDone && !hadithPreview && (
+                <div className="flex items-center gap-2 text-green-400">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span className="text-sm font-semibold">{isAr ? 'تم رفع الأحاديث بنجاح!' : 'Hadiths uploaded successfully!'}</span>
+                  <Button size="sm" variant="ghost" className="ml-2 text-xs" onClick={() => { setHadithUploadDone(false); hadithFileInputRef.current?.click(); }}>
+                    {isAr ? 'رفع ملف آخر' : 'Upload another'}
+                  </Button>
+                </div>
+              )}
+            </div>
+
             <p className="text-xs text-muted-foreground mb-4">
-              {isAr
-                ? 'يمكنك أيضاً رفع ملف JSON بصيغة [{hadith_ar:"...", hadith_de:"..."}] من منطقة الرفع أعلاه'
-                : 'You can also upload a JSON file in format [{hadith_ar:"...", hadith_de:"..."}] from the upload zone above'}
+              {isAr ? 'أو أضف / عدّل الأحاديث يدوياً أدناه ثم اضغط "حفظ التغييرات"' : 'Or add/edit hadiths manually below then click "Save Changes"'}
             </p>
             <div className="space-y-4">
               {formData.azkar.map((item, idx) => (

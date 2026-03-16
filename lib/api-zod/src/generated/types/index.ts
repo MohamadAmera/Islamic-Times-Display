@@ -7,6 +7,7 @@
  */
 
 export * from "./adminVerifyRequest";
+export * from "./hadithItem";
 export * from "./azkarItem";
 export * from "./errorResponse";
 export * from "./healthStatus";

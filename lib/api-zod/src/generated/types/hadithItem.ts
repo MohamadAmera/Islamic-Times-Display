@@ -4,7 +4,9 @@
  * Api
  * Al-Noor Prayer Times API
  * OpenAPI spec version: 0.1.0
- * @deprecated Use HadithItem instead
  */
 
-export type { HadithItem as AzkarItem } from "./hadithItem";
+export interface HadithItem {
+  hadith_ar: string;
+  hadith_de: string;
+}

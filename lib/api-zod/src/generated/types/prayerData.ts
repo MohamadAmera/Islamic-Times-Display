@@ -5,7 +5,7 @@
  * Al-Noor Prayer Times API
  * OpenAPI spec version: 0.1.0
  */
-import type { AzkarItem } from "./azkarItem";
+import type { HadithItem } from "./hadithItem";
 import type { MosqueInfo } from "./mosqueInfo";
 import type { NewsItem } from "./newsItem";
 import type { PrayerTime } from "./prayerTime";
@@ -14,6 +14,6 @@ export interface PrayerData {
   mosque: MosqueInfo;
   prayers: PrayerTime[];
   news: NewsItem[];
-  azkar: AzkarItem[];
+  azkar: HadithItem[];
   lastUpdated: string;
 }

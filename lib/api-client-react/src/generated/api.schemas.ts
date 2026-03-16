@@ -25,10 +25,13 @@ export interface NewsItem {
   textAr: string;
 }
 
-export interface AzkarItem {
+export interface HadithItem {
   hadith_ar: string;
   hadith_de: string;
 }
+
+/** @deprecated Use HadithItem */
+export type AzkarItem = HadithItem;
 
 export interface MosqueInfo {
   name: string;
@@ -42,7 +45,7 @@ export interface PrayerData {
   mosque: MosqueInfo;
   prayers: PrayerTime[];
   news: NewsItem[];
-  azkar: AzkarItem[];
+  azkar: HadithItem[];
   lastUpdated: string;
 }
 
@@ -51,7 +54,7 @@ export interface UpdatePrayerDataRequest {
   mosque: MosqueInfo;
   prayers: PrayerTime[];
   news: NewsItem[];
-  azkar: AzkarItem[];
+  azkar: HadithItem[];
 }
 
 export interface AdminVerifyRequest {

@@ -33,7 +33,7 @@ paths:
       operationId: getPrayerData
       tags: [prayer]
       summary: Get prayer data
-      description: Returns prayer times, news, and azkar for the current configuration
+      description: Returns prayer times, news, and hadiths for the current configuration
       responses:
         "200":
           description: Prayer data
@@ -47,7 +47,7 @@ paths:
       operationId: updatePrayerData
       tags: [admin]
       summary: Update prayer data
-      description: Update prayer times, news, and azkar (requires admin password)
+      description: Update prayer times, news, and hadiths (requires admin password)
       requestBody:
         required: true
         content:
@@ -61,6 +61,38 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SuccessResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /admin/hadith-upload:
+    post:
+      operationId: uploadHadiths
+      tags: [admin]
+      summary: Upload Hadith JSON
+      description: Replace the hadith list with an uploaded JSON array (requires admin password)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HadithUploadRequest"
+      responses:
+        "200":
+          description: Hadiths saved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Invalid data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           description: Unauthorized
           content:
@@ -138,25 +170,19 @@ components:
         - text
         - textAr
 
-    AzkarItem:
+    HadithItem:
       type: object
+      description: A Prophetic Hadith with Arabic text and German translation
       properties:
-        id:
+        hadith_ar:
           type: string
-        text:
+          description: Arabic text of the hadith
+        hadith_de:
           type: string
-        textAr:
-          type: string
-        source:
-          type: string
-        sourceAr:
-          type: string
+          description: German translation of the hadith
       required:
-        - id
-        - text
-        - textAr
-        - source
-        - sourceAr
+        - hadith_ar
+        - hadith_de
 
     MosqueInfo:
       type: object
@@ -193,8 +219,9 @@ components:
             $ref: "#/components/schemas/NewsItem"
         azkar:
           type: array
+          description: List of prophetic hadiths for the ticker
           items:
-            $ref: "#/components/schemas/AzkarItem"
+            $ref: "#/components/schemas/HadithItem"
         lastUpdated:
           type: string
       required:
@@ -222,13 +249,26 @@ components:
         azkar:
           type: array
           items:
-            $ref: "#/components/schemas/AzkarItem"
+            $ref: "#/components/schemas/HadithItem"
       required:
         - adminPassword
         - mosque
         - prayers
         - news
         - azkar
+
+    HadithUploadRequest:
+      type: object
+      properties:
+        adminPassword:
+          type: string
+        hadiths:
+          type: array
+          items:
+            $ref: "#/components/schemas/HadithItem"
+      required:
+        - adminPassword
+        - hadiths
 
     AdminVerifyRequest:
       type: object
