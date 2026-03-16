@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;600;700&family=Inter:wght@300;400;500;600;700;900&display=swap');
+
+.font-amiri { font-family: 'Amiri', 'Noto Naskh Arabic', serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 40s linear infinite; }
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; text-shadow: 0 0 20px currentColor; }
+  50% { opacity: 0.85; text-shadow: 0 0 40px currentColor; }
+}
+.animate-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+@keyframes countdown-tick {
+  0% { transform: translateY(0); }
+  10% { transform: translateY(-2px); }
+  20% { transform: translateY(0); }
+}
+.animate-tick { animation: countdown-tick 1s ease-in-out infinite; }
