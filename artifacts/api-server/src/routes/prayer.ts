@@ -1,7 +1,6 @@
 import { Router, type IRouter } from "express";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
 import {
   GetPrayerDataResponse,
   UpdatePrayerDataBody,
@@ -12,9 +11,15 @@ import {
 
 const router: IRouter = Router();
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_FILE = resolve(__dirname, "../data/prayer_data.json");
-const DIYANET_FILE = resolve(__dirname, "../data/diyanet_data.json");
+// __dirname is native in CJS (production build via esbuild)
+// In ESM dev mode (tsx), derive it from import.meta
+const _routeDir: string =
+  typeof __dirname !== "undefined"
+    ? __dirname
+    : dirname(new URL(import.meta.url).pathname);
+
+const DATA_FILE = resolve(_routeDir, "../data/prayer_data.json");
+const DIYANET_FILE = resolve(_routeDir, "../data/diyanet_data.json");
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 

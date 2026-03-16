@@ -73,57 +73,29 @@
       "text": "SubhanAllah (Glory be to Allah)",
       "textAr": "سبحان الله",
       "source": "Reported by Al-Bukhari and Muslim",
-      "sourceAr": "رواه البخاري ومسلم"
+      "sourceAr": "33"
     },
     {
       "id": "2",
       "text": "Alhamdulillah (Praise be to Allah)",
       "textAr": "الحمد لله",
       "source": "Reported by Muslim",
-      "sourceAr": "رواه مسلم"
-    },
-    {
-      "id": "3",
-      "text": "Allahu Akbar (Allah is the Greatest)",
-      "textAr": "الله أكبر",
-      "source": "Reported by Al-Bukhari",
-      "sourceAr": "رواه البخاري"
+      "sourceAr": "33"
     },
     {
       "id": "4",
       "text": "La ilaha illa Allah (There is no god but Allah)",
       "textAr": "لا إله إلا الله",
       "source": "Reported by Al-Bukhari and Muslim",
-      "sourceAr": "رواه البخاري ومسلم"
+      "sourceAr": "1"
     },
     {
-      "id": "5",
-      "text": "Astaghfirullah (I seek forgiveness from Allah)",
-      "textAr": "أستغفر الله",
-      "source": "Reported by Muslim",
-      "sourceAr": "رواه مسلم"
-    },
-    {
-      "id": "6",
-      "text": "SubhanAllahi wa bihamdihi, SubhanAllahil Azim",
-      "textAr": "سبحان الله وبحمده، سبحان الله العظيم",
-      "source": "Reported by Al-Bukhari and Muslim",
-      "sourceAr": "رواه البخاري ومسلم"
-    },
-    {
-      "id": "7",
-      "text": "Hasbunallahu wa ni'mal wakeel",
-      "textAr": "حسبنا الله ونعم الوكيل",
-      "source": "Quran 3:173",
-      "sourceAr": "القرآن الكريم ٣:١٧٣"
-    },
-    {
-      "id": "8",
-      "text": "La hawla wa la quwwata illa billah",
-      "textAr": "لا حول ولا قوة إلا بالله",
-      "source": "Reported by Al-Bukhari",
-      "sourceAr": "رواه البخاري"
+      "id": "1773700587142",
+      "text": "",
+      "textAr": "الله اكبر ",
+      "source": "",
+      "sourceAr": "33"
     }
   ],
-  "lastUpdated": "2026-03-16T16:58:42.942Z"
+  "lastUpdated": "2026-03-16T22:37:02.453Z"
 }
