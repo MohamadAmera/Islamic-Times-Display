@@ -1,6 +1,6 @@
 import React from 'react';
 import { usePrayerContext } from '@/context/PrayerContext';
-import { Moon, Sun, Monitor, Smartphone, Volume2, VolumeX, Settings, Compass } from 'lucide-react';
+import { Monitor, Volume2, VolumeX, Settings, Compass } from 'lucide-react';
 import { Link } from 'wouter';
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -55,9 +55,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
             {athanEnabled ? <Volume2 size={isTV ? 32 : 24} /> : <VolumeX size={isTV ? 32 : 24} className="opacity-50" />}
           </button>
           
-          <button onClick={toggleTV} className="p-2 md:p-3 rounded-xl hover:bg-white/10 text-primary transition-colors hidden lg:block" title="Toggle TV Mode">
-            {isTV ? <Monitor size={32} /> : <Smartphone size={24} />}
-          </button>
+          <Link href="/tv" className="p-2 md:p-3 rounded-xl hover:bg-white/10 text-primary transition-colors hidden lg:block cursor-pointer" title="TV Mode">
+            <Monitor size={24} />
+          </Link>
           
           <button 
             onClick={toggleLanguage} 

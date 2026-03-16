@@ -9,6 +9,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Qibla from "@/pages/Qibla";
 import Admin from "@/pages/Admin";
+import TVHome from "@/pages/TVHome";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/tv" component={TVHome} />
       <Route path="/qibla" component={Qibla} />
       <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
