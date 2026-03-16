@@ -3,7 +3,7 @@
     "name": "Al Faruk Moschee (Muslime in Potsdam e.V)",
     "nameAr": "مسجد الفاروق",
     "address": "Am Kanal 61, 14467 Potsdam",
-    "addressAr": "١٢٣ شارع المركز الإسلامي، المدينة، الولاية",
+    "addressAr": "Am Kanal 61, 14467 Potsdam",
     "hijriAdjustment": 0
   },
   "prayers": [
@@ -119,5 +119,5 @@
       "sourceAr": "رواه البخاري"
     }
   ],
-  "lastUpdated": "2026-03-16T00:33:31.007Z"
+  "lastUpdated": "2026-03-16T02:58:20.363Z"
 }

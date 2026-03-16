@@ -23,25 +23,25 @@
 }
 
 :root {
-  /* Islamic Dark Mode / Premium Gold Theme */
-  --background: 222 47% 6%;
-  --foreground: 45 20% 98%;
-  
-  --primary: 43 74% 49%; /* Rich Gold */
-  --primary-foreground: 222 47% 11%;
-  
-  --card: 222 47% 10%;
-  --card-foreground: 45 20% 98%;
-  
-  --border: 222 47% 18%;
-  --ring: 43 74% 49%;
-  
-  --muted: 222 47% 14%;
-  --muted-foreground: 215 16% 65%;
-  
-  --accent: 222 47% 16%;
-  --accent-foreground: 43 74% 49%;
-  
+  /* Forest Green + Warm Gold — matched to reference design */
+  --background: 149 9% 18%;       /* #2a322e */
+  --foreground: 45 20% 96%;
+
+  --primary: 42 65% 54%;          /* #d6a93e — warm gold */
+  --primary-foreground: 149 9% 12%;
+
+  --card: 160 5% 26%;             /* #3e4442 */
+  --card-foreground: 45 20% 96%;
+
+  --border: 135 3% 62%;           /* #9ca19d */
+  --ring: 42 65% 54%;
+
+  --muted: 155 7% 22%;
+  --muted-foreground: 135 3% 62%; /* #9ca19d */
+
+  --accent: 155 7% 30%;
+  --accent-foreground: 42 65% 54%;
+
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 45 20% 98%;
 }
@@ -64,24 +64,24 @@
   }
 }
 
-/* Dynamic Prayer Backgrounds */
+/* Dynamic Prayer Backgrounds — forest green palette */
 .bg-theme-fajr {
-  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  background: linear-gradient(135deg, #1a2420 0%, #2a322e 100%);
 }
 .bg-theme-sunrise {
-  background: linear-gradient(135deg, #4c1d95 0%, #9a3412 100%);
+  background: linear-gradient(135deg, #2a322e 0%, #3a3828 100%);
 }
 .bg-theme-dhuhr {
-  background: linear-gradient(135deg, #1e3a8a 0%, #0369a1 100%);
+  background: linear-gradient(135deg, #253028 0%, #2a322e 100%);
 }
 .bg-theme-asr {
-  background: linear-gradient(135deg, #9a3412 0%, #78350f 100%);
+  background: linear-gradient(135deg, #2e2e28 0%, #2a322e 100%);
 }
 .bg-theme-maghrib {
-  background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+  background: linear-gradient(135deg, #2e2828 0%, #2a322e 100%);
 }
 .bg-theme-isha {
-  background: linear-gradient(135deg, #020617 0%, #000000 100%);
+  background: linear-gradient(135deg, #141c18 0%, #1a2420 100%);
 }
 
 /* Ticker Animation */
