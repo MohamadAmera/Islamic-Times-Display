@@ -8,39 +8,39 @@
   },
   "prayers": [
     {
-      "name": "Fajr",
+      "name": "Fadjr",
       "nameAr": "الفجر",
-      "time": "01:20",
+      "time": "04:26",
       "enabled": true
     },
     {
-      "name": "Sunrise",
+      "name": "Shuruk",
       "nameAr": "الشروق",
-      "time": "06:45",
+      "time": "06:16",
       "enabled": true
     },
     {
-      "name": "Dhuhr",
+      "name": "Duhr",
       "nameAr": "الظهر",
-      "time": "12:30",
+      "time": "12:22",
       "enabled": true
     },
     {
-      "name": "Asr",
+      "name": "Assr",
       "nameAr": "العصر",
-      "time": "15:45",
+      "time": "15:29",
       "enabled": true
     },
     {
       "name": "Maghrib",
       "nameAr": "المغرب",
-      "time": "18:20",
+      "time": "18:18",
       "enabled": true
     },
     {
-      "name": "Isha",
+      "name": "Ishaa",
       "nameAr": "العشاء",
-      "time": "20:00",
+      "time": "20:01",
       "enabled": true
     }
   ],
@@ -119,5 +119,5 @@
       "sourceAr": "رواه البخاري"
     }
   ],
-  "lastUpdated": "2026-03-16T00:19:07.161Z"
+  "lastUpdated": "2026-03-16T00:33:31.007Z"
 }
