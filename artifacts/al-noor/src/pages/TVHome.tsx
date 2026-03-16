@@ -729,7 +729,7 @@ export default function TVHome() {
                 marginRight: 16,
               }}
             >
-              <span>أذكار</span>
+              <span>حديث</span>
               <span
                 style={{
                   fontSize: "75%",
@@ -738,7 +738,7 @@ export default function TVHome() {
                   fontFamily: "'Outfit', sans-serif",
                 }}
               >
-                DHIKR
+                HADITH
               </span>
             </div>
             <div className="flex-1 overflow-hidden">
@@ -749,19 +749,12 @@ export default function TVHome() {
                   color: "rgba(255,255,255,0.85)",
                 }}
               >
-                {/* Both Arabic and English for each dhikr */}
                 {prayerData.azkar
-                  .map(
-                    (a) =>
-                      `${a.textAr}  ·  ${a.text}  (${a.sourceAr} / ${a.source})`,
-                  )
+                  .map((a) => `${a.hadith_ar}  ·  ${a.hadith_de}`)
                   .join("  ✦  ")}
                 <span style={{ opacity: 0 }}> ✦ </span>
                 {prayerData.azkar
-                  .map(
-                    (a) =>
-                      `${a.textAr}  ·  ${a.text}  (${a.sourceAr} / ${a.source})`,
-                  )
+                  .map((a) => `${a.hadith_ar}  ·  ${a.hadith_de}`)
                   .join("  ✦  ")}
               </div>
             </div>

@@ -69,32 +69,16 @@
   ],
   "azkar": [
     {
-      "id": "1",
-      "text": "SubhanAllah (Glory be to Allah)",
-      "textAr": "سبحان الله",
-      "source": "Reported by Al-Bukhari and Muslim",
-      "sourceAr": "33"
+      "hadith_ar": "عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى». (رواه البخاري ومسلم)",
+      "hadith_de": "Über Umar ibn al-Khattab (r): Der Gesandte Allahs ﷺ sagte: «Die Taten werden nur nach den Absichten beurteilt, und jedem Menschen steht nur das zu, was er beabsichtigt hat.» (Überliefert von Al-Bukhari und Muslim)"
     },
     {
-      "id": "2",
-      "text": "Alhamdulillah (Praise be to Allah)",
-      "textAr": "الحمد لله",
-      "source": "Reported by Muslim",
-      "sourceAr": "33"
+      "hadith_ar": "عَنْ عَبْدِ اللهِ بْنِ عُمَرَ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «بُنِيَ الإِسْلامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لا إِلَهَ إِلا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلاةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ». (رواه البخاري ومسلم)",
+      "hadith_de": "Über Abdullah ibn Umar (r): Der Gesandte Allahs ﷺ sagte: «Der Islam ist auf fünf Säulen erbaut: dem Zeugnis, dass es keinen Gott gibt außer Allah und dass Muhammad Sein Gesandter ist, dem Gebet, der Zakat, der Pilgerfahrt und dem Fasten im Ramadan.» (Überliefert von Al-Bukhari und Muslim)"
     },
     {
-      "id": "4",
-      "text": "La ilaha illa Allah (There is no god but Allah)",
-      "textAr": "لا إله إلا الله",
-      "source": "Reported by Al-Bukhari and Muslim",
-      "sourceAr": "1"
-    },
-    {
-      "id": "1773700587142",
-      "text": "",
-      "textAr": "الله اكبر ",
-      "source": "",
-      "sourceAr": "33"
+      "hadith_ar": "عَنْ أَبِي ذَرٍّ الْغِفَارِيِّ رَضِيَ اللهُ عَنْهُ عَنْ النَّبِيِّ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ تَبَارَكَ وَتَعَالَى أَنَّهُ قَالَ: «يَا عِبَادِي، إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي وَجَعَلْتُهُ بَيْنَكُمْ مُحَرَّمًا فَلا تَظَالَمُوا». (رواه مسلم)",
+      "hadith_de": "Über Abu Dharr al-Ghifari (r) vom Propheten ﷺ, der von seinem Herrn überliefert: «O Meine Diener! Ich habe Mir das Unrecht verboten und es auch unter euch verboten — so tut einander kein Unrecht.» (Überliefert von Muslim)"
     }
   ],
   "lastUpdated": "2026-03-16T22:37:02.453Z"

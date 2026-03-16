@@ -97,13 +97,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {prayerData?.azkar && prayerData.azkar.length > 0 && (
           <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
             <div className={`text-primary font-bold flex items-center shrink-0 ${isAr ? 'ml-4' : 'mr-4'} ${isTV ? 'text-3xl' : 'text-lg'}`}>
-              {isAr ? 'أذكار اليوم:' : 'DAILY DHIKR:'}
+              {isAr ? 'حديث:' : 'HADITH:'}
             </div>
             <div className="flex-1 overflow-hidden relative flex items-center">
               <div className={`inline-block animate-marquee ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
-                {prayerData.azkar.map(a => `${isAr ? a.textAr : a.text} (${isAr ? a.sourceAr : a.source})`).join('  ✦  ')}
+                {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
                 <span className="opacity-0">  ✦  </span>
-                {prayerData.azkar.map(a => `${isAr ? a.textAr : a.text} (${isAr ? a.sourceAr : a.source})`).join('  ✦  ')}
+                {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
               </div>
             </div>
           </div>

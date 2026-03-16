@@ -188,6 +188,42 @@ router.post("/admin/diyanet-upload", (req, res) => {
   }
 });
 
+// POST /api/admin/hadith-upload — replace the azkar array with uploaded hadiths
+router.post("/admin/hadith-upload", (req, res) => {
+  try {
+    const { adminPassword, hadiths } = req.body as {
+      adminPassword: string;
+      hadiths: Array<{ hadith_ar: string; hadith_de: string }>;
+    };
+
+    if (adminPassword !== ADMIN_PASSWORD) {
+      res.status(401).json({ success: false, message: "Invalid admin password" });
+      return;
+    }
+
+    if (!Array.isArray(hadiths) || hadiths.length === 0) {
+      res.status(400).json({ success: false, message: "Invalid hadith data: expected non-empty array" });
+      return;
+    }
+
+    for (const h of hadiths) {
+      if (typeof h.hadith_ar !== "string" || typeof h.hadith_de !== "string") {
+        res.status(400).json({ success: false, message: 'Each entry must have "hadith_ar" and "hadith_de" string fields' });
+        return;
+      }
+    }
+
+    const prayerData = readPrayerData();
+    prayerData.azkar = hadiths;
+    prayerData.lastUpdated = new Date().toISOString();
+    writePrayerData(prayerData);
+
+    res.json({ success: true, message: `${hadiths.length} Hadiths gespeichert / تم حفظ ${hadiths.length} حديثاً` });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to save hadith data" });
+  }
+});
+
 // POST /api/admin/verify
 router.post("/admin/verify", (req, res) => {
   try {

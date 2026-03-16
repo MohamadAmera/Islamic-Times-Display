@@ -45,11 +45,8 @@ export const GetPrayerDataResponse = zod.object({
   ),
   azkar: zod.array(
     zod.object({
-      id: zod.string(),
-      text: zod.string(),
-      textAr: zod.string(),
-      source: zod.string(),
-      sourceAr: zod.string(),
+      hadith_ar: zod.string(),
+      hadith_de: zod.string(),
     }),
   ),
   lastUpdated: zod.string(),
@@ -86,11 +83,8 @@ export const UpdatePrayerDataBody = zod.object({
   ),
   azkar: zod.array(
     zod.object({
-      id: zod.string(),
-      text: zod.string(),
-      textAr: zod.string(),
-      source: zod.string(),
-      sourceAr: zod.string(),
+      hadith_ar: zod.string(),
+      hadith_de: zod.string(),
     }),
   ),
 });

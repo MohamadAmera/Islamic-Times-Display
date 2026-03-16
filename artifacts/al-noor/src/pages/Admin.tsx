@@ -58,8 +58,21 @@ export default function Admin() {
       const text = await file.text();
       const parsed = JSON.parse(text);
 
+      // ── Detect Hadith format: array of { hadith_ar, hadith_de } ──
+      if (Array.isArray(parsed) && parsed.length > 0 && typeof parsed[0] === 'object' && parsed[0] !== null && ('hadith_ar' in parsed[0] || 'hadith_de' in parsed[0])) {
+        const res = await fetch('/api/admin/hadith-upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ adminPassword: password, hadiths: parsed }),
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.message || 'Upload failed');
+        setUploadDone(true);
+        refetch();
+        toast({ title: isAr ? 'تم رفع الأحاديث ✓' : 'Hadiths Uploaded ✓', description: json.message });
+
       // ── Detect Diyanet format ──
-      if (parsed.times && parsed.prayer_names) {
+      } else if (parsed.times && parsed.prayer_names) {
         const res = await fetch('/api/admin/diyanet-upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -197,6 +210,7 @@ export default function Admin() {
                 <div className="flex gap-2 flex-wrap justify-center mt-1">
                   <span className="bg-primary/20 text-primary text-xs px-3 py-1 rounded-full font-mono">Diyanet</span>
                   <span className="bg-primary/20 text-primary text-xs px-3 py-1 rounded-full font-mono">Al-Noor format</span>
+                  <span className="bg-primary/20 text-primary text-xs px-3 py-1 rounded-full font-mono">Hadith JSON</span>
                 </div>
                 <Button variant="outline" size="sm" className="pointer-events-none mt-2">
                   <Upload className="w-4 h-4 mr-2" />
@@ -353,33 +367,57 @@ export default function Admin() {
             </div>
           </section>
 
-          {/* Azkar */}
+          {/* Hadiths */}
           <section className="glass-panel p-6 rounded-2xl">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold">{isAr ? 'الأذكار' : 'Azkar'}</h2>
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-xl font-bold">{isAr ? 'الأحاديث النبوية' : 'Prophetic Hadiths'}</h2>
               <Button size="sm" variant="outline"
-                onClick={() => setFormData({ ...formData, azkar: [...formData.azkar, { id: Date.now().toString(), text: '', textAr: '', source: '', sourceAr: '' }] })}>
+                onClick={() => setFormData({ ...formData, azkar: [...formData.azkar, { hadith_ar: '', hadith_de: '' }] })}>
                 <Plus className="w-4 h-4 mr-1" /> {isAr ? 'إضافة' : 'Add'}
               </Button>
             </div>
+            <p className="text-xs text-muted-foreground mb-4">
+              {isAr
+                ? 'يمكنك أيضاً رفع ملف JSON بصيغة [{hadith_ar:"...", hadith_de:"..."}] من منطقة الرفع أعلاه'
+                : 'You can also upload a JSON file in format [{hadith_ar:"...", hadith_de:"..."}] from the upload zone above'}
+            </p>
             <div className="space-y-4">
               {formData.azkar.map((item, idx) => (
-                <div key={item.id} className="relative grid grid-cols-1 md:grid-cols-2 gap-3 bg-background/50 p-4 rounded-xl border border-white/5 pr-12">
-                  <Button variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive hover:bg-destructive/20 z-10"
-                    onClick={() => setFormData({ ...formData, azkar: formData.azkar.filter((_, i) => i !== idx) })}>
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                  <div className="space-y-2">
-                    <Input placeholder="Text (EN)" value={item.text} onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], text: e.target.value }; setFormData({ ...formData, azkar: a }); }} />
-                    <Input placeholder="Source (EN)" value={item.source} onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], source: e.target.value }; setFormData({ ...formData, azkar: a }); }} />
+                <div key={idx} className="relative flex flex-col gap-3 bg-background/50 p-4 rounded-xl border border-white/5 pr-12">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-bold text-primary/70 uppercase tracking-widest">{isAr ? `حديث ${idx + 1}` : `Hadith ${idx + 1}`}</span>
+                    <Button variant="ghost" size="icon" className="absolute top-2 right-2 text-destructive hover:bg-destructive/20 z-10"
+                      onClick={() => setFormData({ ...formData, azkar: formData.azkar.filter((_, i) => i !== idx) })}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
                   </div>
-                  <div className="space-y-2">
-                    <Input placeholder="نص (AR)" dir="rtl" value={item.textAr} onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], textAr: e.target.value }; setFormData({ ...formData, azkar: a }); }} />
-                    <Input placeholder="المصدر (AR)" dir="rtl" value={item.sourceAr} onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], sourceAr: e.target.value }; setFormData({ ...formData, azkar: a }); }} />
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">النص العربي (hadith_ar)</label>
+                    <textarea
+                      dir="rtl"
+                      rows={3}
+                      className="w-full rounded-lg bg-background border border-white/10 px-3 py-2 text-sm resize-y focus:outline-none focus:ring-1 focus:ring-primary"
+                      placeholder="أدخل نص الحديث بالعربية..."
+                      value={item.hadith_ar}
+                      onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], hadith_ar: e.target.value }; setFormData({ ...formData, azkar: a }); }}
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-muted-foreground mb-1 block">Deutsche Übersetzung (hadith_de)</label>
+                    <textarea
+                      dir="ltr"
+                      rows={3}
+                      className="w-full rounded-lg bg-background border border-white/10 px-3 py-2 text-sm resize-y focus:outline-none focus:ring-1 focus:ring-primary"
+                      placeholder="Deutsche Übersetzung des Hadith..."
+                      value={item.hadith_de}
+                      onChange={e => { const a = [...formData.azkar]; a[idx] = { ...a[idx], hadith_de: e.target.value }; setFormData({ ...formData, azkar: a }); }}
+                    />
                   </div>
                 </div>
               ))}
-              {formData.azkar.length === 0 && <p className="text-muted-foreground text-sm italic">{isAr ? 'لا توجد أذكار' : 'No azkar items.'}</p>}
+              {formData.azkar.length === 0 && (
+                <p className="text-muted-foreground text-sm italic">{isAr ? 'لا توجد أحاديث. أضف حديثاً أو ارفع ملف JSON.' : 'No hadiths. Add one or upload a JSON file.'}</p>
+              )}
             </div>
           </section>
 

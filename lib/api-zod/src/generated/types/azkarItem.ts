@@ -7,9 +7,6 @@
  */
 
 export interface AzkarItem {
-  id: string;
-  text: string;
-  textAr: string;
-  source: string;
-  sourceAr: string;
+  hadith_ar: string;
+  hadith_de: string;
 }
