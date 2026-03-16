@@ -162,7 +162,7 @@ export default function TVHome() {
               textAlign: "right",
             }}
           >
-            {prayerData?.mosque?.nameAr || "النور"}
+            {prayerData?.mosque?.nameAr || "مسجد الفاروق"}
           </h1>
           <h2
             style={{
@@ -173,7 +173,7 @@ export default function TVHome() {
               marginTop: 2,
             }}
           >
-            {prayerData?.mosque?.name || "Al-Noor"}
+            {prayerData?.mosque?.name || "Al Faruk Moschee"}
           </h2>
           <p
             style={{
@@ -252,7 +252,7 @@ export default function TVHome() {
               letterSpacing: "0.06em",
             }}
           >
-            EXIT TV / عادي
+            EXIT TV 
           </button>
         </div>
       </header>
@@ -360,7 +360,7 @@ export default function TVHome() {
           </div>
 
           {/* Countdown digits — HH:MM only (no seconds) */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4" style={{ direction: 'ltr' }}>
             {[h, m].map((unit, i) => (
               <React.Fragment key={i}>
                 <div
@@ -645,7 +645,7 @@ export default function TVHome() {
                             opacity: 0.6,
                           }}
                         >
-                          +{prayer.iqamaOffset}م
+                          +{prayer.iqamaOffset}M
                         </span>
                       </div>
                     )}
