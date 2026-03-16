@@ -242,27 +242,86 @@ export default function Admin() {
 
           {/* Prayer Times */}
           <section className="glass-panel p-6 rounded-2xl">
-            <h2 className="text-xl font-bold mb-4">{isAr ? 'أوقات الصلاة' : 'Prayer Times'}</h2>
-            <div className="space-y-3">
-              {formData.prayers.map((prayer, idx) => (
-                <div key={idx} className="flex items-center gap-4 bg-background/50 p-4 rounded-xl border border-white/5">
-                  <div className="w-28 font-semibold">{isAr ? prayer.nameAr : prayer.name}</div>
-                  <Input type="time" className="w-36" value={prayer.time}
-                    onChange={e => {
-                      const p = [...formData.prayers]; p[idx] = { ...p[idx], time: e.target.value };
-                      setFormData({ ...formData, prayers: p });
-                    }} />
-                  <div className="flex-1" />
-                  <label className="flex items-center gap-2 cursor-pointer text-sm">
-                    <input type="checkbox" className="w-4 h-4 accent-primary" checked={prayer.enabled}
-                      onChange={e => {
-                        const p = [...formData.prayers]; p[idx] = { ...p[idx], enabled: e.target.checked };
-                        setFormData({ ...formData, prayers: p });
-                      }} />
-                    {isAr ? 'مفعّل' : 'Enabled'}
-                  </label>
-                </div>
-              ))}
+            <h2 className="text-xl font-bold mb-1">{isAr ? 'أوقات الصلاة والإقامة' : 'Prayer & Iqama Times'}</h2>
+            <p className="text-xs text-muted-foreground mb-4">
+              {isAr ? 'وقت الإقامة = وقت الأذان + الدقائق المحددة (0 = لا تُعرض إقامة)' : 'Iqama time = Adhan time + offset in minutes (0 = no iqama shown)'}
+            </p>
+
+            {/* Column headers */}
+            <div className="hidden md:grid grid-cols-[7rem_1fr_1fr_1fr_auto] gap-4 px-4 mb-2 text-xs text-muted-foreground uppercase tracking-wider">
+              <span>{isAr ? 'الصلاة' : 'Prayer'}</span>
+              <span>{isAr ? 'وقت الأذان' : 'Adhan Time'}</span>
+              <span>{isAr ? 'الإقامة (دقائق بعد الأذان)' : 'Iqama Offset (minutes after Adhan)'}</span>
+              <span>{isAr ? 'وقت الإقامة' : 'Iqama Time'}</span>
+              <span>{isAr ? 'مفعّل' : 'Enabled'}</span>
+            </div>
+
+            <div className="space-y-2">
+              {formData.prayers.map((prayer, idx) => {
+                const offset = prayer.iqamaOffset ?? 0;
+                const noIqama = prayer.name.toLowerCase().includes('shuruk') || prayer.name.toLowerCase().includes('sunrise');
+                const iqamaTime = offset > 0 ? (() => {
+                  const [h, m] = prayer.time.split(':').map(Number);
+                  const total = h * 60 + m + offset;
+                  return `${String(Math.floor(total / 60) % 24).padStart(2,'0')}:${String(total % 60).padStart(2,'0')}`;
+                })() : null;
+
+                return (
+                  <div key={idx} className="grid grid-cols-1 md:grid-cols-[7rem_1fr_1fr_1fr_auto] items-center gap-3 bg-background/50 p-4 rounded-xl border border-white/5">
+                    {/* Name */}
+                    <div className="font-semibold text-sm">{isAr ? prayer.nameAr : prayer.name}</div>
+
+                    {/* Adhan time */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-muted-foreground md:hidden">{isAr ? 'الأذان' : 'Adhan'}</label>
+                      <Input type="time" className="w-full md:w-32" value={prayer.time}
+                        onChange={e => {
+                          const p = [...formData.prayers]; p[idx] = { ...p[idx], time: e.target.value };
+                          setFormData({ ...formData, prayers: p });
+                        }} />
+                    </div>
+
+                    {/* Iqama offset */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-muted-foreground md:hidden">{isAr ? 'الإقامة (دقائق)' : 'Iqama (min)'}</label>
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground text-sm">+</span>
+                        <Input
+                          type="number" min={0} max={60} step={1}
+                          className="w-20 text-center"
+                          value={noIqama ? 0 : offset}
+                          disabled={noIqama}
+                          title={noIqama ? (isAr ? 'لا إقامة للشروق' : 'No iqama for Sunrise') : ''}
+                          onChange={e => {
+                            const p = [...formData.prayers];
+                            p[idx] = { ...p[idx], iqamaOffset: Math.max(0, Math.min(60, parseInt(e.target.value) || 0)) };
+                            setFormData({ ...formData, prayers: p });
+                          }}
+                        />
+                        <span className="text-muted-foreground text-sm">{isAr ? 'دقيقة' : 'min'}</span>
+                      </div>
+                    </div>
+
+                    {/* Computed iqama time (display only) */}
+                    <div className="flex flex-col gap-1">
+                      <label className="text-xs text-muted-foreground md:hidden">{isAr ? 'وقت الإقامة' : 'Iqama Time'}</label>
+                      <div className={`font-mono font-bold text-lg px-3 py-1.5 rounded-lg text-center w-full md:w-28 ${iqamaTime ? 'text-primary bg-primary/10 border border-primary/30' : 'text-muted-foreground/30 bg-transparent'}`}>
+                        {iqamaTime ?? (noIqama ? '—' : '—')}
+                      </div>
+                    </div>
+
+                    {/* Enabled toggle */}
+                    <label className="flex items-center gap-2 cursor-pointer text-sm">
+                      <input type="checkbox" className="w-4 h-4 accent-primary" checked={prayer.enabled}
+                        onChange={e => {
+                          const p = [...formData.prayers]; p[idx] = { ...p[idx], enabled: e.target.checked };
+                          setFormData({ ...formData, prayers: p });
+                        }} />
+                      <span className="whitespace-nowrap">{isAr ? 'مفعّل' : 'On'}</span>
+                    </label>
+                  </div>
+                );
+              })}
             </div>
           </section>
 

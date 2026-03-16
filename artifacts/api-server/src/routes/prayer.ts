@@ -96,7 +96,11 @@ router.get("/prayer-data", (_req, res) => {
       const diyanet: DiyanetData = JSON.parse(readFileSync(DIYANET_FILE, "utf-8"));
       const todayPrayers = getTodayPrayersFromDiyanet(diyanet);
       if (todayPrayers) {
-        data.prayers = todayPrayers;
+        // Preserve iqamaOffset from stored prayer_data (set by admin)
+        data.prayers = todayPrayers.map((p: any, i: number) => ({
+          ...p,
+          iqamaOffset: data.prayers?.[i]?.iqamaOffset ?? 0,
+        }));
       }
       // Attach kibla angle if available
       if (diyanet.kibla !== undefined) {

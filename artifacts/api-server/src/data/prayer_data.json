@@ -11,37 +11,43 @@
       "name": "Fadjr",
       "nameAr": "الفجر",
       "time": "04:26",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 20
     },
     {
       "name": "Shuruk",
       "nameAr": "الشروق",
       "time": "06:16",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 0
     },
     {
       "name": "Duhr",
       "nameAr": "الظهر",
       "time": "12:22",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 10
     },
     {
       "name": "Assr",
       "nameAr": "العصر",
       "time": "15:29",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 10
     },
     {
       "name": "Maghrib",
       "nameAr": "المغرب",
       "time": "18:18",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 5
     },
     {
       "name": "Ishaa",
       "nameAr": "العشاء",
       "time": "20:01",
-      "enabled": true
+      "enabled": true,
+      "iqamaOffset": 10
     }
   ],
   "news": [
@@ -99,25 +105,25 @@
     },
     {
       "id": "6",
-      "text": "SubhanAllahi wa bihamdihi, SubhanAllahil Azim (Glory be to Allah and His is the praise, Glory be to Allah the Almighty)",
+      "text": "SubhanAllahi wa bihamdihi, SubhanAllahil Azim",
       "textAr": "سبحان الله وبحمده، سبحان الله العظيم",
       "source": "Reported by Al-Bukhari and Muslim",
       "sourceAr": "رواه البخاري ومسلم"
     },
     {
       "id": "7",
-      "text": "Hasbunallahu wa ni'mal wakeel (Allah is sufficient for us and He is the best disposer of affairs)",
+      "text": "Hasbunallahu wa ni'mal wakeel",
       "textAr": "حسبنا الله ونعم الوكيل",
       "source": "Quran 3:173",
       "sourceAr": "القرآن الكريم ٣:١٧٣"
     },
     {
       "id": "8",
-      "text": "La hawla wa la quwwata illa billah (There is no power or strength except with Allah)",
+      "text": "La hawla wa la quwwata illa billah",
       "textAr": "لا حول ولا قوة إلا بالله",
       "source": "Reported by Al-Bukhari",
       "sourceAr": "رواه البخاري"
     }
   ],
-  "lastUpdated": "2026-03-16T02:58:20.363Z"
+  "lastUpdated": "2026-03-16T12:00:00.000Z"
 }

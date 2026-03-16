@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Al-Noor Prayer Times"
+title = "Prayer Times"
 version = "1.0.0"
 id = "artifacts/al-noor"
 router = "path"

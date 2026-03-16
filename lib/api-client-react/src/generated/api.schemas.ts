@@ -15,6 +15,8 @@ export interface PrayerTime {
   /** Time in HH:MM format (24h) */
   time: string;
   enabled: boolean;
+  /** Minutes after Adhan for Iqama (0 = no iqama displayed) */
+  iqamaOffset?: number;
 }
 
 export interface NewsItem {

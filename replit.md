@@ -66,7 +66,8 @@ artifacts-monorepo/
 - **Daily Azkar**: Scrolling ticker at bottom of screen
 - **News Ticker**: Mosque announcements scrolling ticker
 - **Language Toggle**: Arabic (RTL) / English (LTR) with persistent preference
-- **Admin Dashboard**: Password-protected at /admin to update prayer data
+- **Iqama Times**: Each prayer has a configurable `iqamaOffset` (minutes after Adhan); shown in PrayerCard and TV mode; admin-editable with live preview
+- **Admin Dashboard**: Password-protected at /admin to update prayer data, times, and iqama offsets
 - **PWA**: manifest.json + Service Worker for offline mode and notifications
 
 ## Admin Access

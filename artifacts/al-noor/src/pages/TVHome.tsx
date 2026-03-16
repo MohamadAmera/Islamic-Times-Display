@@ -3,6 +3,14 @@ import { usePrayerContext } from '@/context/PrayerContext';
 import { useLocation } from 'wouter';
 import { Loader2 } from 'lucide-react';
 
+function addMinutes(time: string, minutes: number): string {
+  const [h, m] = time.split(':').map(Number);
+  const total = h * 60 + m + minutes;
+  const newH = Math.floor(total / 60) % 24;
+  const newM = total % 60;
+  return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+}
+
 function useClock() {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -267,16 +275,45 @@ export default function TVHome() {
                     )}
                   </div>
 
-                  {/* Bottom: time */}
-                  <div style={{
-                    fontFamily: "'Outfit', monospace",
-                    fontSize: 'clamp(1.8rem,3vw,4rem)',
-                    fontWeight: 800,
-                    color: isNext ? '#ffffff' : isPast ? '#9ca19d' : 'rgba(255,255,255,0.85)',
-                    letterSpacing: '0.05em',
-                    lineHeight: 1,
-                  }}>
-                    {prayer.time}
+                  {/* Bottom: Adhan + Iqama times */}
+                  <div className="flex flex-col gap-1">
+                    {/* Adhan label + time */}
+                    <div className="flex items-baseline gap-2">
+                      <span style={{ fontSize: 'clamp(0.55rem,0.65vw,0.7rem)', color: '#9ca19d', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                        {isAr ? 'أذان' : 'ADHAN'}
+                      </span>
+                      <span style={{
+                        fontFamily: "'Outfit', monospace",
+                        fontSize: 'clamp(1.6rem,2.8vw,3.5rem)',
+                        fontWeight: 800,
+                        color: isNext ? '#ffffff' : isPast ? '#9ca19d' : 'rgba(255,255,255,0.85)',
+                        letterSpacing: '0.05em',
+                        lineHeight: 1,
+                      }}>
+                        {prayer.time}
+                      </span>
+                    </div>
+                    {/* Iqama line */}
+                    {(prayer.iqamaOffset ?? 0) > 0 && (
+                      <div className="flex items-baseline gap-2">
+                        <span style={{ fontSize: 'clamp(0.55rem,0.65vw,0.7rem)', color: isNext ? 'rgba(214,169,62,0.7)' : '#9ca19d', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                          {isAr ? 'إقامة' : 'IQAMA'}
+                        </span>
+                        <span style={{
+                          fontFamily: "'Outfit', monospace",
+                          fontSize: 'clamp(1.1rem,1.8vw,2.2rem)',
+                          fontWeight: 700,
+                          color: isNext ? '#d6a93e' : isPast ? '#9ca19d' : 'rgba(214,169,62,0.75)',
+                          letterSpacing: '0.05em',
+                          lineHeight: 1,
+                        }}>
+                          {addMinutes(prayer.time, prayer.iqamaOffset!)}
+                        </span>
+                        <span style={{ fontSize: 'clamp(0.55rem,0.65vw,0.7rem)', color: '#9ca19d', opacity: 0.6 }}>
+                          +{prayer.iqamaOffset}m
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               );
