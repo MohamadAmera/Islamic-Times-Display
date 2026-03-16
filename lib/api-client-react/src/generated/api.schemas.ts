@@ -57,6 +57,11 @@ export interface UpdatePrayerDataRequest {
   azkar: HadithItem[];
 }
 
+export interface HadithUploadRequest {
+  adminPassword: string;
+  hadiths: HadithItem[];
+}
+
 export interface AdminVerifyRequest {
   password: string;
 }

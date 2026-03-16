@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Layout } from '@/components/Layout';
 import { usePrayerContext } from '@/context/PrayerContext';
-import { useVerifyAdmin, useUpdatePrayerData, useGetPrayerData } from '@workspace/api-client-react';
+import { useVerifyAdmin, useUpdatePrayerData, useGetPrayerData, useUploadHadiths } from '@workspace/api-client-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
@@ -30,6 +30,7 @@ export default function Admin() {
   const { data: initialData, refetch } = useGetPrayerData();
   const verifyMutation = useVerifyAdmin();
   const updateMutation = useUpdatePrayerData();
+  const uploadHadithsMutation = useUploadHadiths();
   const [formData, setFormData] = useState<PrayerData | null>(null);
 
   useEffect(() => {
@@ -140,18 +141,14 @@ export default function Admin() {
     if (!hadithPreview || hadithPreview.length === 0) return;
     setIsHadithUploading(true);
     try {
-      const res = await fetch('/api/admin/hadith-upload', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ adminPassword: password, hadiths: hadithPreview }),
+      const result = await uploadHadithsMutation.mutateAsync({
+        data: { adminPassword: password, hadiths: hadithPreview },
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.message || 'Upload failed');
       setHadithUploadDone(true);
       setHadithPreview(null);
       setHadithFileName('');
       refetch();
-      toast({ title: isAr ? 'تم رفع الأحاديث ✓' : 'Hadiths Uploaded ✓', description: json.message });
+      toast({ title: isAr ? 'تم رفع الأحاديث ✓' : 'Hadiths Uploaded ✓', description: result.message });
     } catch (err: any) {
       toast({ title: isAr ? 'خطأ' : 'Error', description: err.message, variant: 'destructive' });
     } finally {

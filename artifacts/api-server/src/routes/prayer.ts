@@ -188,8 +188,8 @@ router.post("/admin/diyanet-upload", (req, res) => {
   }
 });
 
-// POST /api/admin/hadith-upload — replace the azkar array with uploaded hadiths
-router.post("/admin/hadith-upload", (req, res) => {
+// POST /api/prayer/hadith — replace the azkar array with uploaded hadiths
+router.post("/prayer/hadith", (req, res) => {
   try {
     const { adminPassword, hadiths } = req.body as {
       adminPassword: string;

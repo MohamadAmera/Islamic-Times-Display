@@ -68,10 +68,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /admin/hadith-upload:
+  /prayer/hadith:
     post:
       operationId: uploadHadiths
-      tags: [admin]
+      tags: [prayer]
       summary: Upload Hadith JSON
       description: Replace the hadith list with an uploaded JSON array (requires admin password)
       requestBody:

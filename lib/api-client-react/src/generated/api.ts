@@ -19,6 +19,7 @@ import type {
 import type {
   AdminVerifyRequest,
   ErrorResponse,
+  HadithUploadRequest,
   HealthStatus,
   PrayerData,
   SuccessResponse,
@@ -357,4 +358,89 @@ export const useVerifyAdmin = <
   TContext
 > => {
   return useMutation(getVerifyAdminMutationOptions(options));
+};
+
+/**
+ * @summary Upload Hadith JSON — replaces the full hadith list
+ */
+export const getUploadHadithsUrl = () => {
+  return `/api/prayer/hadith`;
+};
+
+export const uploadHadiths = async (
+  hadithUploadRequest: HadithUploadRequest,
+  options?: RequestInit,
+): Promise<SuccessResponse> => {
+  return customFetch<SuccessResponse>(getUploadHadithsUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(hadithUploadRequest),
+  });
+};
+
+export const getUploadHadithsMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof uploadHadiths>>,
+    TError,
+    { data: BodyType<HadithUploadRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof uploadHadiths>>,
+  TError,
+  { data: BodyType<HadithUploadRequest> },
+  TContext
+> => {
+  const mutationKey = ["uploadHadiths"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof uploadHadiths>>,
+    { data: BodyType<HadithUploadRequest> }
+  > = (props) => {
+    const { data } = props ?? {};
+    return uploadHadiths(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type UploadHadithsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof uploadHadiths>>
+>;
+export type UploadHadithsMutationBody = BodyType<HadithUploadRequest>;
+export type UploadHadithsMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Upload Hadith JSON — replaces the full hadith list
+ */
+export const useUploadHadiths = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof uploadHadiths>>,
+    TError,
+    { data: BodyType<HadithUploadRequest> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof uploadHadiths>>,
+  TError,
+  { data: BodyType<HadithUploadRequest> },
+  TContext
+> => {
+  return useMutation(getUploadHadithsMutationOptions(options));
 };
