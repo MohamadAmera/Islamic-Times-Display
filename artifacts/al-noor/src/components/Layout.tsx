@@ -81,41 +81,47 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className="mt-auto z-20">
         {prayerData?.news && prayerData.news.length > 0 && (
           <div className="bg-primary/90 text-primary-foreground py-2 md:py-3 px-4 flex overflow-hidden whitespace-nowrap border-y border-white/20">
-            <div className={`font-semibold flex items-center shrink-0 ${isAr ? 'ml-4' : 'mr-4'} ${isTV ? 'text-2xl' : ''}`}>
+            <div className={`font-semibold flex items-center shrink-0 mr-4 ${isTV ? 'text-2xl' : ''}`}>
               {isAr ? 'أخبار:' : 'NEWS:'}
             </div>
-            <div className="flex-1 overflow-hidden relative flex items-center">
-              <div className={`inline-block animate-marquee ${isTV ? 'text-2xl' : 'text-sm md:text-base'}`}>
-                {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
-                <span className="opacity-0">  •  </span>
-                {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
+            <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
+              <div className={`inline-block animate-marquee whitespace-nowrap ${isTV ? 'text-2xl' : 'text-sm md:text-base'}`}>
+                <span dir={isAr ? 'rtl' : 'ltr'} style={{ unicodeBidi: 'isolate' }}>
+                  {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
+                </span>
+                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+                <span dir={isAr ? 'rtl' : 'ltr'} style={{ unicodeBidi: 'isolate' }}>
+                  {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
+                </span>
               </div>
             </div>
           </div>
         )}
-        
-        {prayerData?.azkar && prayerData.azkar.length > 0 && (() => {
-          const hadithNodes = prayerData.azkar.flatMap((a, i, arr) => [
-            <span key={`ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
-            <span key={`dot-${i}`}>&nbsp; · &nbsp;</span>,
-            <span key={`de-${i}`} dir="ltr">{a.hadith_de}</span>,
-            ...(i < arr.length - 1 ? [<span key={`div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
-          ]);
-          return (
-            <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
-              <div className={`text-primary font-bold flex items-center shrink-0 mr-4 ${isTV ? 'text-3xl' : 'text-lg'}`}>
-                {'HADITH:'}
-              </div>
-              <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
-                <div className={`inline-block animate-marquee-slow ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
-                  {hadithNodes}
-                  <span className="opacity-0">&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-                  {hadithNodes.map((n, i) => React.cloneElement(n, { key: `r-${i}` }))}
-                </div>
+
+        {prayerData?.azkar && prayerData.azkar.length > 0 && (
+          <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
+            <div className={`text-primary font-bold flex items-center shrink-0 mr-4 ${isTV ? 'text-3xl' : 'text-lg'}`}>
+              {isAr ? 'حديث:' : 'HADITH:'}
+            </div>
+            <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
+              <div className={`inline-block animate-marquee-slow whitespace-nowrap ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
+                {prayerData.azkar.flatMap((a, i, arr) => [
+                  <span key={`a-ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
+                  <span key={`a-dot-${i}`}> · </span>,
+                  <span key={`a-de-${i}`} dir="ltr">{a.hadith_de}</span>,
+                  ...(i < arr.length - 1 ? [<span key={`a-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
+                ])}
+                <span>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+                {prayerData.azkar.flatMap((a, i, arr) => [
+                  <span key={`b-ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
+                  <span key={`b-dot-${i}`}> · </span>,
+                  <span key={`b-de-${i}`} dir="ltr">{a.hadith_de}</span>,
+                  ...(i < arr.length - 1 ? [<span key={`b-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
+                ])}
               </div>
             </div>
-          );
-        })()}
+          </div>
+        )}
       </div>
     </div>
   );
