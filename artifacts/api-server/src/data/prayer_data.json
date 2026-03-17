@@ -65,6 +65,16 @@
       "id": "3",
       "text": "Islamic studies circle every Tuesday after Isha prayer.",
       "textAr": "حلقة الدراسات الإسلامية كل يوم ثلاثاء بعد صلاة العشاء."
+    },
+    {
+      "id": "1773724272768",
+      "text": "Eid-Gebet um 8:00 Uhr ",
+      "textAr": "صلاة العيد الساعة الثامنة"
+    },
+    {
+      "id": "1773724384151",
+      "text": "Eid-Gebet um 9:00 Uhr ",
+      "textAr": "صلاة العيد الساعة التاسعة"
     }
   ],
   "azkar": [
@@ -237,5 +247,5 @@
       "hadith_de": "Der zweiundvierzigste Hadith\n\nÜber Anas (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Allah der Erhabene sagte: O Sohn Adams, solange du Mich anrufst und auf Mich hoffst, vergebe Ich dir...\" (Überliefert von at-Tirmidhi)"
     }
   ],
-  "lastUpdated": "2026-03-17T02:28:36.624Z"
+  "lastUpdated": "2026-03-17T05:13:47.736Z"
 }

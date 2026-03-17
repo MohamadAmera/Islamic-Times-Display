@@ -3,6 +3,7 @@ import { usePrayerContext } from '@/context/PrayerContext';
 import { Monitor, Volume2, VolumeX, Settings, Compass, Menu, X, ExternalLink, Info, Newspaper, Calendar, Heart } from 'lucide-react';
 import { Link } from 'wouter';
 import type { PrayerData, NewsItem, HadithItem } from '@workspace/api-client-react';
+import { NewsModal } from './NewsModal';
 
 function computeContentHash(prayerData: PrayerData | null): string {
   if (!prayerData) return '';
@@ -30,6 +31,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   } = usePrayerContext();
 
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [showNewsModal, setShowNewsModal] = useState(false);
   const isAr = language === 'ar';
 
   const contentHash = useMemo(() => computeContentHash(prayerData), [prayerData]);
@@ -38,7 +40,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (!contentHash) return;
     const seen = localStorage.getItem(SEEN_HASH_KEY);
-    setHasUnread(seen !== contentHash);
+    const isUnread = seen !== contentHash;
+    setHasUnread(isUnread);
+    // Show news popup automatically if there's new unread news (not in TV mode)
+    if (isUnread && (prayerData?.news?.length ?? 0) > 0 && !isTV) {
+      setShowNewsModal(true);
+    }
+  }, [contentHash]);
+
+  const closeNewsModal = useCallback(() => {
+    setShowNewsModal(false);
+    if (contentHash) {
+      localStorage.setItem(SEEN_HASH_KEY, contentHash);
+      setHasUnread(false);
+    }
   }, [contentHash]);
 
   const openDrawer = useCallback(() => {
@@ -69,6 +84,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col h-dvh">
+      {/* ═══ News Popup Modal ═══ */}
+      {showNewsModal && prayerData?.news && prayerData.news.length > 0 && (
+        <NewsModal
+          news={prayerData.news}
+          isAr={isAr}
+          onClose={closeNewsModal}
+        />
+      )}
+
       {/* ═══ Mobile Header: only burger + small logo ═══ */}
       <header className="md:hidden flex items-center justify-between px-4 py-2 z-20 shrink-0 absolute top-0 left-0 right-0" style={{ paddingTop: 'max(0.5rem, env(safe-area-inset-top))' }}>
         <button
