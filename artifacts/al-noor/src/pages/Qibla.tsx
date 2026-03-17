@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePrayerContext } from '@/context/PrayerContext';
-import { ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, AlertCircle } from 'lucide-react';
 import { Link } from 'wouter';
 
 const MECCA_LAT = 21.422487;
@@ -9,7 +9,7 @@ const MECCA_LNG = 39.826206;
 const MOSQUE_LAT = 52.3963;
 const MOSQUE_LNG = 13.0541;
 
-type Stage = 'starting' | 'ar' | 'compass';
+type Stage = 'requesting' | 'locating' | 'ar' | 'compass' | 'error';
 
 function calcQibla(lat: number, lng: number): number {
   const φ1 = (lat * Math.PI) / 180;
@@ -42,11 +42,12 @@ export default function Qibla() {
   const { language } = usePrayerContext();
   const isAr = language === 'ar';
 
-  const [stage, setStage] = useState<Stage>('starting');
+  const [stage, setStage] = useState<Stage>('requesting');
   const [qiblaAngle, setQiblaAngle] = useState<number | null>(null);
   const [distance, setDistance] = useState<number | null>(null);
   const [heading, setHeading] = useState(0);
   const [usedFallback, setUsedFallback] = useState(false);
+  const [gpsLoading, setGpsLoading] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -102,22 +103,25 @@ export default function Qibla() {
 
   const resolveLocation = useCallback(
     (cameraOk: boolean) => {
-      // Show compass immediately with mosque default location
+      setStage('locating');
+
       const applyLoc = (lat: number, lng: number, fallback: boolean) => {
         setQiblaAngle(calcQibla(lat, lng));
         setDistance(calcDistance(lat, lng));
         setUsedFallback(fallback);
+        setGpsLoading(false);
       };
 
+      // Show compass immediately with mosque default, then upgrade via GPS
       applyLoc(MOSQUE_LAT, MOSQUE_LNG, true);
       setStage(cameraOk ? 'ar' : 'compass');
       requestOrientation();
 
-      // Try to upgrade with real GPS in the background
       if (navigator.geolocation) {
+        setGpsLoading(true);
         navigator.geolocation.getCurrentPosition(
           (pos) => applyLoc(pos.coords.latitude, pos.coords.longitude, false),
-          () => { /* keep mosque fallback */ },
+          () => { setGpsLoading(false); /* keep mosque fallback */ },
           { enableHighAccuracy: true, timeout: 8000 },
         );
       }
@@ -129,6 +133,7 @@ export default function Qibla() {
     let cancelled = false;
 
     (async () => {
+      // requesting-permissions phase: camera + orientation initiated together
       let cameraOk = false;
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -142,9 +147,16 @@ export default function Qibla() {
           stream.getTracks().forEach((t) => t.stop());
         }
       } catch {
-        /* camera denied → compass mode */
+        /* camera denied or unavailable → fall through to compass mode */
       }
-      if (!cancelled) resolveLocation(cameraOk);
+
+      if (!cancelled) {
+        try {
+          resolveLocation(cameraOk);
+        } catch {
+          setStage('error');
+        }
+      }
     })();
 
     return () => {
@@ -159,6 +171,26 @@ export default function Qibla() {
 
   const isAR = stage === 'ar';
   const isReady = stage === 'ar' || stage === 'compass';
+
+  if (stage === 'error') {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#1a211d] flex flex-col items-center justify-center gap-6 px-8 text-center">
+        <AlertCircle className="text-red-400" size={52} />
+        <p className="text-foreground text-base font-semibold">
+          {isAr
+            ? 'تعذّر تشغيل البوصلة. تأكد من دعم المتصفح لمستشعرات الاتجاه.'
+            : 'Kompass konnte nicht gestartet werden. Bitte Sensorrechte prüfen.'}
+        </p>
+        <Link
+          href="/"
+          className="px-6 py-3 rounded-xl font-bold text-sm"
+          style={{ background: '#d6a93e', color: '#1a211d' }}
+        >
+          {isAr ? 'رجوع' : 'Zurück'}
+        </Link>
+      </div>
+    );
+  }
 
   const backBtn = (
     <Link
@@ -178,12 +210,13 @@ export default function Qibla() {
   );
 
   if (!isReady) {
+    const loadingText = stage === 'locating'
+      ? (isAr ? 'جاري تحديد الموقع...' : 'Standort wird ermittelt...')
+      : (isAr ? 'جاري تهيئة الكاميرا...' : 'Kamera wird gestartet...');
     return (
       <div className="fixed inset-0 z-50 bg-[#1a211d] flex flex-col items-center justify-center gap-5">
         <Loader2 className="text-primary animate-spin" size={52} />
-        <p className="text-foreground text-base font-semibold">
-          {isAr ? 'جاري تهيئة الكاميرا...' : 'Kamera wird gestartet...'}
-        </p>
+        <p className="text-foreground text-base font-semibold">{loadingText}</p>
       </div>
     );
   }
@@ -432,9 +465,15 @@ export default function Qibla() {
             <p className="text-muted-foreground text-xs">
               {isAr ? 'مكة المكرمة، المملكة العربية السعودية' : 'Mekka, Saudi-Arabien'}
             </p>
-            {usedFallback && (
+            {usedFallback && !gpsLoading && (
               <p className="text-yellow-400/70 text-xs">
                 {isAr ? '* موقع المسجد كافتراضي' : '* Moschee-Standort als Standard'}
+              </p>
+            )}
+            {gpsLoading && (
+              <p className="text-blue-300/70 text-xs flex items-center gap-1">
+                <Loader2 size={10} className="animate-spin shrink-0" />
+                {isAr ? 'جارٍ تحديد الموقع…' : 'GPS wird ermittelt…'}
               </p>
             )}
           </div>
