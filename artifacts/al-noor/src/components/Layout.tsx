@@ -80,47 +80,61 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Bottom Tickers */}
       <div className="mt-auto z-20">
         {prayerData?.news && prayerData.news.length > 0 && (
-          <div className="bg-primary/90 text-primary-foreground py-2 md:py-3 px-4 flex overflow-hidden whitespace-nowrap border-y border-white/20">
-            <div className={`font-semibold flex items-center shrink-0 mr-4 ${isTV ? 'text-2xl' : ''}`}>
-              {isAr ? 'أخبار:' : 'NEWS:'}
+          <div
+            dir={isAr ? 'rtl' : 'ltr'}
+            className="bg-primary/90 text-primary-foreground py-2 md:py-3 px-4 flex overflow-hidden whitespace-nowrap border-y border-white/20"
+          >
+            <div className={`font-semibold flex items-center shrink-0 ${isAr ? 'ml-4' : 'mr-4'} ${isTV ? 'text-2xl' : ''}`}>
+              {isAr ? ':أخبار' : 'NEWS:'}
             </div>
-            <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
+            <div className="flex-1 overflow-hidden">
               <div className={`inline-block animate-marquee whitespace-nowrap ${isTV ? 'text-2xl' : 'text-sm md:text-base'}`}>
-                <span dir={isAr ? 'rtl' : 'ltr'} style={{ unicodeBidi: 'isolate' }}>
-                  {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
-                </span>
-                <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-                <span dir={isAr ? 'rtl' : 'ltr'} style={{ unicodeBidi: 'isolate' }}>
-                  {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
-                </span>
+                {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
+                &nbsp;&nbsp;•&nbsp;&nbsp;
+                {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
               </div>
             </div>
           </div>
         )}
 
         {prayerData?.azkar && prayerData.azkar.length > 0 && (
-          <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
-            <div className={`text-primary font-bold flex items-center shrink-0 mr-4 ${isTV ? 'text-3xl' : 'text-lg'}`}>
-              {isAr ? 'حديث:' : 'HADITH:'}
-            </div>
-            <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
-              <div className={`inline-block animate-marquee-slow whitespace-nowrap ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
-                {prayerData.azkar.flatMap((a, i, arr) => [
-                  <span key={`a-ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
-                  <span key={`a-dot-${i}`}> · </span>,
-                  <span key={`a-de-${i}`} dir="ltr">{a.hadith_de}</span>,
-                  ...(i < arr.length - 1 ? [<span key={`a-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
-                ])}
-                <span>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-                {prayerData.azkar.flatMap((a, i, arr) => [
-                  <span key={`b-ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
-                  <span key={`b-dot-${i}`}> · </span>,
-                  <span key={`b-de-${i}`} dir="ltr">{a.hadith_de}</span>,
-                  ...(i < arr.length - 1 ? [<span key={`b-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
-                ])}
+          <>
+            {/* Row 1: Arabic — RTL marquee, text enters from left and exits right */}
+            <div
+              dir="rtl"
+              className={`glass-panel border-x-0 border-b-0 flex overflow-hidden whitespace-nowrap items-center
+                ${isTV ? 'py-4 px-6' : 'py-2 md:py-3 px-4'}`}
+            >
+              <div className={`text-primary font-bold shrink-0 ml-4 ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
+                :حديث
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div className={`inline-block animate-marquee-slow whitespace-nowrap ${isTV ? 'text-3xl' : 'text-sm md:text-base'}`}>
+                  {prayerData.azkar.map(a => a.hadith_ar).join('  ✦  ')}
+                  &nbsp;&nbsp;✦&nbsp;&nbsp;
+                  {prayerData.azkar.map(a => a.hadith_ar).join('  ✦  ')}
+                </div>
               </div>
             </div>
-          </div>
+
+            {/* Row 2: German — LTR marquee, text enters from right and exits left */}
+            <div
+              dir="ltr"
+              className={`glass-panel border-x-0 border-b-0 flex overflow-hidden whitespace-nowrap items-center
+                ${isTV ? 'py-4 px-6' : 'py-2 md:py-3 px-4'}`}
+            >
+              <div className={`text-muted-foreground font-semibold shrink-0 mr-4 ${isTV ? 'text-2xl' : 'text-xs md:text-sm'}`}>
+                HADITH:
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div className={`inline-block animate-marquee-slow whitespace-nowrap text-muted-foreground ${isTV ? 'text-2xl' : 'text-xs md:text-sm'}`}>
+                  {prayerData.azkar.map(a => a.hadith_de).join('  ✦  ')}
+                  &nbsp;&nbsp;✦&nbsp;&nbsp;
+                  {prayerData.azkar.map(a => a.hadith_de).join('  ✦  ')}
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -660,108 +660,132 @@ export default function TVHome() {
       {/* ══════ TICKERS ══════ */}
       <div className="z-10 shrink-0">
         {prayerData?.news && prayerData.news.length > 0 && (
-          <div
-            className="flex overflow-hidden whitespace-nowrap items-center"
-            style={{
-              background: "#d6a93e",
-              padding: "11px 0",
-              borderTop: "1px solid rgba(214,169,62,0.4)",
-            }}
-          >
+          <div style={{ background: "#d6a93e", borderTop: "1px solid rgba(214,169,62,0.4)" }}>
+            {/* Arabic news row — RTL */}
             <div
-              className="font-bold shrink-0 px-6 flex flex-col items-center leading-tight"
-              style={{
-                fontSize: "clamp(1rem,1.4vw,1.6rem)",
-                color: "#1a2420",
-                borderRight: "2px solid rgba(26,36,32,0.3)",
-                marginRight: 16,
-              }}
+              dir="rtl"
+              className="flex overflow-hidden whitespace-nowrap items-center"
+              style={{ padding: "8px 0" }}
             >
-              <span>أخبار</span>
-              <span
+              <div
+                className="font-bold shrink-0 flex items-center"
                 style={{
-                  fontSize: "75%",
-                  opacity: 0.7,
-                  letterSpacing: "0.1em",
+                  fontSize: "clamp(1rem,1.4vw,1.6rem)",
+                  color: "#1a2420",
+                  borderLeft: "2px solid rgba(26,36,32,0.3)",
+                  padding: "0 20px",
+                  marginLeft: 16,
+                }}
+              >
+                أخبار
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div
+                  className="inline-block animate-marquee whitespace-nowrap"
+                  style={{ fontSize: "clamp(1rem,1.35vw,1.6rem)", color: "#1a2420", fontWeight: 500 }}
+                >
+                  {prayerData.news.map(n => n.textAr).join("  •  ")}
+                  &nbsp;&nbsp;•&nbsp;&nbsp;
+                  {prayerData.news.map(n => n.textAr).join("  •  ")}
+                </div>
+              </div>
+            </div>
+            {/* German/English news row — LTR */}
+            <div
+              dir="ltr"
+              className="flex overflow-hidden whitespace-nowrap items-center"
+              style={{ padding: "6px 0", borderTop: "1px solid rgba(26,36,32,0.15)" }}
+            >
+              <div
+                className="font-bold shrink-0 flex items-center"
+                style={{
+                  fontSize: "clamp(0.8rem,1.1vw,1.2rem)",
+                  color: "#1a2420",
+                  borderRight: "2px solid rgba(26,36,32,0.3)",
+                  padding: "0 20px",
+                  marginRight: 16,
+                  opacity: 0.75,
+                  letterSpacing: "0.08em",
                 }}
               >
                 NEWS
-              </span>
-            </div>
-            <div className="flex-1 overflow-hidden">
-              <div
-                className="inline-block animate-marquee"
-                style={{
-                  fontSize: "clamp(1rem,1.35vw,1.6rem)",
-                  color: "#1a2420",
-                  fontWeight: 500,
-                }}
-              >
-                {/* Show both Arabic and English for each item */}
-                {prayerData.news
-                  .map((n) => `${n.textAr}  ·  ${n.text}`)
-                  .join("  ✦  ")}
-                <span style={{ opacity: 0 }}> ✦ </span>
-                {prayerData.news
-                  .map((n) => `${n.textAr}  ·  ${n.text}`)
-                  .join("  ✦  ")}
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div
+                  className="inline-block animate-marquee whitespace-nowrap"
+                  style={{ fontSize: "clamp(0.85rem,1.1vw,1.25rem)", color: "#1a2420", fontWeight: 400, opacity: 0.85 }}
+                >
+                  {prayerData.news.map(n => n.text).join("  •  ")}
+                  &nbsp;&nbsp;•&nbsp;&nbsp;
+                  {prayerData.news.map(n => n.text).join("  •  ")}
+                </div>
               </div>
             </div>
           </div>
         )}
 
         {prayerData?.azkar && prayerData.azkar.length > 0 && (
-          <div
-            className="flex overflow-hidden whitespace-nowrap items-center"
-            style={{
-              background: "rgba(0,0,0,0.4)",
-              padding: "13px 0",
-              backdropFilter: "blur(8px)",
-              borderTop: "1px solid rgba(214,169,62,0.15)",
-            }}
-          >
+          <div style={{ background: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", borderTop: "1px solid rgba(214,169,62,0.15)" }}>
+            {/* Arabic hadith row — RTL marquee */}
             <div
-              className="font-bold shrink-0 px-6 flex flex-col items-center leading-tight"
-              style={{
-                fontSize: "clamp(1rem,1.4vw,1.6rem)",
-                color: "#d6a93e",
-                borderRight: "1px solid rgba(214,169,62,0.3)",
-                marginRight: 16,
-              }}
+              dir="rtl"
+              className="flex overflow-hidden whitespace-nowrap items-center"
+              style={{ padding: "10px 0" }}
             >
-              <span>حديث</span>
-              <span
+              <div
+                className="font-bold shrink-0 flex items-center"
                 style={{
-                  fontSize: "75%",
-                  opacity: 0.6,
-                  letterSpacing: "0.1em",
+                  fontSize: "clamp(1rem,1.4vw,1.6rem)",
+                  color: "#d6a93e",
+                  borderLeft: "1px solid rgba(214,169,62,0.35)",
+                  padding: "0 20px",
+                  marginLeft: 16,
+                }}
+              >
+                حديث
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div
+                  className="inline-block animate-marquee-slow whitespace-nowrap"
+                  style={{ fontSize: "clamp(1rem,1.35vw,1.6rem)", color: "rgba(255,255,255,0.9)" }}
+                >
+                  {prayerData.azkar.map(a => a.hadith_ar).join("  ✦  ")}
+                  &nbsp;&nbsp;✦&nbsp;&nbsp;
+                  {prayerData.azkar.map(a => a.hadith_ar).join("  ✦  ")}
+                </div>
+              </div>
+            </div>
+
+            {/* German hadith row — LTR marquee */}
+            <div
+              dir="ltr"
+              className="flex overflow-hidden whitespace-nowrap items-center"
+              style={{ padding: "7px 0", borderTop: "1px solid rgba(214,169,62,0.1)" }}
+            >
+              <div
+                className="font-bold shrink-0 flex items-center"
+                style={{
+                  fontSize: "clamp(0.8rem,1.1vw,1.2rem)",
+                  color: "#d6a93e",
+                  borderRight: "1px solid rgba(214,169,62,0.35)",
+                  padding: "0 20px",
+                  marginRight: 16,
+                  opacity: 0.7,
+                  letterSpacing: "0.08em",
                   fontFamily: "'Outfit', sans-serif",
                 }}
               >
                 HADITH
-              </span>
-            </div>
-            <div className="flex-1 overflow-hidden" dir="ltr">
-              <div
-                className="inline-block animate-marquee-slow whitespace-nowrap"
-                style={{
-                  fontSize: "clamp(1rem,1.35vw,1.6rem)",
-                  color: "rgba(255,255,255,0.85)",
-                }}
-              >
-                {prayerData.azkar.flatMap((a, i, arr) => [
-                  <span key={`a-ar-${i}`} dir="rtl" style={{ unicodeBidi: "isolate" }}>{a.hadith_ar}</span>,
-                  <span key={`a-dot-${i}`}> · </span>,
-                  <span key={`a-de-${i}`} dir="ltr">{a.hadith_de}</span>,
-                  ...(i < arr.length - 1 ? [<span key={`a-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
-                ])}
-                <span>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
-                {prayerData.azkar.flatMap((a, i, arr) => [
-                  <span key={`b-ar-${i}`} dir="rtl" style={{ unicodeBidi: "isolate" }}>{a.hadith_ar}</span>,
-                  <span key={`b-dot-${i}`}> · </span>,
-                  <span key={`b-de-${i}`} dir="ltr">{a.hadith_de}</span>,
-                  ...(i < arr.length - 1 ? [<span key={`b-div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
-                ])}
+              </div>
+              <div className="flex-1 overflow-hidden">
+                <div
+                  className="inline-block animate-marquee-slow whitespace-nowrap"
+                  style={{ fontSize: "clamp(0.85rem,1.1vw,1.25rem)", color: "rgba(255,255,255,0.65)" }}
+                >
+                  {prayerData.azkar.map(a => a.hadith_de).join("  ✦  ")}
+                  &nbsp;&nbsp;✦&nbsp;&nbsp;
+                  {prayerData.azkar.map(a => a.hadith_de).join("  ✦  ")}
+                </div>
               </div>
             </div>
           </div>

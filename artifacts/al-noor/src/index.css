@@ -96,11 +96,11 @@
 }
 
 .animate-marquee {
-  animation: marquee 1380s linear infinite;
+  animation: marquee 60s linear infinite;
 }
 
 [dir="rtl"] .animate-marquee {
-  animation: marquee-rtl 1380s linear infinite;
+  animation: marquee-rtl 60s linear infinite;
 }
 
 .animate-marquee:hover {
@@ -109,11 +109,11 @@
 
 /* Slower ticker for long hadith text */
 .animate-marquee-slow {
-  animation: marquee 1380s linear infinite;
+  animation: marquee 180s linear infinite;
 }
 
 [dir="rtl"] .animate-marquee-slow {
-  animation: marquee-rtl 1380s linear infinite;
+  animation: marquee-rtl 180s linear infinite;
 }
 
 .animate-marquee-slow:hover {
