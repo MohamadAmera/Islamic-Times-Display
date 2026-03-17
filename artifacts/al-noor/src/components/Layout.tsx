@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { usePrayerContext } from '@/context/PrayerContext';
-import { Monitor, Volume2, VolumeX, Settings, Compass, Menu, X } from 'lucide-react';
+import { Monitor, Volume2, VolumeX, Settings, Compass, Menu, X, ExternalLink, Info, Newspaper, Calendar, Heart } from 'lucide-react';
 import { Link } from 'wouter';
+
+function computeContentHash(prayerData: any): string {
+  if (!prayerData) return '';
+  const newsText = (prayerData.news || []).map((n: any) => n.text + n.textAr).join('|');
+  const azkarText = (prayerData.azkar || []).map((a: any) => (a.hadith_ar || '') + (a.hadith_de || '')).join('|');
+  let hash = 0;
+  const str = newsText + '###' + azkarText;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+  }
+  return String(hash);
+}
+
+const SEEN_HASH_KEY = 'alnoor_seen_content_hash';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const { 
@@ -13,7 +27,24 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isAr = language === 'ar';
-  
+
+  const contentHash = useMemo(() => computeContentHash(prayerData), [prayerData]);
+  const [hasUnread, setHasUnread] = useState(false);
+
+  useEffect(() => {
+    if (!contentHash) return;
+    const seen = localStorage.getItem(SEEN_HASH_KEY);
+    setHasUnread(seen !== contentHash);
+  }, [contentHash]);
+
+  const openDrawer = useCallback(() => {
+    setDrawerOpen(true);
+    if (contentHash) {
+      localStorage.setItem(SEEN_HASH_KEY, contentHash);
+      setHasUnread(false);
+    }
+  }, [contentHash]);
+
   const today = new Date();
   const hijriFormat = new Intl.DateTimeFormat(isAr ? 'ar-SA-u-ca-islamic' : 'en-US-u-ca-islamic', {
     day: 'numeric',
@@ -28,26 +59,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
     year: 'numeric'
   }).format(today);
 
+  const hasNews = (prayerData?.news?.length ?? 0) > 0;
+  const hasAzkar = (prayerData?.azkar?.length ?? 0) > 0;
+  const hasNotifications = hasNews || hasAzkar;
+
   return (
     <div className="flex flex-col h-dvh">
-      {/* Header */}
-      <header className={`p-3 md:p-6 flex items-center justify-between glass-panel border-x-0 border-t-0 z-20 shrink-0 ${isTV ? 'text-xl' : ''}`}>
+      {/* ═══ Mobile Header: only burger + small logo ═══ */}
+      <header className="md:hidden flex items-center justify-between px-4 py-2 z-20 shrink-0 absolute top-0 left-0 right-0" style={{ paddingTop: 'max(0.5rem, env(safe-area-inset-top))' }}>
+        <button
+          onClick={openDrawer}
+          className="relative p-2 rounded-xl hover:bg-white/10 text-primary transition-colors"
+        >
+          <Menu size={26} />
+          {hasUnread && (
+            <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-background" />
+          )}
+        </button>
+        <img
+          src="/images/mosque-logo.png"
+          alt="Al Faruk Moschee"
+          className="h-9 w-9 object-contain opacity-80"
+        />
+      </header>
 
-        {/* Mobile: Hamburger + Mosque name */}
-        <div className="flex items-center gap-3 md:hidden">
-          <button
-            onClick={() => setDrawerOpen(true)}
-            className="p-2 rounded-xl hover:bg-white/10 text-primary transition-colors"
-          >
-            <Menu size={24} />
-          </button>
-          <h1 className="font-display font-bold text-lg text-primary drop-shadow-md truncate">
-            {isAr ? prayerData?.mosque?.nameAr || 'مسجد الفاروق' : prayerData?.mosque?.name || 'Al Faruk Moschee'}
-          </h1>
-        </div>
-
-        {/* Desktop: Full mosque info */}
-        <div className="hidden md:flex flex-col">
+      {/* ═══ Desktop/TV Header: unchanged ═══ */}
+      <header className={`hidden md:flex p-6 items-center justify-between glass-panel border-x-0 border-t-0 z-20 shrink-0 ${isTV ? 'text-xl' : ''}`}>
+        <div className="flex flex-col">
           <h1 className="font-display font-bold text-3xl lg:text-4xl text-primary drop-shadow-md">
             {isAr ? prayerData?.mosque?.nameAr || 'مسجد الفاروق' : prayerData?.mosque?.name || 'Al Faruk Moschee'}
           </h1>
@@ -56,122 +94,188 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </p>
         </div>
 
-        {/* Desktop: Hijri + Gregorian dates */}
-        <div className="hidden md:flex flex-col items-center flex-1">
+        <div className="flex flex-col items-center flex-1">
           <div className="text-xl md:text-2xl font-bold text-foreground drop-shadow">{hijriFormat}</div>
           <div className="text-sm md:text-base text-muted-foreground">{gregorianFormat}</div>
         </div>
 
-        {/* Mobile: Language toggle only */}
-        <button 
-          onClick={toggleLanguage} 
-          className="md:hidden px-3 py-1.5 rounded-xl bg-primary/20 text-primary font-bold hover:bg-primary/30 transition-colors uppercase text-sm"
-        >
-          {isAr ? 'DE' : 'عربي'}
-        </button>
-
-        {/* Desktop: All icons */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <Link href="/qibla" className="p-3 rounded-xl hover:bg-white/10 text-primary transition-colors cursor-pointer" title="Qibla Compass">
             <Compass size={isTV ? 32 : 24} />
           </Link>
-          
           <button onClick={toggleAthan} className="p-3 rounded-xl hover:bg-white/10 text-primary transition-colors" title="Toggle Athan">
             {athanEnabled ? <Volume2 size={isTV ? 32 : 24} /> : <VolumeX size={isTV ? 32 : 24} className="opacity-50" />}
           </button>
-          
           <Link href="/tv" className="p-3 rounded-xl hover:bg-white/10 text-primary transition-colors hidden lg:block cursor-pointer" title="TV Mode">
             <Monitor size={24} />
           </Link>
-          
-          <button 
-            onClick={toggleLanguage} 
-            className="px-4 py-2 rounded-xl bg-primary/20 text-primary font-bold hover:bg-primary/30 transition-colors uppercase"
-          >
+          <button onClick={toggleLanguage} className="px-4 py-2 rounded-xl bg-primary/20 text-primary font-bold hover:bg-primary/30 transition-colors uppercase">
             {isAr ? 'DE' : 'عربي'}
           </button>
-          
           <Link href="/admin" className="p-3 rounded-xl hover:bg-white/10 text-muted-foreground transition-colors cursor-pointer">
             <Settings size={isTV ? 32 : 24} />
           </Link>
         </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
+      {/* ═══ Mobile Drawer ═══ */}
       {drawerOpen && (
         <div className="fixed inset-0 z-50 md:hidden" onClick={() => setDrawerOpen(false)}>
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
           <div
-            className="absolute top-0 left-0 h-full w-72 bg-[#2a322e] border-r border-primary/20 shadow-2xl flex flex-col"
+            className="absolute top-0 left-0 h-full w-80 bg-[#2a322e] border-r border-primary/20 shadow-2xl flex flex-col overflow-y-auto"
+            style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)' }}
             onClick={e => e.stopPropagation()}
           >
-            {/* Drawer header */}
-            <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <h2 className="text-primary font-bold text-lg">
-                {isAr ? 'القائمة' : 'Menü'}
-              </h2>
+            {/* Drawer header with logo */}
+            <div className="flex items-center gap-3 p-4 border-b border-white/10">
+              <img src="/images/mosque-logo.png" alt="" className="h-10 w-10 object-contain" />
+              <div className="flex-1">
+                <h2 className="text-primary font-bold text-base leading-tight">
+                  {isAr ? 'مسجد الفاروق' : 'Al Faruk Moschee'}
+                </h2>
+                <p className="text-muted-foreground text-xs opacity-70">
+                  {isAr ? 'المسلمون في بوتسدام' : 'Muslime in Potsdam e.V'}
+                </p>
+              </div>
               <button onClick={() => setDrawerOpen(false)} className="p-2 rounded-xl hover:bg-white/10 text-muted-foreground">
                 <X size={20} />
               </button>
             </div>
 
-            {/* Drawer items */}
-            <nav className="flex-1 flex flex-col gap-1 p-3">
+            {/* Navigation items */}
+            <nav className="flex flex-col gap-0.5 p-3">
+              {/* External: Website */}
+              <a
+                href="https://www.islam-potsdam.de"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors"
+              >
+                <ExternalLink size={20} className="text-primary" />
+                <span className="font-semibold text-sm">{isAr ? 'الصفحة الرئيسية' : 'Startseite'}</span>
+              </a>
+
+              {/* External: Über Uns */}
+              <a
+                href="https://www.islam-potsdam.de/ueber-uns/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors"
+              >
+                <Info size={20} className="text-primary" />
+                <span className="font-semibold text-sm">{isAr ? 'من نحن' : 'Über Uns'}</span>
+              </a>
+
+              <div className="h-px bg-white/10 my-1" />
+
+              {/* Language */}
               <button
                 onClick={() => { toggleLanguage(); setDrawerOpen(false); }}
-                className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 text-foreground transition-colors"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors"
               >
-                <span className="text-primary font-bold text-lg">🌐</span>
-                <span className="font-semibold">{isAr ? 'Deutsch' : 'العربية'}</span>
+                <span className="text-primary font-bold text-lg w-5 text-center">🌐</span>
+                <span className="font-semibold text-sm">{isAr ? 'Deutsch' : 'العربية'}</span>
               </button>
 
+              {/* Athan */}
               <button
                 onClick={() => { toggleAthan(); setDrawerOpen(false); }}
-                className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 text-foreground transition-colors"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors"
               >
                 {athanEnabled ? <Volume2 size={20} className="text-primary" /> : <VolumeX size={20} className="text-muted-foreground" />}
-                <span className="font-semibold">{isAr ? 'الأذان' : 'Athan'}</span>
+                <span className="font-semibold text-sm">{isAr ? 'الأذان' : 'Athan'}</span>
                 <span className={`ml-auto text-xs px-2 py-0.5 rounded-full ${athanEnabled ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
                   {athanEnabled ? (isAr ? 'مفعّل' : 'An') : (isAr ? 'معطّل' : 'Aus')}
                 </span>
               </button>
 
+              {/* Qibla */}
               <Link
                 href="/qibla"
                 onClick={() => setDrawerOpen(false)}
-                className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 text-foreground transition-colors cursor-pointer"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors cursor-pointer"
               >
                 <Compass size={20} className="text-primary" />
-                <span className="font-semibold">{isAr ? 'القبلة' : 'Qibla'}</span>
+                <span className="font-semibold text-sm">{isAr ? 'القبلة' : 'Qibla'}</span>
               </Link>
 
+              {/* TV */}
               <Link
                 href="/tv"
                 onClick={() => setDrawerOpen(false)}
-                className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 text-foreground transition-colors cursor-pointer"
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors cursor-pointer"
               >
                 <Monitor size={20} className="text-primary" />
-                <span className="font-semibold">{isAr ? 'وضع التلفاز' : 'TV-Modus'}</span>
+                <span className="font-semibold text-sm">{isAr ? 'وضع التلفاز' : 'TV-Modus'}</span>
               </Link>
+
+              <div className="h-px bg-white/10 my-1" />
+
+              {/* Gebetszeiten des Monats — placeholder */}
+              <div className="flex items-center gap-4 px-4 py-3 rounded-xl text-muted-foreground/50 cursor-default">
+                <Calendar size={20} />
+                <span className="font-semibold text-sm">{isAr ? 'مواقيت الشهر' : 'Monatszeiten'}</span>
+                <span className="ml-auto text-xs bg-white/5 px-2 py-0.5 rounded-full">{isAr ? 'قريباً' : 'Bald'}</span>
+              </div>
+
+              {/* Spenden — placeholder */}
+              <div className="flex items-center gap-4 px-4 py-3 rounded-xl text-muted-foreground/50 cursor-default">
+                <Heart size={20} />
+                <span className="font-semibold text-sm">{isAr ? 'التبرع' : 'Spenden'}</span>
+                <span className="ml-auto text-xs bg-white/5 px-2 py-0.5 rounded-full">{isAr ? 'قريباً' : 'Bald'}</span>
+              </div>
             </nav>
 
+            {/* ═══ News & Hadiths section inside drawer ═══ */}
+            {hasNotifications && (
+              <div className="px-4 pb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Newspaper size={16} className="text-primary" />
+                  <h3 className="text-primary font-bold text-sm">
+                    {isAr ? 'أخبار وأحاديث' : 'Nachrichten & Hadithe'}
+                  </h3>
+                </div>
+
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                  {hasNews && prayerData!.news.map((n: any, i: number) => (
+                    <div key={`news-${i}`} className="bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
+                      <p className="text-xs text-primary font-semibold mb-0.5">{isAr ? 'خبر' : 'Nachricht'}</p>
+                      <p className="text-sm text-foreground leading-relaxed">
+                        {isAr ? n.textAr : n.text}
+                      </p>
+                    </div>
+                  ))}
+
+                  {hasAzkar && prayerData!.azkar.map((a: any, i: number) => (
+                    <div key={`hadith-${i}`} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
+                      <p className="text-xs text-muted-foreground font-semibold mb-0.5">{isAr ? 'حديث' : 'Hadith'}</p>
+                      <p className="text-sm text-foreground leading-relaxed" style={isAr ? { direction: 'rtl' } : undefined}>
+                        {isAr ? a.hadith_ar : a.hadith_de}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Drawer footer */}
-            <div className="p-4 border-t border-white/10 text-center">
+            <div className="mt-auto p-4 border-t border-white/10 text-center">
               <p className="text-muted-foreground text-xs opacity-60">
-                {prayerData?.mosque?.address || 'Am Kanal 61, 14467 Potsdam'}
+                Am Kanal 61, 14467 Potsdam
               </p>
             </div>
           </div>
         </div>
       )}
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col p-4 md:p-8 z-10 overflow-y-auto relative">
+      {/* ═══ Main Content Area ═══ */}
+      <main className="flex-1 flex flex-col p-4 md:p-8 z-10 overflow-y-auto relative" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
         {children}
       </main>
 
-      {/* Bottom Tickers */}
-      <div className="shrink-0 z-20">
+      {/* ═══ Bottom Tickers — desktop/TV only ═══ */}
+      <div className="hidden md:block shrink-0 z-20">
         {prayerData?.news && prayerData.news.length > 0 && (
           <div
             dir={isAr ? 'rtl' : 'ltr'}

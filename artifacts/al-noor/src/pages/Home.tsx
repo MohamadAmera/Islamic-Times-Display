@@ -66,7 +66,7 @@ export default function Home() {
   return (
     <Layout>
       {/* ═══════ MOBILE VIEW ═══════ */}
-      <div className="md:hidden flex flex-col gap-4 pb-4">
+      <div className="md:hidden flex flex-col gap-4 pb-4 pt-8">
         {/* Quranic verse */}
         <div className="text-center pt-2">
           <p
