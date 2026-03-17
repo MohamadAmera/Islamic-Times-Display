@@ -2,11 +2,15 @@ import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { usePrayerContext } from '@/context/PrayerContext';
 import { Monitor, Volume2, VolumeX, Settings, Compass, Menu, X, ExternalLink, Info, Newspaper, Calendar, Heart } from 'lucide-react';
 import { Link } from 'wouter';
+import type { PrayerData, NewsItem, HadithItem } from '@workspace/api-client-react';
 
-function computeContentHash(prayerData: any): string {
+function computeContentHash(prayerData: PrayerData | null): string {
   if (!prayerData) return '';
-  const newsText = (prayerData.news || []).map((n: any) => n.text + n.textAr).join('|');
-  const azkarText = (prayerData.azkar || []).map((a: any) => (a.hadith_ar || '') + (a.hadith_de || '')).join('|');
+  const newsItems: NewsItem[] = prayerData.news || [];
+  const azkarItems: HadithItem[] = prayerData.azkar || [];
+  if (newsItems.length === 0 && azkarItems.length === 0) return '';
+  const newsText = newsItems.map((n) => n.text + n.textAr).join('|');
+  const azkarText = azkarItems.map((a) => a.hadith_ar + a.hadith_de).join('|');
   let hash = 0;
   const str = newsText + '###' + azkarText;
   for (let i = 0; i < str.length; i++) {
@@ -72,7 +76,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           className="relative p-2 rounded-xl hover:bg-white/10 text-primary transition-colors"
         >
           <Menu size={26} />
-          {hasUnread && (
+          {hasNotifications && hasUnread && (
             <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-red-500 rounded-full border border-background" />
           )}
         </button>
@@ -238,7 +242,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </div>
 
                 <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-                  {hasNews && prayerData!.news.map((n: any, i: number) => (
+                  {hasNews && prayerData!.news.map((n, i) => (
                     <div key={`news-${i}`} className="bg-primary/10 border border-primary/20 rounded-lg px-3 py-2">
                       <p className="text-xs text-primary font-semibold mb-0.5">{isAr ? 'خبر' : 'Nachricht'}</p>
                       <p className="text-sm text-foreground leading-relaxed">
@@ -247,7 +251,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     </div>
                   ))}
 
-                  {hasAzkar && prayerData!.azkar.map((a: any, i: number) => (
+                  {hasAzkar && prayerData!.azkar.map((a, i) => (
                     <div key={`hadith-${i}`} className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
                       <p className="text-xs text-muted-foreground font-semibold mb-0.5">{isAr ? 'حديث' : 'Hadith'}</p>
                       <p className="text-sm text-foreground leading-relaxed" style={isAr ? { direction: 'rtl' } : undefined}>
