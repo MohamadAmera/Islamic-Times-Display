@@ -70,6 +70,11 @@
       "id": "1773725688386",
       "text": "Neue Moschee eröffnet am Mittwoch: Alle sind eingeladen.",
       "textAr": "افتتاح المسجد الجديد الجميع مدعوين "
+    },
+    {
+      "id": "1773725855714",
+      "text": "Der Supermarkt gratuliert Ihnen zum Eid Al Fitr ",
+      "textAr": "الجمعية تبارك لكم عيدكم بأجمل الدعوات."
     }
   ],
   "azkar": [
@@ -242,5 +247,5 @@
       "hadith_de": "Der zweiundvierzigste Hadith\n\nÜber Anas (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Allah der Erhabene sagte: O Sohn Adams, solange du Mich anrufst und auf Mich hoffst, vergebe Ich dir...\" (Überliefert von at-Tirmidhi)"
     }
   ],
-  "lastUpdated": "2026-03-17T05:35:54.994Z"
+  "lastUpdated": "2026-03-17T05:39:17.196Z"
 }
