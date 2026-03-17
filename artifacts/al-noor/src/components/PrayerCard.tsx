@@ -6,6 +6,7 @@ import type { PrayerTime } from '@workspace/api-client-react';
 interface PrayerCardProps {
   prayer: PrayerTime;
   index: number;
+  showIqama?: boolean;
 }
 
 function addMinutes(time: string, minutes: number): string {
@@ -16,7 +17,7 @@ function addMinutes(time: string, minutes: number): string {
   return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
 }
 
-export function PrayerCard({ prayer, index }: PrayerCardProps) {
+export function PrayerCard({ prayer, index, showIqama = true }: PrayerCardProps) {
   const { language, isTV, currentPrayerIndex, nextPrayerIndex } = usePrayerContext();
   const isAr = language === 'ar';
 
@@ -72,7 +73,7 @@ export function PrayerCard({ prayer, index }: PrayerCardProps) {
           </div>
 
           {/* Iqama time */}
-          {iqamaTime && (
+          {showIqama && iqamaTime && (
             <div className={`
               flex items-center gap-1 mt-1
               ${isTV ? 'text-lg' : 'text-xs md:text-sm'}
