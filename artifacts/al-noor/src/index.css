@@ -95,28 +95,33 @@
   100% { transform: translateX(50%); }
 }
 
+/* LTR tickers — text moves right-to-left (standard) */
 .animate-marquee {
   animation: marquee 60s linear infinite;
 }
-
-[dir="rtl"] .animate-marquee {
-  animation: marquee-rtl 60s linear infinite;
-}
-
 .animate-marquee:hover {
   animation-play-state: paused;
 }
 
-/* Slower ticker for long hadith text */
 .animate-marquee-slow {
   animation: marquee 180s linear infinite;
 }
-
-[dir="rtl"] .animate-marquee-slow {
-  animation: marquee-rtl 180s linear infinite;
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
 }
 
-.animate-marquee-slow:hover {
+/* RTL tickers — text moves left-to-right (for Arabic) */
+.animate-marquee-rtl {
+  animation: marquee-rtl 60s linear infinite;
+}
+.animate-marquee-rtl:hover {
+  animation-play-state: paused;
+}
+
+.animate-marquee-rtl-slow {
+  animation: marquee-rtl 180s linear infinite;
+}
+.animate-marquee-rtl-slow:hover {
   animation-play-state: paused;
 }
 

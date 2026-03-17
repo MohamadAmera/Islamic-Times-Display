@@ -88,7 +88,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               {isAr ? ':أخبار' : 'NEWS:'}
             </div>
             <div className="flex-1 overflow-hidden">
-              <div className={`inline-block animate-marquee whitespace-nowrap ${isTV ? 'text-2xl' : 'text-sm md:text-base'}`}>
+              <div className={`inline-block whitespace-nowrap ${isAr ? 'animate-marquee-rtl' : 'animate-marquee'} ${isTV ? 'text-2xl' : 'text-sm md:text-base'}`}>
                 {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
                 &nbsp;&nbsp;•&nbsp;&nbsp;
                 {prayerData.news.map(n => isAr ? n.textAr : n.text).join('  •  ')}
@@ -109,7 +109,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 :حديث
               </div>
               <div className="flex-1 overflow-hidden">
-                <div className={`inline-block animate-marquee-slow whitespace-nowrap ${isTV ? 'text-3xl' : 'text-sm md:text-base'}`}>
+                <div className={`inline-block animate-marquee-rtl-slow whitespace-nowrap ${isTV ? 'text-3xl' : 'text-sm md:text-base'}`}>
                   {prayerData.azkar.map(a => a.hadith_ar).join('  ✦  ')}
                   &nbsp;&nbsp;✦&nbsp;&nbsp;
                   {prayerData.azkar.map(a => a.hadith_ar).join('  ✦  ')}
