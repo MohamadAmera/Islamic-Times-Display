@@ -73,14 +73,14 @@ export default function Home() {
           <p
             style={{
               fontFamily: "'Amiri', 'Noto Naskh Arabic', serif",
-              fontSize: 'clamp(0.95rem, 4.2vw, 1.25rem)',
+              fontSize: 'clamp(1.45rem, 7vw, 2rem)',
               color: '#d6a93e',
               direction: 'rtl',
               lineHeight: 1.7,
             }}
           >
-            إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ
-            <span style={{ fontWeight: 700 }}> كِتَابًا مَّوْقُوتًا</span>
+            إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ<br />
+            <span style={{ fontWeight: 700 }}>كِتَابًا مَّوْقُوتًا</span>
           </p>
         </div>
 
