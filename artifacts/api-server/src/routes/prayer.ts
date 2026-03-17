@@ -224,6 +224,76 @@ router.post("/prayer/hadith", (req, res) => {
   }
 });
 
+// GET /api/monthly-prayer-times?month=M — returns all days for the given month
+router.get("/monthly-prayer-times", (req, res) => {
+  try {
+    if (!existsSync(DIYANET_FILE)) {
+      res.status(404).json({ success: false, message: "No Diyanet data available. Please upload Diyanet data first." });
+      return;
+    }
+
+    const diyanet: DiyanetData = JSON.parse(readFileSync(DIYANET_FILE, "utf-8"));
+    const month = parseInt(req.query.month as string, 10);
+
+    if (isNaN(month) || month < 1 || month > 12) {
+      res.status(400).json({ success: false, message: "Invalid month parameter (1–12)" });
+      return;
+    }
+
+    const year = diyanet.year || new Date().getFullYear();
+    const monthData = diyanet.times?.[String(month)];
+
+    if (!monthData) {
+      res.status(404).json({ success: false, message: `No data found for month ${month}` });
+      return;
+    }
+
+    const WEEKDAYS_DE = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+    const days = Object.keys(monthData)
+      .map((d) => parseInt(d, 10))
+      .sort((a, b) => a - b)
+      .map((day) => {
+        const dayData = (monthData as any)[String(day)];
+        const date = new Date(year, month - 1, day);
+        const weekdayDE = WEEKDAYS_DE[date.getDay()];
+        const gregorianDate = `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.`;
+
+        let hijriDate = "";
+        const hijriRaw: string = dayData.hijri_date || "";
+        if (hijriRaw) {
+          const parts = hijriRaw.split("/");
+          if (parts.length === 3) {
+            hijriDate = `${parts[2].padStart(2, "0")}.${parts[1].padStart(2, "0")}.`;
+          }
+        }
+
+        return {
+          day,
+          weekdayDE,
+          gregorianDate,
+          hijriDate,
+          times: {
+            p1: dayData.p1?.t ?? "",
+            p2: dayData.p2?.t ?? "",
+            p3: dayData.p3?.t ?? "",
+            p4: dayData.p4?.t ?? "",
+            p5: dayData.p5?.t ?? "",
+            p6: dayData.p6?.t ?? "",
+          },
+        };
+      });
+
+    // Extract hijri year from the first day entry for the title
+    const firstDayRaw = (monthData as any)[String(Object.keys(monthData).map(Number).sort((a,b)=>a-b)[0])]?.hijri_date || '';
+    const hijriYear = firstDayRaw.split('/')[0] || '';
+
+    res.json({ success: true, year, month, city: diyanet.city || "", hijriYear, days });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Failed to read monthly prayer data" });
+  }
+});
+
 // POST /api/admin/verify
 router.post("/admin/verify", (req, res) => {
   try {

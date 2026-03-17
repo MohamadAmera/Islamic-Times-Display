@@ -10,6 +10,7 @@ import Home from "@/pages/Home";
 import Qibla from "@/pages/Qibla";
 import Admin from "@/pages/Admin";
 import TVHome from "@/pages/TVHome";
+import MonthlyCalendar from "@/pages/MonthlyCalendar";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/tv" component={TVHome} />
       <Route path="/qibla" component={Qibla} />
+      <Route path="/monthly" component={MonthlyCalendar} />
       <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>

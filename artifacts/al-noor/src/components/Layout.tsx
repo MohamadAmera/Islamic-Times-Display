@@ -240,12 +240,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
               <div className="h-px bg-white/10 my-1" />
 
-              {/* Gebetszeiten des Monats — placeholder */}
-              <div className="flex items-center gap-4 px-4 py-3 rounded-xl text-muted-foreground/50 cursor-default">
-                <Calendar size={20} />
+              {/* Gebetszeiten des Monats */}
+              <Link
+                href="/monthly"
+                onClick={() => setDrawerOpen(false)}
+                className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-white/10 text-foreground transition-colors cursor-pointer"
+              >
+                <Calendar size={20} className="text-primary" />
                 <span className="font-semibold text-sm">{isAr ? 'مواقيت الشهر' : 'Monatszeiten'}</span>
-                <span className="ml-auto text-xs bg-white/5 px-2 py-0.5 rounded-full">{isAr ? 'قريباً' : 'Bald'}</span>
-              </div>
+              </Link>
 
               {/* Spenden — placeholder */}
               <div className="flex items-center gap-4 px-4 py-3 rounded-xl text-muted-foreground/50 cursor-default">

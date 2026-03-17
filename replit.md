@@ -61,14 +61,15 @@ artifacts-monorepo/
 - **Dynamic Backgrounds**: Background changes based on current prayer period
 - **TV Mode**: Auto-scales for large 4K screens with toggle button
 - **Audio Athan**: Toggle to play Athan sound at prayer time
-- **Qibla Compass**: Uses Geolocation API to calculate Qibla direction
+- **Qibla Compass**: AR camera + compass fallback with real-time orientation, green alignment flash, vibration
 - **Hijri Calendar**: Shows current Hijri date via Intl.DateTimeFormat
 - **Daily Azkar**: Scrolling ticker at bottom of screen
 - **News Ticker**: Mosque announcements scrolling ticker
-- **Language Toggle**: Arabic (RTL) / English (LTR) with persistent preference
+- **Language Toggle**: Arabic (RTL) / German (LTR) with persistent preference
 - **Iqama Times**: Each prayer has a configurable `iqamaOffset` (minutes after Adhan); shown in PrayerCard and TV mode; admin-editable with live preview
 - **Admin Dashboard**: Password-protected at /admin to update prayer data, times, and iqama offsets
 - **PWA**: manifest.json + Service Worker for offline mode and notifications
+- **Monthly Prayer Times (Monatszeiten)**: Full month prayer calendar at /monthly — select current or next month, bilingual (AR/DE) table with mosque header, export to PDF via browser print dialog
 
 ## Admin Access
 
@@ -78,9 +79,12 @@ artifacts-monorepo/
 
 ## API Endpoints
 
-- `GET /api/prayer-data` — Returns all prayer data
+- `GET /api/prayer-data` — Returns all prayer data (today's times, overlaid from Diyanet if available)
+- `GET /api/monthly-prayer-times?month=M` — Returns all days for month M (1-12) from Diyanet data
 - `PUT /api/admin/prayer-data` — Update prayer data (requires adminPassword in body)
 - `POST /api/admin/verify` — Verify admin password
+- `POST /api/admin/diyanet-upload` — Upload full Diyanet yearly JSON
+- `POST /api/prayer/hadith` — Replace azkar array with uploaded hadiths
 
 ## Data
 
