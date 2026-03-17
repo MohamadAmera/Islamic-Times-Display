@@ -489,8 +489,8 @@ export default function TVHome() {
                     <div className="flex flex-col gap-0.5">
                       {/* Arabic name */}
                       <div
+                        className="text-[44px]"
                         style={{
-                          fontSize: "clamp(1.3rem,2vw,2.6rem)",
                           fontWeight: 800,
                           color: isNext ? "#d6a93e" : "#ffffff",
                           lineHeight: 1.1,

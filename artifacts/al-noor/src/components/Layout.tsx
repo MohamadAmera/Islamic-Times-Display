@@ -29,9 +29,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }).format(today);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-dvh">
       {/* Header */}
-      <header className={`p-4 md:p-6 flex items-center justify-between glass-panel border-x-0 border-t-0 z-20 ${isTV ? 'text-xl' : ''}`}>
+      <header className={`p-4 md:p-6 flex items-center justify-between glass-panel border-x-0 border-t-0 z-20 shrink-0 ${isTV ? 'text-xl' : ''}`}>
         <div className="flex flex-col">
           <h1 className={`font-display font-bold text-2xl md:text-3xl lg:text-4xl text-primary drop-shadow-md`}>
             {isAr ? prayerData?.mosque?.nameAr || 'مسجد الفاروق' : prayerData?.mosque?.name || 'Al Faruk Moschee'}
@@ -73,7 +73,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col p-4 md:p-8 z-10 overflow-hidden relative">
+      <main className="flex-1 flex flex-col p-4 md:p-8 z-10 overflow-y-auto relative">
         {children}
       </main>
 
@@ -98,8 +98,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         )}
 
         {prayerData?.azkar && prayerData.azkar.length > 0 && (
-          <>
-            {/* Row 1: Arabic — RTL marquee, text enters from left and exits right */}
+          isAr ? (
+            /* Arabic mode — RTL hadith only */
             <div
               dir="rtl"
               className={`glass-panel border-x-0 border-b-0 flex overflow-hidden whitespace-nowrap items-center
@@ -116,8 +116,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </div>
-
-            {/* Row 2: German — LTR marquee, text enters from right and exits left */}
+          ) : (
+            /* German/English mode — LTR hadith only */
             <div
               dir="ltr"
               className={`glass-panel border-x-0 border-b-0 flex overflow-hidden whitespace-nowrap items-center
@@ -134,7 +134,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </div>
-          </>
+          )
         )}
       </div>
     </div>
