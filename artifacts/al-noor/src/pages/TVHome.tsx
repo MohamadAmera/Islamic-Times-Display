@@ -143,7 +143,7 @@ export default function TVHome() {
 
       {/* ══════ TOP BAR ══════ */}
       <header
-        className="flex items-center justify-between px-10 py-5 z-10 shrink-0"
+        className="flex items-center justify-between px-8 py-3 z-10 shrink-0"
         style={{
           borderBottom: "1px solid rgba(214,169,62,0.25)",
           background: "rgba(0,0,0,0.3)",
@@ -154,7 +154,7 @@ export default function TVHome() {
         <div className="flex flex-col" style={{ minWidth: "28%" }}>
           <h1
             style={{
-              fontSize: "clamp(1.4rem,2.2vw,2.6rem)",
+              fontSize: "clamp(1.1rem,1.7vw,2rem)",
               fontWeight: 700,
               color: "#d6a93e",
               lineHeight: 1.2,
@@ -166,7 +166,7 @@ export default function TVHome() {
           </h1>
           <h2
             style={{
-              fontSize: "clamp(1rem,1.4vw,1.6rem)",
+              fontSize: "clamp(0.85rem,1.1vw,1.3rem)",
               fontWeight: 600,
               color: "rgba(214,169,62,0.65)",
               lineHeight: 1.2,
@@ -191,7 +191,7 @@ export default function TVHome() {
           <div
             style={{
               fontFamily: "'Outfit', monospace",
-              fontSize: "clamp(3.8rem,6.5vw,7rem)",
+              fontSize: "clamp(2.8rem,4.8vw,5.5rem)",
               fontWeight: 800,
               color: "#ffffff",
               letterSpacing: "0.06em",
@@ -219,7 +219,7 @@ export default function TVHome() {
         <div className="flex flex-col items-end" style={{ minWidth: "28%" }}>
           <div
             style={{
-              fontSize: "clamp(1.1rem,1.7vw,2rem)",
+              fontSize: "clamp(0.95rem,1.4vw,1.7rem)",
               fontWeight: 700,
               color: "#d6a93e",
               textAlign: "end",
@@ -264,10 +264,10 @@ export default function TVHome() {
       >
         {/* LEFT: Countdown panel */}
         <div
-          className="flex flex-col items-center justify-center gap-5"
+          className="flex flex-col items-center justify-center gap-3"
           style={{
-            width: "38%",
-            padding: "3vw",
+            width: "35%",
+            padding: "2vw",
             borderRight: "1px solid rgba(214,169,62,0.18)",
             background: "rgba(0,0,0,0.2)",
           }}
@@ -286,7 +286,7 @@ export default function TVHome() {
             </div>
             <div
               style={{
-                fontSize: "clamp(1.6rem,2.8vw,3.2rem)",
+                fontSize: "clamp(1.2rem,2.2vw,2.6rem)",
                 color: "#9ca19d",
                 fontWeight: 600,
                 direction: "rtl",
@@ -337,7 +337,7 @@ export default function TVHome() {
             <div style={{ lineHeight: 1.15, textAlign: "center" }}>
               <div
                 style={{
-                  fontSize: "clamp(2.2rem,4.5vw,5.5rem)",
+                  fontSize: "clamp(1.8rem,3.5vw,4.5rem)",
                   fontWeight: 900,
                   color: "#d6a93e",
                   direction: "rtl",
@@ -347,7 +347,7 @@ export default function TVHome() {
               </div>
               <div
                 style={{
-                  fontSize: "clamp(1rem,1.5vw,1.8rem)",
+                  fontSize: "clamp(0.85rem,1.2vw,1.5rem)",
                   color: "rgba(214,169,62,0.6)",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
@@ -368,14 +368,14 @@ export default function TVHome() {
                   style={{
                     background: "rgba(214,169,62,0.1)",
                     border: "1px solid rgba(214,169,62,0.35)",
-                    borderRadius: 16,
-                    padding: "clamp(10px,1.4vw,22px) clamp(16px,2.2vw,36px)",
-                    minWidth: "clamp(90px,11vw,145px)",
+                    borderRadius: 14,
+                    padding: "clamp(8px,1.1vw,18px) clamp(12px,1.7vw,28px)",
+                    minWidth: "clamp(70px,9vw,120px)",
                   }}
                 >
                   <div
                     style={{
-                      fontSize: "clamp(3rem,6vw,7.5rem)",
+                      fontSize: "clamp(2.4rem,4.8vw,6rem)",
                       fontWeight: 900,
                       color: "#ffffff",
                       lineHeight: 1,
@@ -413,11 +413,11 @@ export default function TVHome() {
                 {i < 1 && (
                   <div
                     style={{
-                      fontSize: "clamp(2.5rem,5vw,6rem)",
+                      fontSize: "clamp(2rem,4vw,5rem)",
                       fontWeight: 900,
                       color: "rgba(214,169,62,0.6)",
                       lineHeight: 1,
-                      marginBottom: 30,
+                      marginBottom: 24,
                     }}
                   >
                     :
@@ -430,7 +430,7 @@ export default function TVHome() {
           {/* Next prayer adhan time */}
           <div
             style={{
-              fontSize: "clamp(1.4rem,2.2vw,2.8rem)",
+              fontSize: "clamp(1.1rem,1.8vw,2.2rem)",
               color: "rgba(255,255,255,0.5)",
               fontFamily: "'Outfit', monospace",
               letterSpacing: "0.08em",
@@ -443,10 +443,10 @@ export default function TVHome() {
         {/* RIGHT: Prayer grid */}
         <div
           className="flex-1 flex flex-col justify-center"
-          style={{ padding: "2.5vw 3vw" }}
+          style={{ padding: "1.5vw 2vw" }}
         >
           <div
-            className="grid gap-4 h-full"
+            className="grid gap-3 h-full"
             style={{
               gridTemplateColumns: `repeat(${prayers.length <= 4 ? 2 : 3}, 1fr)`,
               gridTemplateRows: "repeat(2, 1fr)",
@@ -466,7 +466,7 @@ export default function TVHome() {
                   key={prayer.name}
                   className="flex flex-col justify-between rounded-2xl transition-all duration-500"
                   style={{
-                    padding: "clamp(16px,2.2vw,36px)",
+                    padding: "clamp(12px,1.6vw,26px)",
                     background: isNext
                       ? "rgba(214,169,62,0.18)"
                       : isCurrent
@@ -490,7 +490,7 @@ export default function TVHome() {
                       {/* Arabic name */}
                       <div
                         style={{
-                          fontSize: "clamp(1.6rem,2.5vw,3.2rem)",
+                          fontSize: "clamp(1.3rem,2vw,2.6rem)",
                           fontWeight: 800,
                           color: isNext ? "#d6a93e" : "#ffffff",
                           lineHeight: 1.1,
@@ -595,7 +595,7 @@ export default function TVHome() {
                       <span
                         style={{
                           fontFamily: "'Outfit', monospace",
-                          fontSize: "clamp(1.8rem,3.2vw,4rem)",
+                          fontSize: "clamp(1.4rem,2.5vw,3.2rem)",
                           fontWeight: 800,
                           color: isNext
                             ? "#ffffff"
@@ -625,7 +625,7 @@ export default function TVHome() {
                         <span
                           style={{
                             fontFamily: "'Outfit', monospace",
-                            fontSize: "clamp(1.3rem,2vw,2.5rem)",
+                            fontSize: "clamp(1rem,1.6vw,2rem)",
                             fontWeight: 700,
                             color: isNext
                               ? "#d6a93e"
@@ -670,7 +670,7 @@ export default function TVHome() {
             <div
               dir="rtl"
               className="flex overflow-hidden whitespace-nowrap items-center"
-              style={{ padding: "8px 0" }}
+              style={{ padding: "5px 0" }}
             >
               <div
                 className="font-bold shrink-0 flex items-center"
@@ -704,7 +704,7 @@ export default function TVHome() {
               dir="ltr"
               className="flex overflow-hidden whitespace-nowrap items-center"
               style={{
-                padding: "6px 0",
+                padding: "4px 0",
                 borderTop: "1px solid rgba(26,36,32,0.15)",
               }}
             >
@@ -753,7 +753,7 @@ export default function TVHome() {
             <div
               dir="rtl"
               className="flex overflow-hidden whitespace-nowrap items-center"
-              style={{ padding: "10px 0" }}
+              style={{ padding: "6px 0" }}
             >
               <div
                 className="font-bold shrink-0 flex items-center"
@@ -787,7 +787,7 @@ export default function TVHome() {
               dir="ltr"
               className="flex overflow-hidden whitespace-nowrap items-center"
               style={{
-                padding: "7px 0",
+                padding: "4px 0",
                 borderTop: "1px solid rgba(214,169,62,0.1)",
               }}
             >
