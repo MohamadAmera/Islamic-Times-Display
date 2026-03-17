@@ -94,20 +94,28 @@ export function Layout({ children }: { children: React.ReactNode }) {
           </div>
         )}
         
-        {prayerData?.azkar && prayerData.azkar.length > 0 && (
-          <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
-            <div className={`text-primary font-bold flex items-center shrink-0 ${isAr ? 'ml-4' : 'mr-4'} ${isTV ? 'text-3xl' : 'text-lg'}`}>
-              {isAr ? 'حديث:' : 'HADITH:'}
-            </div>
-            <div className="flex-1 overflow-hidden relative flex items-center">
-              <div className={`inline-block animate-marquee-slow ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
-                {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
-                <span className="opacity-0">  ✦  </span>
-                {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
+        {prayerData?.azkar && prayerData.azkar.length > 0 && (() => {
+          const hadithNodes = prayerData.azkar.flatMap((a, i, arr) => [
+            <span key={`ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
+            <span key={`dot-${i}`}>&nbsp; · &nbsp;</span>,
+            <span key={`de-${i}`} dir="ltr">{a.hadith_de}</span>,
+            ...(i < arr.length - 1 ? [<span key={`div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
+          ]);
+          return (
+            <div className="glass-panel border-x-0 border-b-0 py-3 md:py-5 px-4 flex overflow-hidden whitespace-nowrap">
+              <div className={`text-primary font-bold flex items-center shrink-0 mr-4 ${isTV ? 'text-3xl' : 'text-lg'}`}>
+                {'HADITH:'}
+              </div>
+              <div className="flex-1 overflow-hidden relative flex items-center" dir="ltr">
+                <div className={`inline-block animate-marquee-slow ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
+                  {hadithNodes}
+                  <span className="opacity-0">&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+                  {hadithNodes.map((n, i) => React.cloneElement(n, { key: `r-${i}` }))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );

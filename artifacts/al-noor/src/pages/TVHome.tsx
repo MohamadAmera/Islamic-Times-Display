@@ -710,56 +710,60 @@ export default function TVHome() {
           </div>
         )}
 
-        {prayerData?.azkar && prayerData.azkar.length > 0 && (
-          <div
-            className="flex overflow-hidden whitespace-nowrap items-center"
-            style={{
-              background: "rgba(0,0,0,0.4)",
-              padding: "13px 0",
-              backdropFilter: "blur(8px)",
-              borderTop: "1px solid rgba(214,169,62,0.15)",
-            }}
-          >
+        {prayerData?.azkar && prayerData.azkar.length > 0 && (() => {
+          const tvHadithNodes = prayerData.azkar.flatMap((a, i, arr) => [
+            <span key={`ar-${i}`} dir="rtl" style={{ unicodeBidi: 'isolate' }}>{a.hadith_ar}</span>,
+            <span key={`dot-${i}`}>&nbsp; · &nbsp;</span>,
+            <span key={`de-${i}`} dir="ltr">{a.hadith_de}</span>,
+            ...(i < arr.length - 1 ? [<span key={`div-${i}`}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>] : []),
+          ]);
+          return (
             <div
-              className="font-bold shrink-0 px-6 flex flex-col items-center leading-tight"
+              className="flex overflow-hidden whitespace-nowrap items-center"
               style={{
-                fontSize: "clamp(1rem,1.4vw,1.6rem)",
-                color: "#d6a93e",
-                borderRight: "1px solid rgba(214,169,62,0.3)",
-                marginRight: 16,
+                background: "rgba(0,0,0,0.4)",
+                padding: "13px 0",
+                backdropFilter: "blur(8px)",
+                borderTop: "1px solid rgba(214,169,62,0.15)",
               }}
             >
-              <span>حديث</span>
-              <span
-                style={{
-                  fontSize: "75%",
-                  opacity: 0.6,
-                  letterSpacing: "0.1em",
-                  fontFamily: "'Outfit', sans-serif",
-                }}
-              >
-                HADITH
-              </span>
-            </div>
-            <div className="flex-1 overflow-hidden">
               <div
-                className="inline-block animate-marquee-slow"
+                className="font-bold shrink-0 px-6 flex flex-col items-center leading-tight"
                 style={{
-                  fontSize: "clamp(1rem,1.35vw,1.6rem)",
-                  color: "rgba(255,255,255,0.85)",
+                  fontSize: "clamp(1rem,1.4vw,1.6rem)",
+                  color: "#d6a93e",
+                  borderRight: "1px solid rgba(214,169,62,0.3)",
+                  marginRight: 16,
                 }}
               >
-                {prayerData.azkar
-                  .map((a) => `${a.hadith_ar}  ·  ${a.hadith_de}`)
-                  .join("  ✦  ")}
-                <span style={{ opacity: 0 }}> ✦ </span>
-                {prayerData.azkar
-                  .map((a) => `${a.hadith_ar}  ·  ${a.hadith_de}`)
-                  .join("  ✦  ")}
+                <span>حديث</span>
+                <span
+                  style={{
+                    fontSize: "75%",
+                    opacity: 0.6,
+                    letterSpacing: "0.1em",
+                    fontFamily: "'Outfit', sans-serif",
+                  }}
+                >
+                  HADITH
+                </span>
+              </div>
+              <div className="flex-1 overflow-hidden" dir="ltr">
+                <div
+                  className="inline-block animate-marquee-slow"
+                  style={{
+                    fontSize: "clamp(1rem,1.35vw,1.6rem)",
+                    color: "rgba(255,255,255,0.85)",
+                  }}
+                >
+                  {tvHadithNodes}
+                  <span style={{ opacity: 0 }}>&nbsp;&nbsp;✦&nbsp;&nbsp;</span>
+                  {tvHadithNodes.map((n, i) => React.cloneElement(n, { key: `r-${i}` }))}
+                </div>
               </div>
             </div>
-          </div>
-        )}
+          );
+        })()}
       </div>
     </div>
   );
