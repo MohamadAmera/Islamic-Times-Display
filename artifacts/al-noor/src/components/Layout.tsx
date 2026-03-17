@@ -34,7 +34,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <header className={`p-4 md:p-6 flex items-center justify-between glass-panel border-x-0 border-t-0 z-20 ${isTV ? 'text-xl' : ''}`}>
         <div className="flex flex-col">
           <h1 className={`font-display font-bold text-2xl md:text-3xl lg:text-4xl text-primary drop-shadow-md`}>
-            {isAr ? prayerData?.mosque?.nameAr || 'النور' : prayerData?.mosque?.name || 'Al-Noor'}
+            {isAr ? prayerData?.mosque?.nameAr || 'مسجد الفاروق' : prayerData?.mosque?.name || 'Al Faruk Moschee'}
           </h1>
           <p className="text-muted-foreground text-sm md:text-base opacity-80">
             {isAr ? prayerData?.mosque?.addressAr : prayerData?.mosque?.address}

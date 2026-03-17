@@ -133,7 +133,7 @@ export function PrayerProvider({ children }: { children: React.ReactNode }) {
         
         // Notification
         if (Notification.permission === 'granted') {
-          new Notification('Al-Noor Prayer Times', {
+          new Notification('Al Faruk Moschee - Gebetszeiten', {
             body: `It is time for ${prayerData?.prayers?.[currentPrayerIndex]?.name} prayer.`,
             icon: '/favicon.svg'
           });

@@ -1,7 +1,7 @@
 {
-  "name": "Al-Noor - Prayer Times",
-  "short_name": "Al-Noor",
-  "description": "Islamic Prayer Times App - النور",
+  "name": "Al Faruk Moschee - Gebetszeiten",
+  "short_name": "Al Faruk",
+  "description": "مسجد الفاروق - Gebetszeiten Potsdam",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0f1e",

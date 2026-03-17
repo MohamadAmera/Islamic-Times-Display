@@ -104,7 +104,7 @@
 }
 
 .animate-marquee-slow {
-  animation: marquee 180s linear infinite;
+  animation: marquee 580s linear infinite;
 }
 .animate-marquee-slow:hover {
   animation-play-state: paused;
@@ -119,7 +119,7 @@
 }
 
 .animate-marquee-rtl-slow {
-  animation: marquee-rtl 180s linear infinite;
+  animation: marquee-rtl 580s linear infinite;
 }
 .animate-marquee-rtl-slow:hover {
   animation-play-state: paused;
