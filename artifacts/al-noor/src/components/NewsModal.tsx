@@ -9,7 +9,8 @@ interface NewsModalProps {
   onClose: () => void;
 }
 
-export function NewsModal({ news, isAr: initialLang, onClose }: NewsModalProps) {
+export function NewsModal({ news: rawNews, isAr: initialLang, onClose }: NewsModalProps) {
+  const news = [...rawNews].reverse();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [lang, setLang] = useState<'ar' | 'de'>(initialLang ? 'ar' : 'de');
