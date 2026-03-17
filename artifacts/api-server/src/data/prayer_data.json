@@ -75,6 +75,11 @@
       "id": "1773724384151",
       "text": "Eid-Gebet um 9:00 Uhr ",
       "textAr": "صلاة العيد الساعة التاسعة"
+    },
+    {
+      "id": "1773725150803",
+      "text": "Schulschließung ",
+      "textAr": "اغلاق المدرسة "
     }
   ],
   "azkar": [
@@ -247,5 +252,5 @@
       "hadith_de": "Der zweiundvierzigste Hadith\n\nÜber Anas (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Allah der Erhabene sagte: O Sohn Adams, solange du Mich anrufst und auf Mich hoffst, vergebe Ich dir...\" (Überliefert von at-Tirmidhi)"
     }
   ],
-  "lastUpdated": "2026-03-17T05:13:47.736Z"
+  "lastUpdated": "2026-03-17T05:26:21.315Z"
 }
