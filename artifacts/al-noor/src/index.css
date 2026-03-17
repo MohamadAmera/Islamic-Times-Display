@@ -107,6 +107,19 @@
   animation-play-state: paused;
 }
 
+/* Slower ticker for long hadith text */
+.animate-marquee-slow {
+  animation: marquee 180s linear infinite;
+}
+
+[dir="rtl"] .animate-marquee-slow {
+  animation: marquee-rtl 180s linear infinite;
+}
+
+.animate-marquee-slow:hover {
+  animation-play-state: paused;
+}
+
 /* Starry Background for Isha */
 .stars {
   background-image: 

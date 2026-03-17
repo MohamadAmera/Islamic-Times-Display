@@ -10,14 +10,14 @@
     {
       "name": "Fadjr",
       "nameAr": "الفجر",
-      "time": "04:26",
+      "time": "04:24",
       "enabled": true,
       "iqamaOffset": 20
     },
     {
       "name": "Shuruk",
       "nameAr": "الشروق",
-      "time": "06:16",
+      "time": "06:14",
       "enabled": true,
       "iqamaOffset": 0
     },
@@ -31,21 +31,21 @@
     {
       "name": "Assr",
       "nameAr": "العصر",
-      "time": "15:29",
+      "time": "15:30",
       "enabled": true,
       "iqamaOffset": 10
     },
     {
       "name": "Maghrib",
       "nameAr": "المغرب",
-      "time": "18:18",
+      "time": "18:20",
       "enabled": true,
       "iqamaOffset": 5
     },
     {
       "name": "Ishaa",
       "nameAr": "العشاء",
-      "time": "20:01",
+      "time": "20:03",
       "enabled": true,
       "iqamaOffset": 10
     }
@@ -69,17 +69,173 @@
   ],
   "azkar": [
     {
-      "hadith_ar": "عَنْ أَمِيرِ الْمُؤْمِنِينَ أَبِي حَفْصٍ عُمَرَ بْنِ الْخَطَّابِ رَضِيَ اللهُ عَنْهُ قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى». (رواه البخاري ومسلم)",
-      "hadith_de": "Über Umar ibn al-Khattab (r): Der Gesandte Allahs ﷺ sagte: «Die Taten werden nur nach den Absichten beurteilt, und jedem Menschen steht nur das zu, was er beabsichtigt hat.» (Überliefert von Al-Bukhari und Muslim)"
+      "hadith_ar": "الحديث الأول\n\nعن أمير المؤمنين أبي حفص عمر بن الخطاب (رضي الله عنه) قال: سمعت رسول الله ﷺ يقول: \"إنما الأعمال بالنيات وإنما لكل امرئ ما نوى، فمن كانت هجرته إلى الله ورسوله، فهجرته إلى الله ورسوله، ومن كانت هجرته لدنيا يصيبها أو امرأة ينكحها، فهجرته إلى ما هاجـر إليه\". (رواه البخاري ومسلم)",
+      "hadith_de": "Der erste Hadith\n\nÜber den Befehlshaber der Gläubigen, Abu Hafs Umar ibn al-Khattab (r), der sagte: Ich hörte den Gesandten Allahs ﷺ sagen: \"Die Taten werden nur nach den Absichten beurteilt, und jedem Menschen steht das zu, was er beabsichtigt hat. Wessen Auswanderung also für Allah und Seinen Gesandten war, dessen Auswanderung ist für Allah und Seinen Gesandten. Und wessen Auswanderung für etwas Weltliches war, das er erlangen wollte, oder für eine Frau, die er heiraten wollte, dessen Auswanderung ist für das, derentwegen er ausgewandert ist.\" (Überliefert von Al-Bukhari und Muslim)"
     },
     {
-      "hadith_ar": "عَنْ عَبْدِ اللهِ بْنِ عُمَرَ رَضِيَ اللهُ عَنْهُمَا قَالَ: سَمِعْتُ رَسُولَ اللهِ ﷺ يَقُولُ: «بُنِيَ الإِسْلامُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لا إِلَهَ إِلا اللهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللهِ، وَإِقَامِ الصَّلاةِ، وَإِيتَاءِ الزَّكَاةِ، وَحَجِّ الْبَيْتِ، وَصَوْمِ رَمَضَانَ». (رواه البخاري ومسلم)",
-      "hadith_de": "Über Abdullah ibn Umar (r): Der Gesandte Allahs ﷺ sagte: «Der Islam ist auf fünf Säulen erbaut: dem Zeugnis, dass es keinen Gott gibt außer Allah und dass Muhammad Sein Gesandter ist, dem Gebet, der Zakat, der Pilgerfahrt und dem Fasten im Ramadan.» (Überliefert von Al-Bukhari und Muslim)"
+      "hadith_ar": "الحديث الثاني\n\nعن عمر (رضي الله عنه) أيضاً قال: بينما نحن جلوس عند رسول الله ﷺ ذات يوم إذ طلع علينا رجل شديد بياض الثياب، شديد سواد الشعر... (رواه مسلم)",
+      "hadith_de": "Der zweite Hadith\n\nEbenfalls über Umar (r): Eines Tages saßen wir beim Gesandten Allahs ﷺ, als ein Mann mit sehr weißer Kleidung und sehr schwarzen Haaren erschien... Er sagte am Ende: \"Es war Dschibril (Gabriel), er kam zu euch, um euch eure Religion zu lehren.\" (Überliefert von Muslim)"
     },
     {
-      "hadith_ar": "عَنْ أَبِي ذَرٍّ الْغِفَارِيِّ رَضِيَ اللهُ عَنْهُ عَنْ النَّبِيِّ ﷺ فِيمَا يَرْوِيهِ عَنْ رَبِّهِ تَبَارَكَ وَتَعَالَى أَنَّهُ قَالَ: «يَا عِبَادِي، إِنِّي حَرَّمْتُ الظُّلْمَ عَلَى نَفْسِي وَجَعَلْتُهُ بَيْنَكُمْ مُحَرَّمًا فَلا تَظَالَمُوا». (رواه مسلم)",
-      "hadith_de": "Über Abu Dharr al-Ghifari (r) vom Propheten ﷺ, der von seinem Herrn überliefert: «O Meine Diener! Ich habe Mir das Unrecht verboten und es auch unter euch verboten — so tut einander kein Unrecht.» (Überliefert von Muslim)"
+      "hadith_ar": "الحديث الثالث\n\nعن أبي عبد الرحمن عبد الله بن عمر بن الخطاب رضي الله عنهما قال: سمعت رسول الله ﷺ يقول: \"بني الإسلام على خمسٍ؛ شهادة أن لا إله إلا الله وأن محمداً رسول الله، وإقام الصلاة، وإيتاء الزكاة، وحج البيت، وصوم رمضان\". (رواه البخاري ومسلم)",
+      "hadith_de": "Der dritte Hadith\n\nÜber Abdullah ibn Umar (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Der Islam ist auf fünf (Säulen) erbaut: Dem Zeugnis, dass es keinen Gott gibt außer Allah und dass Muhammad der Gesandte Allahs ist, der Verrichtung des Gebets, der Entrichtung der Zakat, der Pilgerfahrt zum Haus und dem Fasten im Ramadan.\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الرابع\n\nعن أبي عبد الرحمن عبد الله بن مسعود (رضي الله عنه) قال: حدّثنا رسول الله ﷺ وهو الصادق المصدوق: \"إن أحدكم يجمع خلقه في بطن أمه أربعين يوماً نطفةً...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der vierte Hadith\n\nÜber Abdullah ibn Masud (r): Der Gesandte Allahs ﷺ berichtete uns: \"Die Schöpfung eines jeden von euch wird im Bauch seiner Mutter für vierzig Tage als Samentropfen zusammengetragen...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الخامس\n\nعن أم المؤمنين أم عبد الله عائشة رضي الله عنها قالت: قال رسول الله ﷺ: \"من أحدث في أمرنا هذا ما ليس منه فهو رد\". (رواه البخاري ومسلم)",
+      "hadith_de": "Der fünfte Hadith\n\nÜber Aischa (r): Der Gesandte Allahs ﷺ sagte: \"Wer in diese unsere Angelegenheit etwas Neues einführt, das nicht dazu gehört, so ist es abzuweisen.\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السادس\n\nعن أبي عبد الله النعمان بن بشير رضي الله عنهما قال: سمعت رسول الله ﷺ يقول: \"إن الحلال بيّن، وإن الحرام بيّن، وبينهما أمور مشتبهات...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der sechste Hadith\n\nÜber an-Numan ibn Baschir (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Wahrlich, das Erlaubte ist offenkundig, und das Verbotene ist offenkundig, und zwischen den beiden gibt es zweifelhafte Angelegenheiten...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السابع\n\nعـن أبي رقية تميم بن أوس الداري (رضي الله عنه) أن النبي ﷺ قال: \"الدين النصيحة\"، قلنا لمن؟ قال: \"لله ولكتابه ولرسوله ولأئمة المسلمين وعامتهم\". (رواه مسلم)",
+      "hadith_de": "Der siebte Hadith\n\nÜber Tamim ad-Dari (r): Der Prophet ﷺ sagte: \"Die Religion ist aufrichtiger Rat.\" Wir fragten: \"Gegenüber wem?\" Er sagte: \"Gegenüber Allah, Seinem Buch, Seinem Gesandten, den Führern der Muslime und ihrer Allgemeinheit.\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثامن\n\nعن ابن عمر رضي الله عنهما أن رسول الله ﷺ قال: \"أمرت أن أقاتل الناس حتى يشهدوا أن لا إله إلا الله وأن محمداً رسول الله، ويقيموا الصلاة، ويؤتوا الزكاة...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der achte Hadith\n\nÜber Ibn Umar (r): Der Gesandte Allahs ﷺ sagte: \"Mir wurde befohlen, die Menschen zu bekämpfen, bis sie bezeugen, dass es keinen Gott gibt außer Allah und dass Muhammad der Gesandte Allahs ist, das Gebet verrichten und die Zakat entrichten...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث التاسع\n\nعن أبي هريرة عبد الرحمن بن صخر رضي الله عنه قال: سمعت رسول الله ﷺ يقول: \"ما نهيتكم عنه فاجتنبوه، وما أمرتكم به فأتوا منه ما استطعتم...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der neunte Hadith\n\nÜber Abu Huraira (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Was ich euch verboten habe, das meidet, und was ich euch befohlen habe, davon tut, was ihr könnt...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث العاشر\n\nعن أبي هريرة (رضي الله عنه) قال: قال رسول الله ﷺ: \"إن الله تعـالى طيب لا يقبل إلا طيباً...\" (رواه مسلم)",
+      "hadith_de": "Der zehnte Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Wahrlich, Allah der Erhabene ist gut und Er nimmt nur Gutes an...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الحادي عشر\n\nعن أبي محمد الحسن بن علي بن أبي طالب رضي الله عنهما قال: حفظت من رسول الله ﷺ: \"دع ما يريبك إلى ما لا يريبك\". (رواه الترمذي والنسائي)",
+      "hadith_de": "Der elfte Hadith\n\nÜber al-Hasan ibn Ali (r): Ich habe vom Gesandten Allahs ﷺ bewahrt: \"Verlasse das, was dir Zweifel weckt, für das, was dir keine Zweifel weckt.\" (Überliefert von at-Tirmidhi und an-Nasai)"
+    },
+    {
+      "hadith_ar": "الحديث الثاني عشر\n\nعن أبي هريرة رضي الله تعالى عنه قال: قال رسول الله ﷺ: \"من حسن إسلام المرء تركه مالا يعنيه\". (رواه الترمذي)",
+      "hadith_de": "Der zwölfte Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Zur Schönheit des Islams eines Menschen gehört es, das zu lassen, was ihn nichts angeht.\" (Überliefert von at-Tirmidhi)"
+    },
+    {
+      "hadith_ar": "الحديث الثالث عشر\n\nعن أبي حمزة أنس بن مالك رضي الله عنه خادم رسول الله ﷺ عن النبي ﷺ قال: \"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه\". (رواه البخاري ومسلم)",
+      "hadith_de": "Der dreizehnte Hadith\n\nÜber Anas ibn Malik (r): Der Prophet ﷺ sagte: \"Keiner von euch ist (wirklich) gläubig, bis er für seinen Bruder das liebt, was er für sich selbst liebt.\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الرابع عشر\n\nعن ابن مسعود رضي الله تعالى عنه قال: قال رسول الله ﷺ: \"لا يحل دم امرئ مسلم إلا بإحدى ثلاث: الثيب الزاني، والنفس بالنفس، والتارك لدينه المفارق للجماعة\". (رواه البخاري ومسلم)",
+      "hadith_de": "Der vierzehnte Hadith\n\nÜber Ibn Masud (r): Der Gesandte Allahs ﷺ sagte: \"Das Blut eines muslimischen Menschen ist nicht erlaubt, außer in einem von drei Fällen: dem verheirateten Ehebrecher, Leben für Leben und dem, der seine Religion verlässt...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الخامس عشر\n\nعن أبي هريرة رضي الله عنه أن رسول الله ﷺ قال: \" من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der fünfzehnte Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Wer an Allah und den Jüngsten Tag glaubt, der spreche Gutes oder schweige...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السادس عشر\n\nعن أبي هريرة رضي الله عنه: أن رجلاً قال للنبي ﷺ: أوصني، قال: \"لا تغضب\"، فردّد مراراً، قال: \"لا تغضب\". (رواه البخاري)",
+      "hadith_de": "Der sechzehnte Hadith\n\nÜber Abu Huraira (r): Ein Mann sagte zum Propheten ﷺ: \"Gib mir einen Rat.\" Er sagte: \"Werde nicht zornig.\" (Überliefert von Al-Bukhari)"
+    },
+    {
+      "hadith_ar": "الحديث السابع عشر\n\nعن أبي يعلى شداد بن أوس رضي الله عنه عن رسول الله ﷺ قال: \"إن الله كتب الإحسان على كل شيء...\" (رواه مسلم)",
+      "hadith_de": "Der siebzehnte Hadith\n\nÜber Schaddad ibn Aus (r): Der Gesandte Allahs ﷺ sagte: \"Wahrlich, Allah hat bei allem Vortrefflichkeit (Ihsan) vorgeschrieben...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثامن عشر\n\nعن أبي ذر جندب بن جنادة وأبي عبد الرحمن معاذ بن جبل رضي الله عنهما عن رسول الله ﷺ قال: \"اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن\". (رواه الترمذي)",
+      "hadith_de": "Der achtzehnte Hadith\n\nÜber Abu Dharr und Muadh ibn Dschabal (r): Der Gesandte Allahs ﷺ sagte: \"Fürchte Allah, wo immer du bist, und lass der schlechten Tat die gute Tat folgen, so wird sie diese auslöschen, und behandle die Menschen mit gutem Charakter.\" (Überliefert von at-Tirmidhi)"
+    },
+    {
+      "hadith_ar": "الحديث التاسع عشر\n\nعن أبي العباس عبد الله بن عباس رضي الله عنهما قال: كنت خلف النبي ﷺ يوماً، فقال لي: \"يا غلام إني أعلّمك كلمات: احفظ الله يحفظك...\" (رواه الترمذي)",
+      "hadith_de": "Der neunzehnte Hadith\n\nÜber Ibn Abbas (r): Ich war eines Tages hinter dem Propheten ﷺ, da sagte er: \"O Junge, ich lehre dich einige Worte: Bewahre Allah, so wird Er dich bewahren...\" (Überliefert von at-Tirmidhi)"
+    },
+    {
+      "hadith_ar": "الحديث العشرون\n\nعن أبي مسعود عقبة بن عمرو الأنصاري البدري رضي الله عنه قال: قال رسول الله ﷺ: \"إن مما أدرك الناس من كلام النبوة الأولى: إذا لم تستح فاصنع ما شئت\". (رواه البخاري)",
+      "hadith_de": "Der zwanzigste Hadith\n\nÜber Abu Masud (r): Der Gesandte Allahs ﷺ sagte: \"Wahrlich, zu dem, was die Menschen von den Worten der ersten Prophetenschaft erfasst haben, gehört: Wenn du dich nicht schämst, so tu, was du willst.\" (Überliefert von Al-Bukhari)"
+    },
+    {
+      "hadith_ar": "الحديث الحادي والعشرون\n\nعن أبي عمرو سفيان بن عبد الله رضي الله عنه قال: قلت: يا رسول الله قل لي في الإسلام قولاً لا أسأل عنه أحداً غيرك، قال: \"قل آمنت بالله ثم استقم\". (رواه مسلم)",
+      "hadith_de": "Der einundzwanzigste Hadith\n\nÜber Sufyan ibn Abdullah (r): Ich sagte: \"O Gesandter Allahs, sag mir im Islam ein Wort, nach dem ich niemanden außer dir fragen muss.\" Er sagte: \"Sag: Ich glaube an Allah, und dann sei standhaft.\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثاني والعشرون\n\nعن أبي عبد الله جابر بن عبد الله الأنصاري رضي الله عنهما: أن رجلاً سأل رسول الله ﷺ فقال: أرأيت إذا صلّيت المكتوبات، وصمت رمضان وأحللت الحلال وحرّمت الحرام ولم أزد على ذلك شيئاً أدخل الجنة؟ قال: نعم. (رواه مسلم)",
+      "hadith_de": "Der zweiundbezwanigste Hadith\n\nÜber Dschabir ibn Abdullah (r): Ein Mann fragte: \"Was meinst du, wenn ich die Gebete verrichte, im Ramadan faste, das Erlaubte erlaube و das Verbotene verbiete... werde ich ins Paradies eingehen?\" Er sagte: \"Ja.\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثالث والعشرون\n\nعن أبي مالك الحارث بن عاصم الأشعري رضي الله عنه قال: قال رسول الله ﷺ: \"الطهور شطر الإيمان...\" (رواه مسلم)",
+      "hadith_de": "Der dreiundzwanzigste Hadith\n\nÜber Abu Malik al-Aschari (r): Der Gesandte Allahs ﷺ sagte: \"Die Reinheit ist die Hälfte des Glaubens...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الرابع والعشرون\n\nعن أبي ذر الغفاري رضي الله عنه عن النبي ﷺ فيما يرويه عن ربه -عزّ وجلّ- أنه قال: \"يا عبادي إني حرّمت الظلم على نفسي، وجعلته بينكم محرّماً؛ فلا تظالموا...\" (رواه مسلم)",
+      "hadith_de": "Der vierundzwanzigste Hadith\n\nÜber Abu Dharr (r) vom Propheten ﷺ von seinem Herrn: \"O Meine Diener, Ich habe Mir Selbst das Unrecht verboten und es unter euch für verboten erklärt, so tut einander kein Unrecht...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الخامس والعشرون\n\nعن أبي ذر رضي الله عنه أيضاً: أن ناساً من أصحاب رسول الله ﷺ قالوا للنبي ﷺ: يا رسول الله ذهب أهل الدثور بالأجور... (رواه مسلم)",
+      "hadith_de": "Der fünfundzwanzigste Hadith\n\nÜber Abu Dharr (r): Einige Gefährten sagten: \"O Gesandter Allahs, die Reichen haben den Lohn davongetragen...\" Er antwortete: \"Wahrlich, in jedem Lobpreis liegt Sadaqah...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السادس والعشرون\n\nعن أبي هريرة رضي الله تعالى عنه قال: قال رسول الله ﷺ: \"كل سلامى من الناس عليه صدقة...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der sechsundzwanzigste Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Für jedes Gelenk der Menschen ist jeden Tag Sadaqah fällig...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السابع والعشرون\n\nعن النواس بن سمعان رضي الله عنهما عن النبي ﷺ قال: \"البر حسن الخلق، والإثم ما حاك في نفسك...\" (رواه مسلم)",
+      "hadith_de": "Der siebenundzwanzigste Hadith\n\nÜber an-Nawwas ibn Saman (r): Der Prophet ﷺ sagte: \"Güte ist der gute Charakter, und Sünde ist das, was in deiner Seele schwankt...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثامن والعشرون\n\nعن أبي نجيح العرباض بن سارية رضي الله عنه قال: وعظَنا رسول الله ﷺ موعظةً وجلت منها القلوب... (رواه أبو داود والترمذي)",
+      "hadith_de": "Der achtundzwanzigste Hadith\n\nÜber al-Irbad ibn Sariyah (r): Der Gesandte Allahs ﷺ hielt uns eine Ermahnung... Er sagte: \"Haltet euch an meine Sunnah...\" (Überliefert von Abu Dawud und at-Tirmidhi)"
+    },
+    {
+      "hadith_ar": "الحديث التاسع والعشرون\n\nعن معاذ بن جبل رضي الله عنه قال: قلت يا رسول الله أخبرني بعمل يدخلني الجنة... (رواه الترمذي)",
+      "hadith_de": "Der neunundzwanzigste Hadith\n\nÜber Muadh ibn Dschabal (r): Ich sagte: \"O Gesandter Allahs, nenne mir eine Tat, die mich ins Paradies bringt...\" (Überliefert von at-Tirmidhi)"
+    },
+    {
+      "hadith_ar": "الحديث الثلاثون\n\nعن أبي ثعلبة الخشني رضي الله عنه عن رسول الله ﷺ قال: \" إن الله تعالى فرض فرائض فلاتضيعوها...\" (رواه الدارقطني)",
+      "hadith_de": "Der dreißigste Hadith\n\nÜber Abu Thalabah (r): Der Gesandte Allahs ﷺ sagte: \"Wahrlich, Allah hat Pflichten vorgeschrieben, so vernachlässigt sie nicht...\" (Überliefert von ad-Daraqutni)"
+    },
+    {
+      "hadith_ar": "الحديث الحادي والثلاثون\n\nعن أبي العباس سهل بن سعد الساعدي رضي الله عنه قال: جاء رجل إلى النبي ﷺ فقال: يا رسول الله دلّني على عمل إذا عملته أحبني الله وأحبني الناس... (رواه ابن ماجه)",
+      "hadith_de": "Der einunddreißigste Hadith\n\nÜber Sahl ibn Saad (r): Ein Mann kam und fragte nach einer Tat, für die Allah und die Menschen ihn lieben. Er ﷺ sagte: \"Sei enthaltsam gegenüber der Welt...\" (Überliefert von Ibn Madschah)"
+    },
+    {
+      "hadith_ar": "الحديث الثاني والثلاثون\n\nعن أبي سعيد الخدري رضي الله عنه أن رسول الله ﷺ قال: \"لا ضرر ولا ضرار\". (رواه ابن ماجه والدارقطني)",
+      "hadith_de": "Der zweiunddreißigste Hadith\n\nÜber Abu Said al-Chudri (r): Der Gesandte Allahs ﷺ sagte: \"Kein Schaden, noch Schädigung (als Vergeltung).\" (Überliefert von Ibn Madschah und ad-Daraqutni)"
+    },
+    {
+      "hadith_ar": "الحديث الثالث والثلاثون\n\nعن ابن عباس رضي الله عنهما أن رسول الله ﷺ قال: \"لو يعطى الناس بدعواهم... لكن البينة على المدعي واليمين على من أنكر\". (رواه البيهقي)",
+      "hadith_de": "Der dreiunddreißigste Hadith\n\nÜber Ibn Abbas (r): Der Gesandte Allahs ﷺ sagte: \"...Der Beweis obliegt dem Kläger, und der Eid dem, der abstreitet.\" (Überliefert von al-Baihaqi)"
+    },
+    {
+      "hadith_ar": "الحديث الرابع والثلاثون\n\nعن أبي سعيد الخدري رضي الله عنه قال: سمعت رسول الله ﷺ يقول: \"من رأى منكم منكراً فليغيره بيده...\" (رواه مسلم)",
+      "hadith_de": "Der vierunddreißigste Hadith\n\nÜber Abu Said al-Chudri (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Wer von euch etwas Verwerfliches sieht, der soll es mit seiner Hand ändern...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الخامس والثلاثون\n\nعن أبي هريرة رضي الله عنه قال: قال رسول الله ﷺ: \"لا تحاسدوا، ولا تناجشوا... وكونوا عباد الله إخواناً\". (رواه مسلم)",
+      "hadith_de": "Der fünfunddreißigste Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Beneidet einander nicht... und seid Diener Allahs und Brüder.\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السادس والثلاثون\n\nعن أبي هريرة رضي الله عنه عن النبي ﷺ قال: \"من نفّس عن مؤمن كربةً من كرب الدنيا...\" (رواه مسلم)",
+      "hadith_de": "Der sechsunddreißigste Hadith\n\nÜber Abu Huraira (r): Der Prophet ﷺ sagte: \"Wer einem Gläubigen eine Sorge dieser Welt nimmt, dem wird Allah eine Sorge des Jüngsten Tages nehmen...\" (Überliefert von Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث السابع والثلاثون\n\nعن ابن عباس رضي الله عنهما عن رسول الله ﷺ فيما يرويه عن ربه: \"إن الله كتب الحسنات والسيئات...\" (رواه البخاري ومسلم)",
+      "hadith_de": "Der siebenunddreißigste Hadith\n\nÜber Ibn Abbas (r) vom Propheten ﷺ: \"Wahrlich, Allah hat die guten und die schlechten Taten aufgeschrieben...\" (Überliefert von Al-Bukhari und Muslim)"
+    },
+    {
+      "hadith_ar": "الحديث الثامن والثلاثون\n\nعن أبي هريرة رضي الله عنه قال: قال رسول الله ﷺ: \"إن الله تعالى قال: من عادى لي ولياً فقد آذنته في الحرب...\" (رواه البخاري)",
+      "hadith_de": "Der achtunddreißigste Hadith\n\nÜber Abu Huraira (r): Der Gesandte Allahs ﷺ sagte: \"Allah der Erhabene sagte: Wer einem Meiner Nahestehenden Feindschaft zeigt, dem erkläre Ich den Krieg...\" (Überliefert von Al-Bukhari)"
+    },
+    {
+      "hadith_ar": "الحديث التاسع والثلاثون\n\nعن ابن عباس رضي الله عنهما أن رسول الله ﷺ قال: \"إن الله تجاوز لي عن أمتي الخطأ والنسيان وما استكرهوا عليه\". (رواه ابن ماجه)",
+      "hadith_de": "Der neununddreißigste Hadith\n\nÜber Ibn Abbas (r): Der Gesandte Allahs ﷺ sagte: \"Wahrlich, Allah hat mir zuliebe meiner Ummah Fehler, Vergesslichkeit und Zwang verziehen.\" (Überliefert von Ibn Madschah)"
+    },
+    {
+      "hadith_ar": "الحديث الأربعون\n\nعن ابن عمر رضي الله عنهما قال: أخذ رسول الله ﷺ بمنكبي فقال: \"كن في الدنيا كأنك غريب أو عابر سبيل\". (رواه البخاري)",
+      "hadith_de": "Der vierzigste Hadith\n\nÜber Ibn Umar (r): Der Gesandte Allahs ﷺ fasste mich an meinen Schultern und sagte: \"Sei auf der Welt wie ein Fremder oder ein Reisender.\" (Überliefert von Al-Bukhari)"
+    },
+    {
+      "hadith_ar": "الحديث الحادي والأربعون\n\nعن أبي محمد عبد الله بن عمرو بن العاص رضي الله عنهما قال: قال رسول الله ﷺ: \"لا يؤمن أحدكم حتى يكون هواه تبعاً لما جئت به\".",
+      "hadith_de": "Der einundvierzigste Hadith\n\nÜber Abdullah ibn Amr (r): Der Gesandte Allahs ﷺ sagte: \"Keiner von euch ist gläubig, bis seine Neigungen dem folgen, womit ich gekommen bin.\""
+    },
+    {
+      "hadith_ar": "الحديث الثاني والأربعون\n\nعن أنس رضي الله عنه قال: سمعت رسول الله ﷺ يقول: \"قال الله تعالى: يا ابن آدم إنك ما دعوتني ورجوتني غفرت لك...\" (رواه الترمذي)",
+      "hadith_de": "Der zweiundvierzigste Hadith\n\nÜber Anas (r): Ich hörte den Gesandten Allahs ﷺ sagen: \"Allah der Erhabene sagte: O Sohn Adams, solange du Mich anrufst und auf Mich hoffst, vergebe Ich dir...\" (Überliefert von at-Tirmidhi)"
     }
   ],
-  "lastUpdated": "2026-03-16T22:37:02.453Z"
+  "lastUpdated": "2026-03-17T00:02:37.280Z"
 }

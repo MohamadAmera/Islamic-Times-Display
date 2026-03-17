@@ -743,7 +743,7 @@ export default function TVHome() {
             </div>
             <div className="flex-1 overflow-hidden">
               <div
-                className="inline-block animate-marquee"
+                className="inline-block animate-marquee-slow"
                 style={{
                   fontSize: "clamp(1rem,1.35vw,1.6rem)",
                   color: "rgba(255,255,255,0.85)",

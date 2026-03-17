@@ -100,7 +100,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               {isAr ? 'حديث:' : 'HADITH:'}
             </div>
             <div className="flex-1 overflow-hidden relative flex items-center">
-              <div className={`inline-block animate-marquee ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
+              <div className={`inline-block animate-marquee-slow ${isTV ? 'text-3xl' : 'text-base md:text-lg'}`}>
                 {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
                 <span className="opacity-0">  ✦  </span>
                 {prayerData.azkar.map(a => `${a.hadith_ar}  ·  ${a.hadith_de}`).join('  ✦  ')}
