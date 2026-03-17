@@ -224,7 +224,7 @@ router.post("/prayer/hadith", (req, res) => {
   }
 });
 
-// GET /api/monthly-prayer-times?month=M — returns all days for the given month
+// GET /api/monthly-prayer-times?month=M&year=Y — returns all days for the given month
 router.get("/monthly-prayer-times", (req, res) => {
   try {
     if (!existsSync(DIYANET_FILE)) {
@@ -240,7 +240,9 @@ router.get("/monthly-prayer-times", (req, res) => {
       return;
     }
 
-    const year = diyanet.year || new Date().getFullYear();
+    // Accept explicit year param for correct weekday calculation across year boundaries
+    const queryYear = parseInt(req.query.year as string, 10);
+    const year = (!isNaN(queryYear) && queryYear > 2000) ? queryYear : (diyanet.year || new Date().getFullYear());
     const monthData = diyanet.times?.[String(month)];
 
     if (!monthData) {

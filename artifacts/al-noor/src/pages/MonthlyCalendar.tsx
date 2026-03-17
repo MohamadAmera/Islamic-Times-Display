@@ -120,7 +120,7 @@ export default function MonthlyCalendar() {
     if (selectedMonth === null) return;
     setLoading(true);
     setFetchError(null);
-    fetch(`/api/monthly-prayer-times?month=${selectedMonth}`)
+    fetch(`/api/monthly-prayer-times?month=${selectedMonth}&year=${selectedYear}`)
       .then((r) => r.json())
       .then((d: MonthlyResponse) => {
         if (!d.success) throw new Error(d.message || 'Fehler beim Laden');
@@ -312,7 +312,7 @@ export default function MonthlyCalendar() {
                       border: BORDER,
                       padding: '6px 4px',
                       textAlign: 'center',
-                      background: col.highlight ? GOLD_LIGHT : GOLD_LIGHT,
+                      background: col.highlight ? GOLD_LIGHT : '#fff',
                       color: GOLD,
                       fontWeight: 700,
                       whiteSpace: 'nowrap',
