@@ -159,7 +159,7 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 className="inline-block px-5 py-1.5 rounded-xl bg-white/5 border border-white/10"
               >
-                <span className="font-mono font-bold text-lg text-foreground tracking-wider">
+                <span className="font-mono font-bold text-lg text-foreground tracking-wider" dir="ltr">
                   {countdownHM}
                 </span>
               </motion.div>
