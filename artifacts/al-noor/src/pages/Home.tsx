@@ -85,6 +85,9 @@ export default function Home() {
               كِتَابًا مَّوْقُوتًا
             </span>
           </p>
+          <p className="text-muted-foreground text-xs mt-1.5 italic max-w-[320px] mx-auto leading-relaxed">
+            „Das Gebet ist den Gläubigen zu bestimmten Zeiten vorgeschrieben."
+          </p>
         </div>
 
         {/* Bilingual subtitle + date + clock */}
