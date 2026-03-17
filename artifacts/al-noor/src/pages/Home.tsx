@@ -37,10 +37,10 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className={`flex flex-col h-full ${isTV ? 'gap-12' : 'gap-6'} max-w-[1920px] mx-auto w-full`}>
+      <div className={`flex flex-col h-full ${isTV ? 'gap-12' : 'gap-3 md:gap-5'} max-w-[1920px] mx-auto w-full`}>
         
         {/* Countdown Section */}
-        <div className="flex-shrink-0 flex flex-col items-center justify-center py-4 md:py-8">
+        <div className="flex-shrink-0 flex flex-col items-center justify-center py-2 md:py-4">
           <h2 className={`text-muted-foreground uppercase tracking-widest font-semibold ${isTV ? 'text-3xl mb-4' : 'text-sm md:text-lg mb-2'}`}>
             {isAr ? `الوقت المتبقي لـ ${nextPrayer?.nameAr || ''}` : `Time remaining until ${nextPrayer?.name || ''}`}
           </h2>
@@ -74,7 +74,7 @@ export default function Home() {
           flex-1 w-full
           ${isTV 
             ? 'grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 lg:gap-8 items-center' 
-            : 'flex flex-col md:grid md:grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 justify-center'
+            : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4'
           }
         `}>
           {prayers.map((prayer, index) => (
