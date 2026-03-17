@@ -34,15 +34,61 @@ const PRINT_CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
 @media print {
-  @page { size: A4 landscape; margin: 1cm; }
-  body, html { background: white !important; margin: 0 !important; }
+  @page { size: A4 landscape; margin: 0.6cm; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body, html { background: white !important; margin: 0 !important; padding: 0 !important; }
   .monthly-calendar-page { position: static !important; overflow: visible !important; height: auto !important; }
   .no-print { display: none !important; }
-  .monthly-print-area { font-family: 'Cairo', sans-serif !important; }
-  table { page-break-inside: auto; }
-  tr { page-break-inside: avoid; page-break-after: auto; }
+
+  /* Print area: no extra padding */
+  .monthly-print-area {
+    font-family: 'Cairo', sans-serif !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Compact header */
+  .cal-hdr {
+    padding-bottom: 6px !important;
+    margin-bottom: 4px !important;
+    gap: 4px !important;
+  }
+  .cal-hdr-left,
+  .cal-hdr-right {
+    font-size: 8.5px !important;
+    line-height: 1.55 !important;
+    min-width: 0 !important;
+  }
+  .cal-hdr-center svg { width: 42px !important; height: 42px !important; }
+  .cal-hdr-center .cal-hdr-name  { font-size: 10px !important; }
+  .cal-hdr-center .cal-hdr-name-ar { font-size: 9px !important; }
+
+  /* Compact titles */
+  .cal-titles { margin: 3px 0 !important; }
+  .cal-titles h1 { font-size: 12px !important; margin: 0 !important; }
+  .cal-titles h2 { font-size: 11px !important; margin: 0 !important; }
+
+  /* Compact table: fits 31 rows on one A4 landscape page */
+  .cal-table-wrap { overflow: visible !important; }
+  .cal-table {
+    font-size: 8.5px !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+    page-break-inside: avoid !important;
+  }
+  .cal-table th,
+  .cal-table td {
+    padding: 1.8px 3px !important;
+    font-size: 8.5px !important;
+    white-space: nowrap !important;
+  }
+  .cal-table th span { font-size: 7.5px !important; }
   thead { display: table-header-group; }
+
+  /* Footer */
+  .cal-footer { font-size: 7.5px !important; margin-top: 3px !important; }
 }
+
 @media screen {
   .monthly-print-area { font-family: 'Cairo', 'Segoe UI', sans-serif; }
 }
@@ -227,7 +273,7 @@ export default function MonthlyCalendar() {
       <div className="monthly-print-area p-4 md:p-8 max-w-5xl mx-auto">
         <CalendarHeader />
 
-        <div className="titles text-center my-6">
+        <div className="cal-titles text-center my-6">
           {hijriInfo.arabicTitle && (
             <h1
               className="font-bold mb-1"
@@ -245,8 +291,8 @@ export default function MonthlyCalendar() {
           </h2>
         </div>
 
-        <div style={{ overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', direction: 'ltr', fontSize: '13px' }}>
+        <div className="cal-table-wrap" style={{ overflowX: 'auto' }}>
+          <table className="cal-table" style={{ width: '100%', borderCollapse: 'collapse', direction: 'ltr', fontSize: '13px' }}>
             <thead>
               <tr>
                 {[
@@ -317,7 +363,7 @@ export default function MonthlyCalendar() {
         </div>
 
         <div
-          className="mt-4 text-center text-xs"
+          className="cal-footer mt-4 text-center text-xs"
           style={{ color: '#888', fontStyle: 'italic' }}
         >
           Al Faruk Moschee — Muslime in Potsdam e.V. — Am Kanal 61, 14467 Potsdam — www.islam-potsdam.de
@@ -351,6 +397,7 @@ function MonthCard({ label, monthDE, monthAR, year, gold, onClick }: {
 function CalendarHeader() {
   return (
     <div
+      className="cal-hdr"
       style={{
         display: 'flex',
         justifyContent: 'space-between',
@@ -363,14 +410,14 @@ function CalendarHeader() {
         flexWrap: 'wrap',
       }}
     >
-      <div style={{ fontSize: '12px', lineHeight: 1.9, fontWeight: 700, color: '#333', minWidth: '180px' }}>
+      <div className="cal-hdr-left" style={{ fontSize: '12px', lineHeight: 1.9, fontWeight: 700, color: '#333', minWidth: '180px' }}>
         <div style={{ color: GOLD, fontWeight: 700 }}>📍 Am Kanal 61, 14467 Potsdam</div>
         <div><span style={{ color: GOLD }}>📞</span> 0179 729 71 79</div>
         <div><span style={{ color: GOLD }}>📧</span> Webmaster@islam-potsdam.de</div>
         <div><span style={{ color: GOLD }}>🌐</span> www.islam-potsdam.de</div>
       </div>
 
-      <div style={{ textAlign: 'center', flex: '0 0 auto' }}>
+      <div className="cal-hdr-center" style={{ textAlign: 'center', flex: '0 0 auto' }}>
         <svg viewBox="0 0 48 48" width="64" height="64" style={{ fill: GOLD }}>
           <path d="M24 4C24 4 18 12 18 20C18 24 20.5 27 23 30C24.5 28.5 26 27 27 25.5C28.5 27 30 28.5 30 28.5C27.5 27 26 24 26 20C26 12 24 4 24 4Z" />
           <rect x="12" y="24" width="24" height="20" rx="1" />
@@ -378,15 +425,15 @@ function CalendarHeader() {
           <rect x="38" y="30" width="4" height="14" />
           <rect x="21" y="32" width="6" height="12" rx="1" />
         </svg>
-        <div style={{ fontSize: '13px', fontWeight: 800, color: GOLD, textTransform: 'uppercase', lineHeight: 1.3, marginTop: '4px' }}>
+        <div className="cal-hdr-name" style={{ fontSize: '13px', fontWeight: 800, color: GOLD, textTransform: 'uppercase', lineHeight: 1.3, marginTop: '4px' }}>
           Verein der Muslime<br />in Potsdam e.V.
         </div>
-        <div style={{ fontSize: '12px', fontWeight: 700, color: '#333', fontFamily: "'Cairo','Noto Naskh Arabic',serif", marginTop: '2px' }} dir="rtl">
+        <div className="cal-hdr-name-ar" style={{ fontSize: '12px', fontWeight: 700, color: '#333', fontFamily: "'Cairo','Noto Naskh Arabic',serif", marginTop: '2px' }} dir="rtl">
           الجمعية الإسلامية في بوتسدام
         </div>
       </div>
 
-      <div style={{ fontSize: '12px', lineHeight: 1.9, fontWeight: 700, color: '#333', textAlign: 'right', minWidth: '200px' }}>
+      <div className="cal-hdr-right" style={{ fontSize: '12px', lineHeight: 1.9, fontWeight: 700, color: '#333', textAlign: 'right', minWidth: '200px' }}>
         <div><span style={{ color: GOLD }}>💳</span> Bankverbindung:</div>
         <div>Verein der Muslime in Potsdam e.V.</div>
         <div style={{ color: '#666', fontSize: '11px' }}>Mittelbrandenburgische Sparkasse</div>
