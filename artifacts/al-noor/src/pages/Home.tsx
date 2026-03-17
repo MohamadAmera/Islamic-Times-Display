@@ -65,43 +65,31 @@ export default function Home() {
 
   return (
     <Layout>
-      {/* ═══════ MOBILE VIEW ═══════ */}
-      <div className="md:hidden flex flex-col gap-4 pb-4 pt-8">
-        {/* Quranic verse */}
-        <div className="text-center pt-2">
+      {/* ═══════ MOBILE VIEW — no-scroll, fills screen ═══════ */}
+      <div className="md:hidden flex flex-col h-full pt-8 justify-between">
+
+        {/* Quranic verse — compact */}
+        <div className="text-center shrink-0">
           <p
-            className="font-display leading-relaxed"
             style={{
               fontFamily: "'Amiri', 'Noto Naskh Arabic', serif",
-              fontSize: 'clamp(1.1rem, 5vw, 1.5rem)',
+              fontSize: 'clamp(0.95rem, 4.2vw, 1.25rem)',
               color: '#d6a93e',
               direction: 'rtl',
-              lineHeight: 1.8,
+              lineHeight: 1.7,
             }}
           >
             إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ
-            <br />
-            <span style={{ fontSize: '130%', fontWeight: 700 }}>
-              كِتَابًا مَّوْقُوتًا
-            </span>
-          </p>
-          <p className="text-muted-foreground text-xs mt-1.5 italic max-w-[320px] mx-auto leading-relaxed">
-            „Das Gebet ist den Gläubigen zu bestimmten Zeiten vorgeschrieben."
+            <span style={{ fontWeight: 700 }}> كِتَابًا مَّوْقُوتًا</span>
           </p>
         </div>
 
-        {/* Bilingual subtitle + date + clock */}
-        <div className="text-center space-y-0.5">
-          <p className="text-muted-foreground text-sm" style={{ direction: 'rtl' }}>
-            أوقات الصلاة لمدينة بوتسدام
-          </p>
-          <p className="text-muted-foreground text-xs">
-            Gebetszeiten für Potsdam
-          </p>
-          <p className="text-muted-foreground text-xs mt-1">
+        {/* Date + clock — single compact row */}
+        <div className="text-center shrink-0">
+          <p className="text-muted-foreground text-xs leading-tight">
             {gregorianDe}
           </p>
-          <p className="text-foreground font-mono text-lg font-bold tracking-wider">
+          <p className="text-foreground font-mono text-base font-bold tracking-wider">
             {timeStr}
           </p>
         </div>
@@ -110,7 +98,6 @@ export default function Home() {
         <div className="flex flex-col gap-2 px-1">
           {prayers.map((prayer, idx) => {
             const isNext = idx === nextPrayerIndex;
-            const isCurrent = idx === currentPrayerIndex;
             const isPast = currentPrayerIndex >= 0
               ? idx < nextPrayerIndex && idx !== currentPrayerIndex
               : false;
@@ -120,38 +107,24 @@ export default function Home() {
                 key={prayer.name}
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.05, duration: 0.3 }}
+                transition={{ delay: idx * 0.04, duration: 0.25 }}
                 className={`
-                  flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-300
+                  flex items-center justify-between px-3 py-2 rounded-xl transition-all duration-300
                   ${isNext
-                    ? 'bg-primary/20 border-2 border-primary shadow-[0_0_20px_rgba(214,169,62,0.25)]'
+                    ? 'bg-primary/20 border-2 border-primary shadow-[0_0_16px_rgba(214,169,62,0.2)]'
                     : 'bg-white/5 border border-white/10'
                   }
-                  ${isPast ? 'opacity-50' : ''}
+                  ${isPast ? 'opacity-40' : ''}
                 `}
               >
-                {/* German name */}
-                <span className={`
-                  font-semibold text-base
-                  ${isNext ? 'text-primary' : 'text-foreground'}
-                `}>
+                <span className={`font-semibold text-sm w-16 ${isNext ? 'text-primary' : 'text-foreground'}`}>
                   {prayer.name}
                 </span>
-
-                {/* Time */}
-                <span className={`
-                  font-mono font-bold text-lg tabular-nums
-                  ${isNext ? 'text-white' : 'text-muted-foreground'}
-                `}>
+                <span className={`font-mono font-bold text-base tabular-nums ${isNext ? 'text-white' : 'text-muted-foreground'}`}>
                   {prayer.time}
                 </span>
-
-                {/* Arabic name */}
                 <span
-                  className={`
-                    font-display text-base
-                    ${isNext ? 'text-primary' : 'text-foreground'}
-                  `}
+                  className={`text-sm w-16 text-right ${isNext ? 'text-primary' : 'text-foreground'}`}
                   style={{ direction: 'rtl', fontFamily: "'Amiri', 'Noto Naskh Arabic', serif" }}
                 >
                   {prayer.nameAr}
@@ -161,15 +134,13 @@ export default function Home() {
           })}
         </div>
 
-        {/* Countdown section */}
-        <div className="text-center mt-2 space-y-1">
-          <p className="text-muted-foreground text-xs" style={{ direction: 'rtl' }}>
-            {`الوقت المتبقي لصلاة ${nextPrayer?.nameAr || ''}`}
+        {/* Countdown — bottom */}
+        <div className="text-center shrink-0 pb-2">
+          <p className="text-muted-foreground text-xs mb-1">
+            {isAr
+              ? `الوقت المتبقي لصلاة ${nextPrayer?.nameAr || ''}`
+              : `Zeit bis zum ${nextPrayer?.name || ''}-Gebet`}
           </p>
-          <p className="text-muted-foreground text-xs">
-            {`Zeit bis zum ${nextPrayer?.name || ''}-Gebet`}
-          </p>
-
           <AnimatePresence mode="wait">
             {isAthanPlaying ? (
               <motion.div
@@ -177,7 +148,7 @@ export default function Home() {
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
-                className="font-display font-bold text-primary text-3xl drop-shadow-[0_0_15px_rgba(214,169,62,0.6)] py-2"
+                className="font-display font-bold text-primary text-2xl drop-shadow-[0_0_15px_rgba(214,169,62,0.6)]"
               >
                 {isAr ? 'حان وقت الأذان' : 'GEBETSZEIT'}
               </motion.div>
@@ -186,9 +157,9 @@ export default function Home() {
                 key="countdown-mobile"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="inline-block mt-1 px-6 py-2 rounded-xl bg-white/5 border border-white/10"
+                className="inline-block px-5 py-1.5 rounded-xl bg-white/5 border border-white/10"
               >
-                <span className="font-mono font-bold text-xl text-foreground tracking-wider">
+                <span className="font-mono font-bold text-lg text-foreground tracking-wider">
                   {countdownHM}
                 </span>
               </motion.div>

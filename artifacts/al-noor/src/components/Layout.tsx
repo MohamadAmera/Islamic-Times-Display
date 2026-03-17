@@ -274,7 +274,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       )}
 
       {/* ═══ Main Content Area ═══ */}
-      <main className="flex-1 flex flex-col p-4 md:p-8 z-10 overflow-y-auto relative" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+      <main className="flex-1 flex flex-col p-3 md:p-8 z-10 overflow-y-auto relative" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
         {children}
       </main>
 
