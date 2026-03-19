@@ -1,6 +1,9 @@
-FROM node:24-slim as builder
+FROM node:24-slim AS builder
 
 WORKDIR /app
+
+# Set CI environment for pnpm
+ENV CI=true
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -19,12 +22,12 @@ FROM node:24-slim
 
 WORKDIR /app
 
-# Copy only necessary files from builder
-COPY --from=builder /app/artifacts/api-server/dist ./dist
-COPY --from=builder /app/artifacts/api-server/public ./public
+# Copy dist and public directories from builder
+COPY --from=builder /app/artifacts/api-server/dist /app/dist
+COPY --from=builder /app/artifacts/api-server/public /app/public
 
 # Expose port
 EXPOSE 8080
 
-# Start server
+# Start server - Node will find dist/index.cjs from WORKDIR
 CMD ["node", "dist/index.cjs"]
