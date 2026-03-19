@@ -11,15 +11,20 @@ import {
 
 const router: IRouter = Router();
 
-// __dirname is native in CJS (production build via esbuild)
-// In ESM dev mode (tsx), derive it from import.meta
-const _routeDir: string =
-  typeof __dirname !== "undefined"
-    ? __dirname
-    : dirname(new URL(import.meta.url).pathname);
+// In production (Docker), __dirname should point to /app/dist
+// Data files are at /app/dist/data/ after COPY in Dockerfile
+let DATA_FILE: string;
+let DIYANET_FILE: string;
 
-const DATA_FILE = resolve(_routeDir, "../data/prayer_data.json");
-const DIYANET_FILE = resolve(_routeDir, "../data/diyanet_data.json");
+if (typeof __dirname !== "undefined") {
+  // CJS environment (esbuild): __dirname is available
+  DATA_FILE = resolve(__dirname, "./data/prayer_data.json");
+  DIYANET_FILE = resolve(__dirname, "./data/diyanet_data.json");
+} else {
+  // Fallback (should not happen with esbuild CJS)
+  DATA_FILE = "/app/dist/data/prayer_data.json";
+  DIYANET_FILE = "/app/dist/data/diyanet_data.json";
+}
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 

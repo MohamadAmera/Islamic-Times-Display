@@ -14,14 +14,13 @@ app.use("/api", router);
 
 // In production, serve the built frontend static files
 if (process.env.NODE_ENV === "production") {
-  // In Docker/production: /app/public is copied to /app/public
   const frontendDist = path.resolve("/app/public");
   
   // Serve static files if the directory exists
   if (fs.existsSync(frontendDist)) {
     app.use(express.static(frontendDist));
-    // SPA fallback — all non-API routes return index.html
-    app.get("*", (_req, res) => {
+    // SPA fallback — use middleware instead of route to avoid parsing "*"
+    app.use((_req, res) => {
       const indexPath = path.join(frontendDist, "index.html");
       if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
@@ -32,13 +31,13 @@ if (process.env.NODE_ENV === "production") {
   } else {
     console.warn(`Frontend directory not found at ${frontendDist}`);
     // Fallback: API only mode
-    app.get("*", (_req, res) => {
+    app.use((_req, res) => {
       res.status(404).json({ error: "Not Found. API endpoints available at /api/*" });
     });
   }
 } else {
   // Development mode
-  app.get("*", (_req, res) => {
+  app.use((_req, res) => {
     res.status(404).json({ error: "Not Found. API endpoints available at /api/*" });
   });
 }
