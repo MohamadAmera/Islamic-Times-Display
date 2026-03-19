@@ -22,9 +22,15 @@ FROM node:24-slim
 
 WORKDIR /app
 
+# Create directories
+RUN mkdir -p /app/dist /app/public
+
 # Copy dist and public directories from builder
-COPY --from=builder /app/artifacts/api-server/dist /app/dist
-COPY --from=builder /app/artifacts/api-server/public /app/public
+COPY --from=builder /app/artifacts/api-server/dist/ /app/dist/
+COPY --from=builder /app/artifacts/api-server/public/ /app/public/
+
+# Verify files exist
+RUN ls -la /app/dist/ && ls -la /app/public/ || echo "Warning: Some directories may be empty"
 
 # Expose port
 EXPOSE 8080
